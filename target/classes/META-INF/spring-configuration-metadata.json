@@ -8,22 +8,17 @@
   ],
   "properties": [
     {
-      "name": "admin.first-name",
+      "name": "admin.email",
       "type": "java.lang.String",
       "sourceType": "com.example.projectbase.config.properties.AdminInfoProperties"
     },
     {
-      "name": "admin.last-name",
+      "name": "admin.name",
       "type": "java.lang.String",
       "sourceType": "com.example.projectbase.config.properties.AdminInfoProperties"
     },
     {
       "name": "admin.password",
-      "type": "java.lang.String",
-      "sourceType": "com.example.projectbase.config.properties.AdminInfoProperties"
-    },
-    {
-      "name": "admin.username",
       "type": "java.lang.String",
       "sourceType": "com.example.projectbase.config.properties.AdminInfoProperties"
     }
