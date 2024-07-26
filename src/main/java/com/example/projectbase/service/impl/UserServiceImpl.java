@@ -13,8 +13,13 @@ import com.example.projectbase.security.UserPrincipal;
 import com.example.projectbase.service.UserService;
 import com.example.projectbase.util.PaginationUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import javax.mail.MessagingException;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -43,6 +48,76 @@ public class UserServiceImpl implements UserService {
   public UserDto getCurrentUser(UserPrincipal principal) {
     User user = userRepository.getUser(principal);
     return userMapper.toUserDto(user);
+  }
+
+  @Override
+  public Optional<User> saveOrUpdate(User user) {
+    return Optional.empty();
+  }
+
+  @Override
+  public Optional<User> findById(String id) {
+    return Optional.empty();
+  }
+
+  @Override
+  public Optional<User> findByEmail(String email) {
+    return Optional.empty();
+  }
+
+  @Override
+  public void deleteById(String id) {
+
+  }
+
+  @Override
+  public void updateLastLoginDate(User user) {
+
+  }
+
+  @Override
+  public List<User> findAll() {
+    return List.of();
+  }
+
+  @Override
+  public Boolean existsByEmail(String email) {
+    return null;
+  }
+
+  @Override
+  public Page<User> findAllByEmailLike(String keyword, Pageable pageable) {
+    return null;
+  }
+
+  @Override
+  public List<Object[]> statisticsViewMonthByYear(int year) {
+    return List.of();
+  }
+
+  @Override
+  public int getCustomersByDate(String dateNow, String dateTo) {
+    return 0;
+  }
+
+  @Override
+  public int getCustomersByMonth(int month) {
+    return 0;
+  }
+
+  @Override
+  public int getCustomersByYear(int year) {
+    return 0;
+  }
+
+  @Override
+  public Optional<User> changePassword(String email, String password) {
+    return Optional.empty();
+  }
+
+  @Override
+  public void sendMail(String email, String url) throws MessagingException {
+
   }
 
 }

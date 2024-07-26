@@ -26,7 +26,7 @@ public class AuthController {
   @Operation(summary = "API Login")
   @PostMapping(UrlConstant.Auth.LOGIN)
   public ResponseEntity<?> login(@Valid @RequestBody LoginRequestDto request) {
-    return VsResponseUtil.success(authService.login(request));
+    return VsResponseUtil.success(null);
   }
 
   @Operation(summary = "API test")
