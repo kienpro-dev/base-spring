@@ -8,6 +8,8 @@ import org.hibernate.annotations.Nationalized;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -49,5 +51,13 @@ public class User extends DateAuditing {
   @ManyToOne
   @JoinColumn(name = "role_id", foreignKey = @ForeignKey(name = "FK_USER_ROLE"))
   private Role role;
+
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "userRent")
+  @JsonIgnore
+  private List<Car> carRent = new ArrayList<>();
+
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "userOwn")
+  @JsonIgnore
+  private List<Car> carOwn = new ArrayList<>();
 
 }
