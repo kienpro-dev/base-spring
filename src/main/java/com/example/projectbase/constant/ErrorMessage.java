@@ -18,7 +18,7 @@ public class ErrorMessage {
   public static final String INVALID_DATETIME = "invalid.datetime-format";
 
   public static class Auth {
-    public static final String ERR_INCORRECT_USERNAME = "exception.auth.incorrect.username";
+    public static final String ERR_INCORRECT_EMAIL = "exception.auth.incorrect.email";
     public static final String ERR_INCORRECT_PASSWORD = "exception.auth.incorrect.password";
     public static final String ERR_ACCOUNT_NOT_ENABLED = "exception.auth.account.not.enabled";
     public static final String ERR_ACCOUNT_LOCKED = "exception.auth.account.locked";
@@ -27,7 +27,7 @@ public class ErrorMessage {
   }
 
   public static class User {
-    public static final String ERR_NOT_FOUND_USERNAME = "exception.user.not.found.username";
+    public static final String ERR_NOT_FOUND_EMAIL = "exception.user.not.found.email";
     public static final String ERR_NOT_FOUND_ID = "exception.user.not.found.id";
   }
 

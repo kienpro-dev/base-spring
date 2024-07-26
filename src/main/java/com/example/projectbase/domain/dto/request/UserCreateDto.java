@@ -19,16 +19,12 @@ import javax.validation.constraints.Pattern;
 public class UserCreateDto {
 
   @NotNull(message = ErrorMessage.INVALID_SOME_THING_FIELD_IS_REQUIRED)
-  private String username;
+  private String email;
 
   @NotNull(message = ErrorMessage.INVALID_SOME_THING_FIELD_IS_REQUIRED)
   @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=\\S+$).{8,}$", message = ErrorMessage.INVALID_FORMAT_PASSWORD)
   private String password;
 
   @NotBlank(message = ErrorMessage.NOT_BLANK_FIELD)
-  private String firstName;
-
-  @NotBlank(message = ErrorMessage.NOT_BLANK_FIELD)
-  private String lastName;
-
+  private String name;
 }
