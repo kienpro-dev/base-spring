@@ -22,6 +22,9 @@ public interface UserRepository extends JpaRepository<User, String> {
   @Query("SELECT u FROM User u WHERE u.email = ?1")
   Optional<User> findByEmail(String email);
 
+
+  Page<User> findByOrderByCreatedDateDesc(Pageable pageable);
+
   default User getUser(UserPrincipal currentUser) {
     return findByEmail(currentUser.getUsername())
         .orElseThrow(() -> new NotFoundException(ErrorMessage.User.ERR_NOT_FOUND_EMAIL,

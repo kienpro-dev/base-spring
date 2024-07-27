@@ -4,6 +4,7 @@ import com.example.projectbase.constant.ErrorMessage;
 import com.example.projectbase.constant.SortByDataConstant;
 import com.example.projectbase.domain.dto.pagination.PaginationFullRequestDto;
 import com.example.projectbase.domain.dto.pagination.PaginationResponseDto;
+import com.example.projectbase.domain.dto.request.UserUpdateRequestDto;
 import com.example.projectbase.domain.dto.response.UserDto;
 import com.example.projectbase.domain.entity.User;
 import com.example.projectbase.domain.mapper.UserMapper;
@@ -25,99 +26,121 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
-  private final UserRepository userRepository;
+    private final UserRepository userRepository;
 
-  private final UserMapper userMapper;
+    private final UserMapper userMapper;
 
-  @Override
-  public UserDto getUserById(String userId) {
-    User user = userRepository.findById(userId)
-        .orElseThrow(() -> new NotFoundException(ErrorMessage.User.ERR_NOT_FOUND_ID, new String[]{userId}));
-    return userMapper.toUserDto(user);
-  }
+    @Override
+    public UserDto getUserById(String userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new NotFoundException(ErrorMessage.User.ERR_NOT_FOUND_ID, new String[]{userId}));
+        return userMapper.toUserDto(user);
+    }
 
-  @Override
-  public PaginationResponseDto<UserDto> getCustomers(PaginationFullRequestDto request) {
-    //Pagination
-    Pageable pageable = PaginationUtil.buildPageable(request, SortByDataConstant.USER);
-    //Create Output
-    return new PaginationResponseDto<>(null, null);
-  }
+    @Override
+    public PaginationResponseDto<UserDto> getCustomers(PaginationFullRequestDto request) {
+        //Pagination
+        Pageable pageable = PaginationUtil.buildPageable(request, SortByDataConstant.USER);
+        //Create Output
+        return new PaginationResponseDto<>(null, null);
+    }
 
-  @Override
-  public UserDto getCurrentUser(UserPrincipal principal) {
-    User user = userRepository.getUser(principal);
-    return userMapper.toUserDto(user);
-  }
+    @Override
+    public UserDto getCurrentUser(UserPrincipal principal) {
+        User user = userRepository.getUser(principal);
+        return userMapper.toUserDto(user);
+    }
 
-  @Override
-  public Optional<User> saveOrUpdate(User user) {
-    return Optional.empty();
-  }
+    @Override
+    public Optional<User> saveOrUpdate(User user) {
+        return Optional.empty();
+    }
 
-  @Override
-  public Optional<User> findById(String id) {
-    return Optional.empty();
-  }
+    @Override
+    public User findById(String id) {
+        return userRepository.findById(id).orElseThrow(() -> new NotFoundException(ErrorMessage.User.ERR_NOT_FOUND_ID, new String[]{id}));
+    }
 
-  @Override
-  public Optional<User> findByEmail(String email) {
-    return Optional.empty();
-  }
+    @Override
+    public User findByEmail(String email) {
+      return userRepository.findById(email).orElseThrow(() -> new NotFoundException(ErrorMessage.User.ERR_NOT_FOUND_EMAIL, new String[]{email}));
+    }
 
-  @Override
-  public void deleteById(String id) {
+    @Override
+    public void deleteById(String id) {
 
-  }
+    }
 
-  @Override
-  public void updateLastLoginDate(User user) {
+    @Override
+    public void updateLastLoginDate(User user) {
 
-  }
+    }
 
-  @Override
-  public List<User> findAll() {
-    return List.of();
-  }
+    @Override
+    public boolean updateUser(String id, UserUpdateRequestDto requestDto) {
+        Optional<User> user=userRepository.findById(id);
+        if(user.isPresent()){
+            user.get().setName(requestDto.getName());
+            user.get().setDateOfBirth(requestDto.getDateOfBirth());
+            user.get().setAddress(requestDto.getAddress());
+            user.get().setNationalId(requestDto.getNationalId());
+            user.get().setPhoneNumber(requestDto.getPhoneNumber());
+            user.get().setEmail(requestDto.getEmail());
+            user.get().setDrivingLicense(requestDto.getDrivingLicense());
+            userRepository.save(user.get());
+            return true;
+        }
+        return false;
+    }
 
-  @Override
-  public Boolean existsByEmail(String email) {
-    return null;
-  }
+    @Override
+    public Page<User> findAllUser(Pageable pageable) {
+        return userRepository.findByOrderByCreatedDateDesc(pageable);
+    }
 
-  @Override
-  public Page<User> findAllByEmailLike(String keyword, Pageable pageable) {
-    return null;
-  }
+    @Override
+    public List<User> findAll() {
+        return List.of();
+    }
 
-  @Override
-  public List<Object[]> statisticsViewMonthByYear(int year) {
-    return List.of();
-  }
+    @Override
+    public Boolean existsByEmail(String email) {
+        return null;
+    }
 
-  @Override
-  public int getCustomersByDate(String dateNow, String dateTo) {
-    return 0;
-  }
+    @Override
+    public Page<User> findAllByEmailLike(String keyword, Pageable pageable) {
+        return null;
+    }
 
-  @Override
-  public int getCustomersByMonth(int month) {
-    return 0;
-  }
+    @Override
+    public List<Object[]> statisticsViewMonthByYear(int year) {
+        return List.of();
+    }
 
-  @Override
-  public int getCustomersByYear(int year) {
-    return 0;
-  }
+    @Override
+    public int getCustomersByDate(String dateNow, String dateTo) {
+        return 0;
+    }
 
-  @Override
-  public Optional<User> changePassword(String email, String password) {
-    return Optional.empty();
-  }
+    @Override
+    public int getCustomersByMonth(int month) {
+        return 0;
+    }
 
-  @Override
-  public void sendMail(String email, String url) throws MessagingException {
+    @Override
+    public int getCustomersByYear(int year) {
+        return 0;
+    }
 
-  }
+    @Override
+    public Optional<User> changePassword(String email, String password) {
+        return Optional.empty();
+    }
+
+    @Override
+    public void sendMail(String email, String url) throws MessagingException {
+
+    }
 
 }
