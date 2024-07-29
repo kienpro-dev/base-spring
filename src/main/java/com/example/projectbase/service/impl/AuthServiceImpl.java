@@ -1,7 +1,9 @@
 package com.example.projectbase.service.impl;
 
 import com.example.projectbase.domain.dto.request.LoginRequestDto;
+import com.example.projectbase.domain.dto.request.RegisterRequestDto;
 import com.example.projectbase.domain.entity.User;
+import com.example.projectbase.exception.NotFoundException;
 import com.example.projectbase.security.UserPrincipal;
 import com.example.projectbase.service.AuthService;
 import com.example.projectbase.service.UserService;
@@ -53,7 +55,7 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public void autoLogin(String email, String password) {
-        User user = userService.findByEmail(email).get();
+        User user = userService.findByEmail(email);
         userService.updateLastLoginDate(user);
         UserDetails userDetails = userDetailsService.loadUserByUsername(email);
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
@@ -77,8 +79,8 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public boolean checkCurrentUserPassword(String password) {
-        Optional<User> user = userService.findByEmail(email());
-		if(passwordEncoder.matches(password, user.get().getPassword())) {
+        User user = userService.findByEmail(email());
+		if(passwordEncoder.matches(password, user.getPassword())) {
 			return true;
 		}
 		return false;
@@ -86,8 +88,8 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public boolean checkEmailMatchPassword(LoginRequestDto login) {
-        Optional<User> user = userService.findByEmail(login.getEmail());
-		if(passwordEncoder.matches(login.getPassword(), user.get().getPassword())) {
+       User user = userService.findByEmail(login.getEmail());
+		if(passwordEncoder.matches(login.getPassword(), user.getPassword())) {
 			return true;
 		}
 		return false;
@@ -95,11 +97,14 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public boolean checkEmailRegistered(String email) {
-        Optional<User> user = userService.findByEmail(email);
-		if(user.isPresent()) {
-			return true;
-		}
-		return false;
+        try {
+            User user = userService.findByEmail(email);
+            return true;
+        } catch (NotFoundException e) {
+            return false;
+        }
     }
+
+
 
 }

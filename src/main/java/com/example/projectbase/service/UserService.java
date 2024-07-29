@@ -2,6 +2,8 @@ package com.example.projectbase.service;
 
 import com.example.projectbase.domain.dto.pagination.PaginationFullRequestDto;
 import com.example.projectbase.domain.dto.pagination.PaginationResponseDto;
+import com.example.projectbase.domain.dto.request.RegisterRequestDto;
+import com.example.projectbase.domain.dto.request.UserUpdateRequestDto;
 import com.example.projectbase.domain.dto.response.UserDto;
 import com.example.projectbase.domain.entity.User;
 import com.example.projectbase.security.UserPrincipal;
@@ -14,37 +16,43 @@ import java.util.Optional;
 
 public interface UserService {
 
-  UserDto getUserById(String userId);
+    UserDto getUserById(String userId);
 
-  PaginationResponseDto<UserDto> getCustomers(PaginationFullRequestDto request);
+    PaginationResponseDto<UserDto> getCustomers(PaginationFullRequestDto request);
 
-  UserDto getCurrentUser(UserPrincipal principal);
+    UserDto getCurrentUser(UserPrincipal principal);
 
-  Optional<User> saveOrUpdate(User user);
+    Optional<User> saveOrUpdate(User user);
 
-	Optional<User> findById(String id);
+    User findById(String id);
 
-	Optional<User> findByEmail(String email);
+    User findByEmail(String email);
 
-	void deleteById(String id);
+    void deleteById(String id);
 
-	void updateLastLoginDate(User user);
+    void updateLastLoginDate(User user);
 
-	List<User> findAll();
+    boolean updateUser(String id, UserUpdateRequestDto requestDto);
 
-	Boolean existsByEmail(String email);
+    Page<User> findAllUser(Pageable pageable);
 
-	Page<User> findAllByEmailLike(String keyword, Pageable pageable);
+    List<User> findAll();
 
-	List<Object[]> statisticsViewMonthByYear(int year);
+    Boolean existsByEmail(String email);
 
-	int getCustomersByDate(String dateNow, String dateTo);
+    Page<User> findAllByEmailLike(String keyword, Pageable pageable);
 
-	int getCustomersByMonth(int month);
+    List<Object[]> statisticsViewMonthByYear(int year);
 
-	int getCustomersByYear(int year);
+    int getCustomersByDate(String dateNow, String dateTo);
 
-	Optional<User> changePassword(String email, String password);
+    int getCustomersByMonth(int month);
 
-	void sendMail(String email, String url) throws MessagingException;
+    int getCustomersByYear(int year);
+
+    Optional<User> changePassword(String email, String password);
+
+    void sendMail(String email, String url) throws MessagingException;
+
+    boolean createUser(RegisterRequestDto requestDto);
 }
