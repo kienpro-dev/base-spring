@@ -111,24 +111,24 @@ public class WebMvcConfig implements WebMvcConfigurer {
                         "/statistics/**")
                 .access("hasRole('ROLE_ADMIN')")
                 .anyRequest().authenticated();
-        http.formLogin((form) -> form
-                .loginPage("/auth/login")
-                .failureHandler(new CustomAuthenticationFailureHandler())
-                .successHandler(new CustomAuthenticationSuccessHandler())
-                .permitAll()
-        );
-        http.rememberMe()
-                .key(rememberKey)
-                .tokenValiditySeconds(tokenValiditySeconds)
-                .and()
-                .sessionManagement()
-                .maximumSessions(1)
-                .maxSessionsPreventsLogin(false);;
-        http.logout((logout) -> logout
-                .logoutUrl("/logout")
-                .logoutSuccessUrl("/login?logout=true")
-                .deleteCookies("JSESSIONID")
-                .permitAll());
+//        http.formLogin((form) -> form
+//                .loginPage("/auth/login")
+//                .failureHandler(new CustomAuthenticationFailureHandler())
+//                .successHandler(new CustomAuthenticationSuccessHandler())
+//                .permitAll()
+//        );
+//        http.rememberMe()
+//                .key(rememberKey)
+//                .tokenValiditySeconds(tokenValiditySeconds)
+//                .and()
+//                .sessionManagement()
+//                .maximumSessions(1)
+//                .maxSessionsPreventsLogin(false);;
+//        http.logout((logout) -> logout
+//                .logoutUrl("/logout")
+//                .logoutSuccessUrl("/login?logout=true")
+//                .deleteCookies("JSESSIONID")
+//                .permitAll());
         http.exceptionHandling().accessDeniedHandler(accessDeniedHandler());
         http.authenticationProvider(authenticationProvider());
         return http.build();

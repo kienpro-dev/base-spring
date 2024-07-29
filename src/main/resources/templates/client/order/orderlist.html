@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{shop/layout.html}">
+	layout:decorate="~{client/layout.html}">
 
 <head>
 <title>Danh sách đặt hàng</title>
@@ -10,7 +10,7 @@
 <body>
 	<div layout:fragment="content">
 		<div class="page-header text-center"
-			style="background-image: url('../shop/assets/images/page-header-bg.jpg')">
+			style="background-image: url('../client/assets/images/page-header-bg.jpg')">
 			<div class="container">
 				<h1 class="page-title">
 					Đặt hàng<span>Cửa hàng</span>
@@ -22,9 +22,9 @@
 		<nav aria-label="breadcrumb" class="breadcrumb-nav">
 			<div class="container">
 				<ol class="breadcrumb">
-					<li class="breadcrumb-item"><a th:href="@{/molla/home}">Trang
+					<li class="breadcrumb-item"><a th:href="@{/car/home}">Trang
 							chủ</a></li>
-					<li class="breadcrumb-item"><a th:href="@{/molla/shop}">Cửa
+					<li class="breadcrumb-item"><a th:href="@{/car/client}">Cửa
 							hàng</a></li>
 					<li class="breadcrumb-item active" aria-current="page">Danh
 						sách đặt hàng</li>

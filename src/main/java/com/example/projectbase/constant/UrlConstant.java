@@ -1,6 +1,7 @@
 package com.example.projectbase.constant;
 
 public class UrlConstant {
+  public static final String HOME = "/home";
 
   public static class Auth {
     private static final String PRE_FIX = "/auth";

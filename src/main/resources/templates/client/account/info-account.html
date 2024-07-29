@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{shop/layout.html}">
+	layout:decorate="~{client/layout.html}">
 
 <head>
 <title>Thông tin tài khoản</title>
@@ -10,7 +10,7 @@
 <body>
 	<div layout:fragment="content">
 		<div class="page-header text-center"
-			style="background-image: url('../shop/assets/images/page-header-bg.jpg')">
+			style="background-image: url('../client/assets/images/page-header-bg.jpg')">
 			<div class="container">
 				<h1 class="page-title">
 					Tài khoản<span>Cửa hàng</span>
@@ -22,9 +22,9 @@
 		<nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
 			<div class="container">
 				<ol class="breadcrumb">
-					<li class="breadcrumb-item"><a th:href="@{/molla/home}">Trang
+					<li class="breadcrumb-item"><a th:href="@{/car/home}">Trang
 							chủ</a></li>
-					<li class="breadcrumb-item"><a th:href="@{/molla/shop}">Cửa
+					<li class="breadcrumb-item"><a th:href="@{/car/client}">Cửa
 							hàng</a></li>
 					<li class="breadcrumb-item active" aria-current="page">Tài
 						khoản của bạn</li>
@@ -88,7 +88,7 @@
 								<div class="tab-pane fade" id="tab-orders" role="tabpanel"
 									aria-labelledby="tab-orders-link">
 									<p>Bạn chưa có đơn hàng nào.</p>
-									<a th:href="@{/molla/shop}" class="btn btn-outline-primary-2"><span>Cửa
+									<a th:href="@{/car/client}" class="btn btn-outline-primary-2"><span>Cửa
 											hàng</span><i class="icon-long-arrow-right"></i></a>
 								</div>
 								<!-- .End .tab-pane -->
@@ -131,7 +131,7 @@
 													<h3 class="card-title">Giao hàng</h3>
 													<!-- End .card-title -->
 													<form
-														th:action="@{/molla/account/info-account/order-address}"
+														th:action="@{/car/account/info-account/order-address}"
 														method="POST" th:object="${orderAddressDto}">
 
 														<input type="hidden" th:field="*{id}"> <label>Họ
@@ -164,7 +164,7 @@
 								<div sec:authorize="isAuthenticated()" class="tab-pane fade"
 									id="tab-account" role="tabpanel"
 									aria-labelledby="tab-account-link">
-									<form th:action="@{/molla/account/info-account/change-info}"
+									<form th:action="@{/car/account/info-account/change-info}"
 										method="POST" th:object="${userDto}"
 										enctype="multipart/form-data">
 										<div class="card card-dashboard">
@@ -240,7 +240,7 @@
 											<div class="col-sm-6">
 												<div class="product text-center w-50">
 													<figure class="product-media">
-														<img th:src="@{/shop/assets/images/no-image.jpg}"
+														<img th:src="@{/client/assets/images/no-image.jpg}"
 															alt="Product image" class="product-image"
 															id="change__info__avatar">
 													</figure>
