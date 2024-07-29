@@ -25,10 +25,13 @@ public interface UserRepository extends JpaRepository<User, String> {
 
   Page<User> findByOrderByCreatedDateDesc(Pageable pageable);
 
+
   default User getUser(UserPrincipal currentUser) {
     return findByEmail(currentUser.getUsername())
         .orElseThrow(() -> new NotFoundException(ErrorMessage.User.ERR_NOT_FOUND_EMAIL,
             new String[]{currentUser.getUsername()}));
   }
+
+  boolean existsByEmail(String email);
 
 }
