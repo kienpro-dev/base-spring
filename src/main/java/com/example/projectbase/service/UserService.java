@@ -40,6 +40,8 @@ public interface UserService {
 
     Boolean existsByEmail(String email);
 
+    Boolean existsByPhoneNumber(String phoneNumber);
+
     Page<User> findAllByEmailLike(String keyword, Pageable pageable);
 
     List<Object[]> statisticsViewMonthByYear(int year);
