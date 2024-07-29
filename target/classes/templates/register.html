@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/abc5153db7.js" crossorigin="anonymous"></script>
+</head>
+<body class="bg-primary">
+<div id="layoutAuthentication">
+    <div id="layoutAuthentication_content">
+        <main>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-5">
+                        <div class="card shadow-lg border-0 rounded-lg mt-5">
+                            <div class="card-header">
+                                <h3 class="text-center font-weight-light my-4">Đăng ký</h3>
+                            </div>
+                            <div class="card-body">
+                                <form method="post" th:action="@{/auth/register}" th:object="${requestDto}">
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" id="name" type="text" name="name" th:field="*{name}"
+                                               autocomplete="name" required/>
+                                        <label for="name">Họ tên</label>
+                                    </div>
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" id="email" type="email" name="email"
+                                               th:field="*{email}" autocomplete="email" required/>
+                                        <label for="email">Email</label>
+                                    </div>
+                                    <div class="form-floating mb-3 position-relative">
+                                        <input class="form-control" id="password" type="password" name="password"
+                                               th:field="*{password}" autocomplete="password" required/>
+                                        <label for="password">Mật khẩu</label>
+                                        <span class="position-absolute top-50 end-0 translate-middle-y p-2"
+                                              id="togglePassword" style="cursor: pointer;">
+                <i class="fa fa-eye-slash" id="toggleIcon"></i>
+            </span>
+                                    </div>
+                                    <div class="form-floating mb-3 position-relative">
+                                        <input class="form-control" id="repeat-password" type="password"
+                                               name="repeatPassword" th:field="*{repeatPassword}"
+                                               autocomplete="repeatPassword" required/>
+                                        <label for="repeat-password">Nhập lại mật khẩu</label>
+                                    </div>
+                                    <div th:if="${message != null}">
+                                        <p class="text-warning" th:text="${message}"></p>
+                                    </div>
+                                    <div th:if="${succes != null}">
+                                        <p class="text-success" th:text="${succes}"></p>
+                                    </div>
+                                    <div class="mt-4 mb-0">
+                                        <div class="d-grid">
+                                            <input class="btn btn-primary btn-block" type="submit" value="Đăng ký">
+                                        </div>
+                                    </div>
+                                </form>
+
+                            </div>
+                            <div class="card-footer text-center py-3">
+                                <div class="small">Bạn đã có tài khoản? <a th:href="@{/auth/login}"> Đăng nhập</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#togglePassword').click(function() {
+            console.log("alo");
+            const passwordField = $('#password');
+            const repeatPasswordField = $('#repeat-password');
+            const passwordFieldType = passwordField.attr('type');
+            const toggleIcon = $('#toggleIcon');
+            if (passwordFieldType === 'password') {
+                passwordField.attr('type', 'text');
+                repeatPasswordField.attr('type', 'text');
+                toggleIcon.removeClass('fa fa-eye-slash').addClass('fa fa-eye');
+            } else {
+                passwordField.attr('type', 'password');
+                repeatPasswordField.attr('type', 'password');
+                toggleIcon.removeClass('fa fa-eye').addClass('fa fa-eye-slash');
+            }
+        });
+    });
+</script>
+</body>
+</html>
