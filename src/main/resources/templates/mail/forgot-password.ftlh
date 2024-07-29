@@ -207,7 +207,6 @@
                                     <img align="center" border="0" src="cid:forgot-password" alt="image" title="image"
                                       style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 35%;max-width: 203px;"
                                       width="203" class="v-src-width v-src-max-width" />
-
                                   </td>
                                 </tr>
                               </table>

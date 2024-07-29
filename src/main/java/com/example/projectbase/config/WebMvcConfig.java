@@ -8,6 +8,7 @@ import com.example.projectbase.security.CustomAuthenticationFailureHandler;
 import com.example.projectbase.security.CustomAuthenticationSuccessHandler;
 import com.example.projectbase.service.impl.CustomUserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -31,6 +32,11 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Autowired
     CustomUserDetailsServiceImpl customUserDetailsService;
 
+    @Value("${remember.key}")
+    private String rememberKey;
+
+    @Value("${remember.expiration_time}")
+    private int tokenValiditySeconds;
 
     @Bean
     public MyAccessDeniedHandler accessDeniedHandler() {
@@ -49,6 +55,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
         authProvider.setPasswordEncoder(passwordEncoder());
         return authProvider;
     }
+
 
 
     @Bean
@@ -110,6 +117,13 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 .successHandler(new CustomAuthenticationSuccessHandler())
                 .permitAll()
         );
+        http.rememberMe()
+                .key(rememberKey)
+                .tokenValiditySeconds(tokenValiditySeconds)
+                .and()
+                .sessionManagement()
+                .maximumSessions(1)
+                .maxSessionsPreventsLogin(false);;
         http.logout((logout) -> logout
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/login?logout=true")
