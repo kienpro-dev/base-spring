@@ -1,6 +1,7 @@
 package com.example.projectbase.service.impl;
 
 import com.example.projectbase.domain.dto.request.LoginRequestDto;
+import com.example.projectbase.domain.dto.request.RegisterRequestDto;
 import com.example.projectbase.domain.entity.User;
 import com.example.projectbase.exception.NotFoundException;
 import com.example.projectbase.security.UserPrincipal;
@@ -103,5 +104,7 @@ public class AuthServiceImpl implements AuthService {
             return false;
         }
     }
+
+
 
 }

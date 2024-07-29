@@ -2,6 +2,7 @@ package com.example.projectbase.service;
 
 import com.example.projectbase.domain.dto.pagination.PaginationFullRequestDto;
 import com.example.projectbase.domain.dto.pagination.PaginationResponseDto;
+import com.example.projectbase.domain.dto.request.RegisterRequestDto;
 import com.example.projectbase.domain.dto.request.UserUpdateRequestDto;
 import com.example.projectbase.domain.dto.response.UserDto;
 import com.example.projectbase.domain.entity.User;
@@ -52,4 +53,6 @@ public interface UserService {
     Optional<User> changePassword(String email, String password);
 
     void sendMail(String email, String url) throws MessagingException;
+
+    boolean createUser(RegisterRequestDto requestDto);
 }
