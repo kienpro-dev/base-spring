@@ -15,7 +15,7 @@
     <div id="layoutAuthentication_content">
         <main>
             <div class="container">
-                <div class="row justify-content-center">
+                <div class="row justify-content-center mb-5">
                     <div class="col-lg-5">
                         <div class="card shadow-lg border-0 rounded-lg mt-5">
                             <div class="card-header">
@@ -33,20 +33,33 @@
                                                th:field="*{email}" autocomplete="email" required/>
                                         <label for="email">Email</label>
                                     </div>
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" id="phoneNumber" type="text" name="phoneNumber"
+                                               th:field="*{phoneNumber}" autocomplete="phoneNumber" required/>
+                                        <label for="email">Số điện thoại</label>
+                                    </div>
                                     <div class="form-floating mb-3 position-relative">
                                         <input class="form-control" id="password" type="password" name="password"
                                                th:field="*{password}" autocomplete="password" required/>
                                         <label for="password">Mật khẩu</label>
                                         <span class="position-absolute top-50 end-0 translate-middle-y p-2"
                                               id="togglePassword" style="cursor: pointer;">
-                <i class="fa fa-eye-slash" id="toggleIcon"></i>
-            </span>
+                                             <i class="fa fa-eye-slash" id="toggleIcon"></i>
+                                        </span>
                                     </div>
                                     <div class="form-floating mb-3 position-relative">
                                         <input class="form-control" id="repeat-password" type="password"
                                                name="repeatPassword" th:field="*{repeatPassword}"
                                                autocomplete="repeatPassword" required/>
                                         <label for="repeat-password">Nhập lại mật khẩu</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" id="roleUser" name="role" th:field="*{role}" value="ROLE_USER" required>
+                                        <label class="form-check-label" for="roleUser">Đăng ký tài khoản người dùng</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" id="roleAdmin" name="role" th:value="'ROLE_ADMIN'" th:field="*{role}" required>
+                                        <label class="form-check-label" for="roleAdmin">Đăng ký tài khoản chủ xe</label>
                                     </div>
                                     <div th:if="${message != null}">
                                         <p class="text-warning" th:text="${message}"></p>
