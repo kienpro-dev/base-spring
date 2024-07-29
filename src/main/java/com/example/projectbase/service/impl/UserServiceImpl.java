@@ -163,7 +163,8 @@ public class UserServiceImpl implements UserService {
                 .name(requestDto.getName())
                 .email(requestDto.getEmail())
                 .password(passwordEncoder.encode(requestDto.getPassword()))
-                .role(roleRepository.findByRoleName(RoleConstant.USER))
+                .phoneNumber(requestDto.getPhoneNumber())
+                .role(roleRepository.findByRoleName(requestDto.getRole()))
                 .build();
         userRepository.save(user);
         return true;
