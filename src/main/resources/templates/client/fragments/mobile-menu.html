@@ -11,7 +11,7 @@
 			<div class="mobile-menu-wrapper">
 				<span class="mobile-menu-close"><i class="icon-close"></i></span>
 
-				<form th:action="@{/molla/shop(field=${field})}"
+				<form th:action="@{/car/client(field=${field})}"
 					class="mobile-search">
 					<label for="mobile-search" class="sr-only">Tìm kiếm</label> <input
 						type="search" class="form-control" name="keywords" id="keywords"
@@ -37,9 +37,9 @@
 						role="tabpanel" aria-labelledby="mobile-menu-link">
 						<nav class="mobile-nav">
 							<ul class="mobile-menu">
-								<li class="active"><a th:href="@{/molla/home}">Trang
+								<li class="active"><a th:href="@{/car/home}">Trang
 										chủ</a></li>
-								<li><a th:href="@{/molla/shop}">Cửa hàng</a></li>
+								<li><a th:href="@{/car/client}">Cửa hàng</a></li>
 								<li><a href="#" class="sf-with-ul">Danh mục</a>
 									<ul id="menu__mobile__item__data">
 										<!-- Danh mục sản phẩm -->
@@ -50,13 +50,13 @@
 									<ul id="menu__mobile__item__data__brand">
 										<li><a href="#">Thương hiệu 1</a></li>
 									</ul></li>
-								<li><a th:href="@{/molla/about}">Thông tin</a></li>
+								<li><a th:href="@{/car/about}">Thông tin</a></li>
 								<li><a href="#">Liên hệ</a></li>
 								<li sec:authorize="isAuthenticated()"><a href="#">Tài khoản</a>
 									<ul>
-										<li><a th:href="@{/molla/account/info-account}">Thông tin tài khoản</a></li>
-										<li><a th:href="@{/molla/like}">Danh sách yêu thích</a></li>
-										<li><a th:href="@{/molla/order}">Danh sách đặt hàng</a></li>
+										<li><a th:href="@{/car/account/info-account}">Thông tin tài khoản</a></li>
+										<li><a th:href="@{/car/like}">Danh sách yêu thích</a></li>
+										<li><a th:href="@{/car/order}">Danh sách đặt hàng</a></li>
 										<li><a href="#">Đổi mật khẩu</a></li>
 									</ul></li>
 							</ul>

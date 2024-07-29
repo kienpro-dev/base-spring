@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{shop/layout.html}">
+	layout:decorate="~{client/layout.html}">
 
 <head>
 <title>Thanh toán</title>
@@ -10,7 +10,7 @@
 <body>
 	<div layout:fragment="content">
 		<div class="page-header text-center"
-			style="background-image: url('../shop/assets/images/page-header-bg.jpg')">
+			style="background-image: url('../client/assets/images/page-header-bg.jpg')">
 			<div class="container">
 				<h1 class="page-title">
 					Thanh toán<span>Cửa hàng</span>
@@ -22,9 +22,9 @@
 		<nav aria-label="breadcrumb" class="breadcrumb-nav mb-2">
 			<div class="container">
 				<ol class="breadcrumb">
-					<li class="breadcrumb-item"><a th:href="@{/molla/home}">Trang
+					<li class="breadcrumb-item"><a th:href="@{/car/home}">Trang
 							chủ</a></li>
-					<li class="breadcrumb-item"><a th:href="@{/molla/cart}">Giỏ
+					<li class="breadcrumb-item"><a th:href="@{/car/cart}">Giỏ
 							hàng</a></li>
 					<li class="breadcrumb-item active" aria-current="page">Thanh
 						toán</li>
@@ -37,7 +37,7 @@
 		<div class="page-content">
 			<div class="checkout">
 				<div class="container">
-					<form th:action="@{/molla/check-out/submit}" method="POST" th:object="${orderAddressDto}">
+					<form th:action="@{/car/check-out/submit}" method="POST" th:object="${orderAddressDto}">
 						<div class="row">
 							<div class="col-lg-9">
 								<h2 class="checkout-title">Chi tiết thanh toán</h2>
@@ -85,7 +85,7 @@
 											<tr th:each="item, i : ${carts}"
 												th:with="totalPrice = ${item.discount > 0 ? (item.price - (item.price * item.discount * 0.01)) * item.quantity : item.price * item.quantity}">
 												<td><a
-													th:href="@{/molla/product-detail(id=${item.id})}"
+													th:href="@{/car/product-detail(id=${item.id})}"
 													th:text="${item.name}"></a></td>
 												<td
 													th:text="${#numbers.formatDecimal(totalPrice, 0, 'COMMA', 0, 'POINT')} + ' VND'">$84.00</td>

@@ -38,7 +38,7 @@ public class ProjectBaseApplication {
     log.info("-------------------------START " + appName
         + " Application------------------------------");
     log.info("   Application         : " + appName);
-    log.info("   Url swagger-ui      : http://localhost:" + port + "/swagger-ui.html");
+    log.info("   Client UI           : http://localhost:" + port + "/car/home");
     log.info("-------------------------START SUCCESS " + appName
         + " Application------------------------------");
   }
