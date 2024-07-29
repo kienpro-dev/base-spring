@@ -1,0 +1,63 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+</head>
+
+<body>
+<div th:fragment="forgot-modal">
+    <!-- Sign in / Register Modal -->
+    <div class="modal fade" id="forgot-modal" tabindex="-1" role="dialog"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <button type="button" class="close" data-dismiss="modal"
+                            aria-label="Close">
+                        <span aria-hidden="true"><i class="icon-close"></i></span>
+                    </button>
+
+                    <div class="form-box">
+                        <div class="form-tab">
+                            <ul class="nav nav-pills nav-fill" role="tablist">
+                                <li class="nav-item"><a class="nav-link active"
+                                                        id="forgot-tab" data-toggle="tab" href="#forgot" role="tab"
+                                                        aria-controls="forgot" aria-selected="true">Quên mật khẩu</a></li>
+                            </ul>
+                            <div class="tab-content" id="tab-content-5">
+                                <form class="tab-pane fade show active" id="forgot"
+                                     role="tabpanel" aria-labelledby="forgot-tab">
+                                    <div class="form-group">
+                                        <label for="forgot_email">Email *</label> <input
+                                            type="email" class="form-control" id="forgot_email"
+                                            name="forgot_email" required>
+                                    </div>
+                                    <!-- End .form-group -->
+
+                                    <div class="form-footer">
+                                        <button class="btn btn-outline-primary-2">
+                                            <span>GỬI YÊU CẦU ĐỔI MẬT KHẨU</span> <i class="icon-long-arrow-right"></i>
+                                        </button>
+                                    </div>
+                                    <!-- End .form-footer -->
+                                </form>
+                                <!-- .End .tab-pane -->
+                            </div>
+                            <!-- End .tab-content -->
+                        </div>
+                        <!-- End .form-tab -->
+                    </div>
+                    <!-- End .form-box -->
+                </div>
+                <!-- End .modal-body -->
+            </div>
+            <!-- End .modal-content -->
+        </div>
+        <!-- End .modal-dialog -->
+    </div>
+    <!-- End .modal -->
+</div>
+</body>
+
+</html>
