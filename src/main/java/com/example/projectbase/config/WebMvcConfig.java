@@ -29,120 +29,94 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebMvcConfig implements WebMvcConfigurer {
 
-    @Autowired
-    CustomUserDetailsServiceImpl customUserDetailsService;
+	@Autowired
+	CustomUserDetailsServiceImpl customUserDetailsService;
 
-    @Value("${remember.key}")
-    private String rememberKey;
+	@Bean
+	public MyAccessDeniedHandler accessDeniedHandler(){
+	    return new MyAccessDeniedHandler();
+	}
 
-    @Value("${remember.expiration_time}")
-    private int tokenValiditySeconds;
+	@Bean
+	public BCryptPasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
 
-    @Bean
-    public MyAccessDeniedHandler accessDeniedHandler() {
-        return new MyAccessDeniedHandler();
-    }
+	@Bean
+	public DaoAuthenticationProvider authenticationProvider() {
+		DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+		authProvider.setUserDetailsService(customUserDetailsService);
+		authProvider.setPasswordEncoder(passwordEncoder());
+		return authProvider;
+	}
 
-    @Bean
-    public BCryptPasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+	@Bean
+	public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
+		return authConfig.getAuthenticationManager();
+	}
 
-    @Bean
-    public DaoAuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(customUserDetailsService);
-        authProvider.setPasswordEncoder(passwordEncoder());
-        return authProvider;
-    }
+	@Bean
+	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+		http.cors().and().csrf().disable()
+		//Tất cả có thể truy cập
+				.authorizeRequests()
+				.antMatchers(
+						"/uploads/**",
+						"/error/**",
+						"/admin/**",
+						"/client/**",
+                        "/client/assets",
+						"/auth/**",
+						"/car/layout/**",
+						"/car/auth/**",
+						"/car/home/**",
+						"/car/about/**",
+						"/car/client/**",
+						"/car/contact/**",
+						"/car/product-detail/**",
+						"/car/cart/**",
+						"/car/account/**",
+						"/car/check-out/**",
+						"/car/like/**",
+						"/car/order/**")
+				.permitAll().and()
 
-
-
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
-        return authConfig.getAuthenticationManager();
-    }
-
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.cors().and().csrf().disable()
-                //Tất cả có thể truy cập
-                .authorizeRequests()
-                .antMatchers(
-                        "/",
-                        "/uploads/**",
-                        "/error/**",
-                        "/home/**",
-                        "/shop/**",
-                        "/auth/**",
-                        "/car/layout/**",
-                        "/car/auth/**",
-                        "/car/home/**",
-                        "/car/about/**",
-                        "/car/shop/**",
-                        "/car/contact/**",
-                        "/car/product-detail/**",
-                        "/car/cart/**",
-                        "/car/account/**",
-                        "/car/check-out/**",
-                        "/car/like/**",
-                        "/car/order/**")
-                .permitAll().and()
-
-                //Chỉ có user mới có thể truy cập
-                .exceptionHandling()
+		//Chỉ có user mới có thể truy cập
+				.exceptionHandling()
                 .accessDeniedPage("/error/car/404")
                 .and()
-                .authorizeRequests()
-                .antMatchers()
-                .access("hasRole('ROLE_USER')").and()
-                //Chỉ có admin mới có thể truy cập
-                .exceptionHandling()
+				.authorizeRequests()
+				.antMatchers()
+				.access("hasRole('ROLE_USER')").and()
+		//Chỉ có admin mới có thể truy cập
+				.exceptionHandling()
                 .accessDeniedPage("/error/admin/404")
                 .and()
-                .authorizeRequests()
-                .antMatchers(
-                        "/admin/**",
-                        "/users/**",
-                        "/categories/**",
-                        "/brands/**",
-                        "/products/**",
-                        "/orders/**",
-                        "/statistics/**")
-                .access("hasRole('ROLE_ADMIN')")
-                .anyRequest().authenticated();
-//        http.formLogin((form) -> form
-//                .loginPage("/auth/login")
-//                .failureHandler(new CustomAuthenticationFailureHandler())
-//                .successHandler(new CustomAuthenticationSuccessHandler())
-//                .permitAll()
-//        );
-//        http.rememberMe()
-//                .key(rememberKey)
-//                .tokenValiditySeconds(tokenValiditySeconds)
-//                .and()
-//                .sessionManagement()
-//                .maximumSessions(1)
-//                .maxSessionsPreventsLogin(false);;
-//        http.logout((logout) -> logout
-//                .logoutUrl("/logout")
-//                .logoutSuccessUrl("/login?logout=true")
-//                .deleteCookies("JSESSIONID")
-//                .permitAll());
-        http.exceptionHandling().accessDeniedHandler(accessDeniedHandler());
-        http.authenticationProvider(authenticationProvider());
-        return http.build();
-    }
+				.authorizeRequests()
+				.antMatchers(
+						"/home/**",
+						"/users/**",
+						"/categories/**",
+						"/brands/**",
+						"/products/**",
+						"/orders/**",
+						"/statistics/**")
+				.access("hasRole('ROLE_ADMIN')")
+				.anyRequest().authenticated();
+		http.exceptionHandling().accessDeniedHandler(accessDeniedHandler());
+		http.authenticationProvider(authenticationProvider());
+		return http.build();
+	}
 
-    @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        String dirName = "uploads";
-        Path uploadDir = Paths.get(dirName);
-        String uploadPath = uploadDir.toFile().getAbsolutePath();
-        if (dirName.startsWith("../"))
-            dirName = dirName.replace("../", "");
-        registry.addResourceHandler("/" + dirName + "/**").addResourceLocations("file:/" + uploadPath + "/");
-        registry.addResourceHandler("/static/**").addResourceLocations("/static/");
-    }
+	@Override
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+		String dirName = "uploads";
+		Path uploadDir = Paths.get(dirName);
+		String uploadPath = uploadDir.toFile().getAbsolutePath();
+		if (dirName.startsWith("../"))
+			dirName = dirName.replace("../", "");
+		registry.addResourceHandler("/" + dirName + "/**").addResourceLocations("file:/" + uploadPath + "/");
+		registry.addResourceHandler("/static/**").addResourceLocations("/static/");
+	}
 }
 
