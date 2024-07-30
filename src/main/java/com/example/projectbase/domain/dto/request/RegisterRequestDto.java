@@ -21,6 +21,8 @@ public class RegisterRequestDto {
     @NotNull(message = ErrorMessage.INVALID_SOME_THING_FIELD_IS_REQUIRED)
     private String email;
 
+    @NotNull(message = ErrorMessage.INVALID_SOME_THING_FIELD_IS_REQUIRED)
+    @Pattern(regexp = "^(0?)(3[2-9]|5[25689]|7[06-9]|8[1-9]|9[0-9])[0-9]{7}$|^(0?)(2[0-9]{1,2})[0-9]{6,8}$", message = ErrorMessage.INVALID_SOME_THING_FIELD)
     private String phoneNumber;
 
     @NotNull(message = ErrorMessage.INVALID_SOME_THING_FIELD_IS_REQUIRED)

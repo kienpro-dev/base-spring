@@ -61,7 +61,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User> saveOrUpdate(User user) {
-        return Optional.empty();
+        if(user.getId() == null || user.getId().equals(""))
+			user.setPassword(passwordEncoder.encode(user.getPassword()));
+		User userOld = userRepository.save(user);
+		return Optional.of(userOld);
     }
 
     @Override
@@ -71,7 +74,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findByEmail(String email) {
-      return userRepository.findById(email).orElseThrow(() -> new NotFoundException(ErrorMessage.User.ERR_NOT_FOUND_EMAIL, new String[]{email}));
+      return userRepository.findByEmail(email).orElseThrow(() -> new NotFoundException(ErrorMessage.User.ERR_NOT_FOUND_EMAIL, new String[]{email}));
     }
 
     @Override
