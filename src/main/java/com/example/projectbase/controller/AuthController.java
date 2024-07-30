@@ -1,26 +1,21 @@
 package com.example.projectbase.controller;
 
-import com.example.projectbase.base.RestApiV1;
-import com.example.projectbase.base.VsResponseUtil;
+
 import com.example.projectbase.constant.UrlConstant;
-import com.example.projectbase.domain.dto.request.LoginRequestDto;
 import com.example.projectbase.domain.dto.request.RegisterRequestDto;
 import com.example.projectbase.domain.entity.User;
 import com.example.projectbase.repository.UserRepository;
+import com.example.projectbase.security.UserPrincipal;
 import com.example.projectbase.service.AuthService;
 import com.example.projectbase.service.UserService;
-import com.example.projectbase.validator.annotation.ValidFileImage;
-import io.swagger.v3.oas.annotations.Operation;
+
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import javax.validation.Valid;
 
 @RequiredArgsConstructor
 @Validated
@@ -39,8 +34,6 @@ public class AuthController {
     return "login";
   }
 
-
-  //Test Login Succes
   @GetMapping("/")
   @ResponseBody
   public String getHomePage(){
@@ -48,9 +41,14 @@ public class AuthController {
   }
 
   @GetMapping("/admin/home")
-  @ResponseBody
-  public String getAdminPage(){
-    return "Hello Admin";
+  public String getAdminPage(Model model){
+    Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
+    if (authentication != null && authentication.getPrincipal() instanceof UserPrincipal) {
+      UserPrincipal user= (UserPrincipal) authentication.getPrincipal();
+      model.addAttribute("currentUser",user.getName());
+    }
+
+    return "/admin/index";
   }
 
   @GetMapping(UrlConstant.Auth.REGISTER)

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -21,6 +22,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -55,7 +57,6 @@ public class WebMvcConfig implements WebMvcConfigurer {
         authProvider.setPasswordEncoder(passwordEncoder());
         return authProvider;
     }
-
 
 
     @Bean
@@ -123,11 +124,11 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 .and()
                 .sessionManagement()
                 .maximumSessions(1)
-                .maxSessionsPreventsLogin(false);;
+                .maxSessionsPreventsLogin(false);
         http.logout((logout) -> logout
                 .logoutUrl("/logout")
-                .logoutSuccessUrl("/login?logout=true")
-                .deleteCookies("JSESSIONID")
+                .logoutSuccessUrl("/auth/login")
+                .deleteCookies("JSESSIONID","remember-me")
                 .permitAll());
         http.exceptionHandling().accessDeniedHandler(accessDeniedHandler());
         http.authenticationProvider(authenticationProvider());
@@ -144,5 +145,6 @@ public class WebMvcConfig implements WebMvcConfigurer {
         registry.addResourceHandler("/" + dirName + "/**").addResourceLocations("file:/" + uploadPath + "/");
         registry.addResourceHandler("/static/**").addResourceLocations("/static/");
     }
+
 }
 
