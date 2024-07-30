@@ -1,11 +1,13 @@
 package com.example.projectbase;
 
 import com.example.projectbase.config.properties.AdminInfoProperties;
+import com.example.projectbase.config.properties.StorageProperties;
 import com.example.projectbase.constant.RoleConstant;
 import com.example.projectbase.domain.entity.Role;
 import com.example.projectbase.domain.entity.User;
 import com.example.projectbase.repository.RoleRepository;
 import com.example.projectbase.repository.UserRepository;
+import com.example.projectbase.service.StorageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
@@ -18,7 +20,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Slf4j
 @RequiredArgsConstructor
-@EnableConfigurationProperties({AdminInfoProperties.class})
+@EnableConfigurationProperties({AdminInfoProperties.class, StorageProperties.class})
 @SpringBootApplication
 public class ProjectBaseApplication {
 
@@ -44,8 +46,9 @@ public class ProjectBaseApplication {
   }
 
   @Bean
-  CommandLineRunner init(AdminInfoProperties userInfo) {
+  CommandLineRunner init(AdminInfoProperties userInfo, StorageService storageService) {
     return args -> {
+      storageService.init();
       //init role
       if (roleRepository.count() == 0) {
         roleRepository.save(new Role(null, RoleConstant.ADMIN, null));
