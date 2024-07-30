@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{shop/layout.html}">
+	layout:decorate="~{client/layout.html}">
 
 <head>
 <title>Chi tiết sản phẩm</title>
@@ -12,9 +12,9 @@
 		<nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">
 			<div class="container d-flex align-items-center">
 				<ol class="breadcrumb">
-					<li class="breadcrumb-item"><a th:href="@{/molla/home}">Trang
+					<li class="breadcrumb-item"><a th:href="@{/car/home}">Trang
 							chủ</a></li>
-					<li class="breadcrumb-item"><a th:href="@{/molla/shop}">Cửa
+					<li class="breadcrumb-item"><a th:href="@{/car/client}">Cửa
 							hàng</a></li>
 					<li class="breadcrumb-item active" aria-current="page">Chi
 						tiết sản phẩm</li>
@@ -48,7 +48,7 @@
 									<div class="col-md-6" th:each="item, i : ${listImage}">
 										<figure class="product-separated-item">
 											<img
-												th:src="${item.name} == null ? '/shop/assets/images/no-image.jpg' : '/uploads/' + ${item.name}"
+												th:src="${item.name} == null ? '/client/assets/images/no-image.jpg' : '/uploads/' + ${item.name}"
 												alt="product image">
 										</figure>
 									</div>

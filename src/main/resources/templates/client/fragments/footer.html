@@ -9,7 +9,7 @@
 	<div th:fragment="footer">
 		<footer class="footer">
 			<div class="cta cta-horizontal cta-horizontal-box bg-dark bg-image"
-				style="background-image: url('../shop/assets/images/demos/demo-14/bg-1.jpg');">
+				style="background-image: url('../client/assets/images/demos/demo-14/bg-1.jpg');">
 				<div class="container-fluid">
 					<div class="row align-items-center">
 						<div class="col-xl-8 offset-xl-2">
@@ -54,7 +54,7 @@
 						<div class="col-sm-12 col-lg-4">
 							<div class="widget widget-about">
 								<img
-									th:src="@{/shop/assets/images/demos/demo-14/logo-footer.png}"
+									th:src="@{/client/assets/images/demos/demo-14/logo-footer.png}"
 									class="footer-logo" alt="Footer Logo" width="105" height="25">
 								<p>Không ngừng vươn xa, MollaShop sẽ mở rộng Hệ thống siêu
 									thị điện máy - nội thất tới các Tỉnh thành trong cả nước với
@@ -74,7 +74,7 @@
 											<span class="widget-about-title">Phương thức thanh
 												toán</span>
 											<figure class="footer-payments">
-												<img th:src="@{/shop/assets/images/payments.png}"
+												<img th:src="@{/client/assets/images/payments.png}"
 													alt="Payment methods" width="272" height="20">
 											</figure>
 											<!-- End .footer-payments -->
@@ -95,10 +95,10 @@
 								<!-- End .widget-title -->
 
 								<ul class="widget-list">
-									<li><a th:href="@{/molla/about}">Thông tin MollaShop</a></li>
+									<li><a th:href="@{/car/about}">Thông tin MollaShop</a></li>
 									<li><a href="#">Cách mua sắm trên MollaShop</a></li>
 									<li><a href="#">FAQ</a></li>
-									<li><a th:href="@{/molla/contact}">Liên hệ</a></li>
+									<li><a th:href="@{/car/contact}">Liên hệ</a></li>
 									<li sec:authorize="!isAuthenticated()"><a
 										href="#signin-modal" data-toggle="modal">Đăng nhập</a></li>
 									<li sec:authorize="isAuthenticated()"><a
@@ -135,10 +135,10 @@
 								<!-- End .widget-title -->
 
 								<ul class="widget-list">
-									<li><a th:href="@{/molla/account/info-account}">Thông tin tài khoản</a></li>
-									<li><a th:href="@{/molla/cart}">Giỏ hàng</a></li>
-									<li><a th:href="@{/molla/like}">Danh sách yêu thích</a></li>
-									<li><a th:href="@{/molla/order}">Danh sách đặt hàng</a></li>
+									<li><a th:href="@{/car/account/info-account}">Thông tin tài khoản</a></li>
+									<li><a th:href="@{/car/cart}">Giỏ hàng</a></li>
+									<li><a th:href="@{/car/like}">Danh sách yêu thích</a></li>
+									<li><a th:href="@{/car/order}">Danh sách đặt hàng</a></li>
 									<li><a href="#">Hỗ trợ</a></li>
 								</ul>
 								<!-- End .widget-list -->
