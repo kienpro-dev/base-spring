@@ -1,5 +1,9 @@
 package com.example.projectbase.constant;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
+import java.util.List;
+
 public class CommonConstant {
 
   public static final String SORT_TYPE_ASC = "ASC";
@@ -20,5 +24,6 @@ public class CommonConstant {
   public static final String CONTENT_TYPE_DOCUMENT = "txt doc pdf ppt pps xlsx xls docx";
   public static final String CONTENT_TYPE_IMAGE = "png jpg jpeg webp gif";
   public static final String CONTENT_TYPE_VIDEO = "mp4 mpg mpe mpeg webm mov m4v";
+
 
 }

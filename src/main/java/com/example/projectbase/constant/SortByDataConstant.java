@@ -16,4 +16,18 @@ public enum SortByDataConstant implements SortByInterface {
     }
   },
 
+    CAR {
+        @Override
+        public String getSortBy(String sortBy) {
+          switch (sortBy) {
+              case "name":
+                return "name";
+              case "lastModifiedDate":
+                return "last_modified_date";
+              default:
+                return "created_date";
+          }
+        }
+    }
+
 }
