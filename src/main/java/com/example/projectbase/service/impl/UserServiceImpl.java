@@ -1,7 +1,6 @@
 package com.example.projectbase.service.impl;
 
 import com.example.projectbase.constant.ErrorMessage;
-import com.example.projectbase.constant.RoleConstant;
 import com.example.projectbase.constant.SortByDataConstant;
 import com.example.projectbase.domain.dto.pagination.PaginationFullRequestDto;
 import com.example.projectbase.domain.dto.pagination.PaginationResponseDto;
@@ -76,7 +75,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteById(String id) {
-
+        userRepository.deactivateUser(id);
     }
 
     @Override
@@ -123,7 +122,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Page<User> findAllByEmailLike(String keyword, Pageable pageable) {
-        return null;
+        return userRepository.findAllByEmailLikeAndIsActiveTrue(keyword,pageable);
     }
 
     @Override

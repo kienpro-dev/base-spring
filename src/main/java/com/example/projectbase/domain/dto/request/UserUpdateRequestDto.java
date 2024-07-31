@@ -8,6 +8,8 @@ import java.time.LocalDateTime;
 @Setter
 public class UserUpdateRequestDto {
 
+    private String id;
+
     private String name;
 
     private LocalDateTime dateOfBirth;
@@ -21,4 +23,6 @@ public class UserUpdateRequestDto {
     private String address;
 
     private String drivingLicense;
+
+    private boolean Role;
 }

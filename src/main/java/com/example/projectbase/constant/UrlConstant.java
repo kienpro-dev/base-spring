@@ -3,6 +3,18 @@ package com.example.projectbase.constant;
 public class UrlConstant {
   public static final String HOME = "/home";
 
+  public static class Admin{
+    private static final String PRE_FIX = "/admin";
+
+    public static final String ADMIN_HOME=PRE_FIX+"/home";
+    public static final String USERS_MANAGEMENT=PRE_FIX+"/users";
+    public static final String DELETE_USER=PRE_FIX+"/delete/{id}";
+    public static final String VIEW_USER=PRE_FIX+"/view/{id}";
+    private Admin(){
+
+    }
+  }
+
   public static class Auth {
     private static final String PRE_FIX = "/auth";
 
