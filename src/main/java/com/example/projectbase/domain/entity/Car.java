@@ -1,11 +1,14 @@
 package com.example.projectbase.domain.entity;
 
 import com.example.projectbase.domain.entity.common.DateAuditing;
+import com.example.projectbase.domain.entity.common.UserAuditing;
+import com.example.projectbase.domain.entity.common.UserDateAuditing;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import javax.print.Doc;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,6 +65,9 @@ public class Car extends DateAuditing {
     @Column(nullable = false)
     private Double deposit;
 
+    @Column(nullable = false)
+    private String address;
+
     @Lob
     @Column(nullable = false)
     private String description;
@@ -74,11 +80,7 @@ public class Car extends DateAuditing {
     private String termOfUse;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", foreignKey = @ForeignKey(name = "FK_CAR_USER_RENT"), nullable = false, updatable = false, insertable = false)
-    private User userRent;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id", foreignKey = @ForeignKey(name = "FK_CAR_USER_OWN"), nullable = false, updatable = false, insertable = false)
+    @JoinColumn(name = "user_id", foreignKey = @ForeignKey(name = "FK_CAR_USER_OWN"), nullable = false, updatable = false)
     private User userOwn;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "car")
@@ -88,4 +90,8 @@ public class Car extends DateAuditing {
     @ManyToMany(cascade = CascadeType.ALL, mappedBy = "cars")
     @JsonIgnore
     private List<Booking> bookings;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "document_id", referencedColumnName = "id")
+    private Document document;
 }
