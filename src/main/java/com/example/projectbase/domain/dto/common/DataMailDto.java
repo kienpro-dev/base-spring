@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
 import java.util.Map;
 
 @AllArgsConstructor
@@ -12,13 +13,11 @@ import java.util.Map;
 @Setter
 @Getter
 public class DataMailDto {
-
+  private String from;
   private String to;
-
+  private String[] cc;
+  private String[] bcc;
   private String subject;
-
-  private String content;
-
-  private Map<String, Object> properties;
-
+  private List<Object[]> body;
+  private String[] attachments;
 }

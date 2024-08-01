@@ -94,9 +94,8 @@ public class AuthController {
     }
 
     @GetMapping(value = UrlConstant.Auth.RESET_PASSWORD)
-    public String resetPassword(@RequestParam(name = "reset") String reset) {
-        String email = CryptionUtil.decrypt(reset, "RentalCar");
-        sessionService.set("reset-password", email);
+    public String resetPassword(@RequestParam(name = "email") String email) {
+        sessionService.set("reset-password", CryptionUtil.decrypt(email, "RentalCar"));
         return "auth/admin/reset-password";
     }
 
