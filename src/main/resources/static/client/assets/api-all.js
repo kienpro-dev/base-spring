@@ -23,27 +23,27 @@ $(document).ready(function() {
 		axios({
 			method: 'GET',
 			contentType: "application/json",
-			url: baseUrl + "/molla/layout/category"
+			url: baseUrl + "/car/layout/category"
 		})
 			.then(response => {
 				response.data.forEach(item => {
 					var itemMenu = document.createElement('li');
-					itemMenu.innerHTML = `<a href="/molla/shop?category_id=` + item.id + `">` + item.name + `</a>`;
+					itemMenu.innerHTML = `<a href="/car/client?category_id=` + item.id + `">` + item.name + `</a>`;
 
 					menuData.appendChild(itemMenu);
 
 					var itemMenuMobile = document.createElement('li');
-					itemMenuMobile.innerHTML = `<a href="/molla/shop?category_id=` + item.id + `">` + item.name + `</a>`;
+					itemMenuMobile.innerHTML = `<a href="/car/client?category_id=` + item.id + `">` + item.name + `</a>`;
 
 					menuMobileData.appendChild(itemMenuMobile);
 
 					var itemMenuMobileTab = document.createElement('li');
-					itemMenuMobileTab.innerHTML = `<a href="/molla/shop?category_id=` + item.id + `">` + item.name + `</a>`;
+					itemMenuMobileTab.innerHTML = `<a href="/car/client?category_id=` + item.id + `">` + item.name + `</a>`;
 
 					menuMobileTabData.appendChild(itemMenuMobileTab);
 
 					var itemMenuTitleCategory = document.createElement('li');
-					itemMenuTitleCategory.innerHTML = `<a href="/molla/shop?category_id=` + item.id + `">` + item.name + `</a>`;
+					itemMenuTitleCategory.innerHTML = `<a href="/car/client?category_id=` + item.id + `">` + item.name + `</a>`;
 
 					menuTitleCategoryData.appendChild(itemMenuTitleCategory);
 				});
@@ -57,17 +57,17 @@ $(document).ready(function() {
 		axios({
 			method: 'GET',
 			contentType: "application/json",
-			url: baseUrl + "/molla/layout/brand"
+			url: baseUrl + "/car/layout/brand"
 		})
 			.then(response => {
 				response.data.forEach(item => {
 					var itemTitleBrand = document.createElement('li');
-					itemTitleBrand.innerHTML = `<a href="/molla/shop?brand_id=` + item.id + `">` + item.name + `</a>`;
+					itemTitleBrand.innerHTML = `<a href="/car/client?brand_id=` + item.id + `">` + item.name + `</a>`;
 
 					menuTitleBrandData.appendChild(itemTitleBrand);
 
 					var itemTitleMobileBrand = document.createElement('li');
-					itemTitleMobileBrand.innerHTML = `<a href="/molla/shop?brand_id=` + item.id + `">` + item.name + `</a>`;
+					itemTitleMobileBrand.innerHTML = `<a href="/car/client?brand_id=` + item.id + `">` + item.name + `</a>`;
 
 					menuMobileBrandData.appendChild(itemTitleMobileBrand);
 				});
@@ -78,7 +78,7 @@ $(document).ready(function() {
 		axios({
 			method: 'GET',
 			contentType: "application/json",
-			url: baseUrl + "/molla/layout/get-cart-items"
+			url: baseUrl + "/car/layout/get-cart-items"
 		})
 			.then(response => {
 				var totalPrice = 0;
@@ -98,8 +98,8 @@ $(document).ready(function() {
 							<span class="cart-total-price">`+ formatVND(totalPrice, ' VND') + `</span>
 						</div>
 						<div class="dropdown-cart-action">
-							<a href="/molla/cart" class="btn btn-primary">Giỏ hàng</a> 
-							<a href="/molla/check-out" class="btn btn-outline-primary-2">
+							<a href="/car/cart" class="btn btn-primary">Giỏ hàng</a>
+							<a href="/car/check-out" class="btn btn-outline-primary-2">
 								<span>Thanh toán</span>
 								<i class="icon-long-arrow-right"></i>
 							</a>
@@ -110,7 +110,7 @@ $(document).ready(function() {
 				if (response.data.length === 0) {
 					cart.innerHTML = `
 						<a href="#" class="dropdown-toggle"> 
-							<i class="icon-shopping-cart"></i> 
+							<i class="icon-shopping-cart"></i>
 							<span class="cart-count">`+ response.data.length + `</span>
 							<span class="cart-txt">Giỏ hàng</span>
 						</a>`;
@@ -129,7 +129,7 @@ $(document).ready(function() {
 						productItem.innerHTML += `
 									<div class="product-cart-details">
 										<h4 class="product-title">
-											<a href="/molla/product-detail?id=`+ response.data[i].id + `">` + response.data[i].name + `</a>
+											<a href="/car/product-detail?id=`+ response.data[i].id + `">` + response.data[i].name + `</a>
 										</h4>
 										<span class="cart-product-info"> 
 											<span class="cart-product-qty">`+ response.data[i].quantity + `</span> 
@@ -137,7 +137,7 @@ $(document).ready(function() {
 										</span>
 									</div>
 									<figure class="product-image-container">
-										<a href="/molla/product-detail?id=`+ response.data[i].id + `" class="product-image"> 
+										<a href="/car/product-detail?id=`+ response.data[i].id + `" class="product-image">
 											<img src="/uploads/`+ response.data[i].image + `" alt="product">
 										</a>
 									</figure>
@@ -150,7 +150,7 @@ $(document).ready(function() {
 
 					cart.innerHTML = `
 						<a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static"> 
-							<i class="icon-shopping-cart"></i> 
+							<i class="icon-shopping-cart"></i>
 							<span class="cart-count">`+ response.data.length + `</span>
 							<span class="cart-txt">Giỏ hàng</span>
 						</a>`;
@@ -176,7 +176,7 @@ function removeCartItem(id, name) {
 		confirmButtonText: 'Xác nhận!'
 	}).then((result) => {
 		if (result.isConfirmed) {
-			axios.delete(baseUrl + '/molla/cart/remove/' + id)
+			axios.delete(baseUrl + '/car/cart/remove/' + id)
 				.then(function(response) {
 					Swal.fire({
 						title: 'Thông báo',

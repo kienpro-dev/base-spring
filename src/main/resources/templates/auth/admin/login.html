@@ -56,9 +56,9 @@
 							class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
 
 							<div class="d-flex justify-content-center py-4">
-								<a th:href="@{/molla}" class="logo d-flex align-items-center w-auto">
+								<a  class="logo d-flex align-items-center w-auto">
 									<img th:src="@{/admin/assets/img/logo.png}" alt=""> <span
-									class="d-none d-lg-block">Molla Admin</span>
+									class="d-none d-lg-block">Rental Car Admin</span>
 								</a>
 							</div>
 							<!-- End Logo -->
@@ -74,21 +74,21 @@
 									</div>
 
 									<form class="row g-3 needs-validation" 
-									th:action="@{/auth/login}" method="POST"
-										th:object="${login}">
+									th:action="@{/auth/admin/login}" method="POST"
+										th:object="${loginRequestDto}">
 
 										<div class="col-12">
 											<label for="username" class="form-label">Tên đăng
 												nhập</label> <input type="text" name="username" class="form-control"
-												id="username" placeholder="Tên đăng nhập" th:field="*{username}"> <span
+												id="username" placeholder="Tên đăng nhập" th:field="*{email}"> <span
 												class="badge rounded-pill bg-danger"
-												th:if="${#fields.hasErrors('username')}"
-												th:errors="*{username}"></span>
+												th:if="${#fields.hasErrors('email')}"
+												th:errors="*{email}"></span>
 										</div>
 
 										<div class="col-12">
 											<label for="password" class="form-label">Mật khẩu</label> <input
-												type="password" name="password" class="form-control"
+												type="password" name="password" class="form-control" autocomplete="password"
 												id="password" placeholder="Mật khẩu" th:field="*{password}"> <span
 												class="badge rounded-pill bg-danger"
 												th:if="${#fields.hasErrors('password')}"

@@ -63,7 +63,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
 				.antMatchers(
 						"/uploads/**",
 						"/error/**",
-						"/admin/**",
+						"/admin/assets/**",
+						"/auth/admin/**",
 						"/client/**",
                         "/client/assets",
 						"/auth/**",
@@ -95,6 +96,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 				.authorizeRequests()
 				.antMatchers(
 						"/home/**",
+						"/admin/**",
 						"/users/**",
 						"/categories/**",
 						"/brands/**",

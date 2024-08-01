@@ -6,6 +6,7 @@ import com.example.projectbase.domain.entity.User;
 import com.example.projectbase.exception.NotFoundException;
 import com.example.projectbase.security.UserPrincipal;
 import com.example.projectbase.service.AuthService;
+import com.example.projectbase.service.CustomUserDetailsService;
 import com.example.projectbase.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -31,7 +32,7 @@ public class AuthServiceImpl implements AuthService {
 
     private final PasswordEncoder passwordEncoder;
 
-    private final UserDetailsService userDetailsService;
+    private final CustomUserDetailsService userDetailsService;
 
     private final UserService userService;
 
@@ -55,8 +56,6 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public void autoLogin(String email, String password) {
-        User user = userService.findByEmail(email);
-        userService.updateLastLoginDate(user);
         UserDetails userDetails = userDetailsService.loadUserByUsername(email);
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
                 userDetails, password, userDetails.getAuthorities());

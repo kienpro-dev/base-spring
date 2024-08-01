@@ -1,12 +1,14 @@
 var baseUrl = new URL(window.location.href).origin;
 
-var registerUsername = document.getElementById('register_username');
+var registerName = document.getElementById('register_name');
 var registerEmail = document.getElementById('register_email');
+var registerPhone = document.getElementById('register_phone');
 var registerPassword = document.getElementById('register_password');
+var registerRetypePassword = document.getElementById('register_retype_password');
 var formRegister = document.getElementById('register');
 
-var loginUsername = document.getElementById('login_username');
-var loginPassword = document.getElementById('login_password');;
+var loginEmail = document.getElementById('login_email');
+var loginPassword = document.getElementById('login_password');
 var loginForm = document.getElementById('signin');
 
 var changePassword = document.getElementById('change_password');
@@ -18,7 +20,7 @@ var forgotEmail = document.getElementById('forgot_email');
 var forgotForm = document.getElementById('forgot');
 
 function registerSubmit() {
-	if (!registerUsername.value || !registerEmail.value || !registerPassword.value) {
+	if (!registerName.value || !registerEmail.value || !registerPassword.value || !registerPhone.value || !registerRetypePassword.value) {
 		Swal.fire({
 			icon: 'error',
 			title: 'Thông báo lỗi',
@@ -26,10 +28,13 @@ function registerSubmit() {
 		})
 		return;
 	}
-	axios.post(baseUrl + '/molla/auth/register', {
-		username: registerUsername.value,
+	axios.post(baseUrl + '/car/auth/register', {
+		name: registerName.value,
 		email: registerEmail.value,
+		phoneNumber: registerPhone.value,
 		password: registerPassword.value,
+		repeatPassword: registerRetypePassword.value,
+		role: 'ROLE_USER',
 	})
 		.then(function(response) {
 			Swal.fire({
@@ -59,7 +64,7 @@ formRegister.addEventListener('submit', (e) => {
 });
 
 function loginSubmit() {
-	if (!loginUsername.value || !loginPassword.value) {
+	if (!loginEmail.value || !loginPassword.value) {
 		Swal.fire({
 			icon: 'error',
 			title: 'Thông báo lỗi',
@@ -67,8 +72,8 @@ function loginSubmit() {
 		})
 		return;
 	}
-	axios.post(baseUrl + '/molla/auth/login', {
-		username: loginUsername.value,
+	axios.post(baseUrl + '/car/auth/login', {
+		email: loginEmail.value,
 		password: loginPassword.value,
 	})
 		.then(function(response) {
@@ -109,7 +114,7 @@ function logout() {
 		confirmButtonText: 'Xác nhận!'
 	}).then((result) => {
 		if (result.isConfirmed) {
-			axios.get(baseUrl + '/molla/auth/logout')
+			axios.get(baseUrl + '/car/auth/logout')
 				.then(function(response) {
 					Swal.fire({
 						title: 'Thông báo',
@@ -143,7 +148,7 @@ function changeSubmit() {
 		})
 		return;
 	}
-	axios.post(baseUrl + '/molla/auth/change-password', {
+	axios.post(baseUrl + '/car/auth/change-password', {
 		password: changePassword.value,
 		retype_password: changeRetypePassword.value,
 		retype_password2: changeRetypePassword2.value,
@@ -183,7 +188,7 @@ function forgotSubmit() {
 		})
 		return;
 	}
-	axios.post(baseUrl + '/molla/auth/forgot-password', {
+	axios.post(baseUrl + '/car/auth/forgot-password', {
 		email: forgotEmail.value,
 		url: baseUrl
 	})
