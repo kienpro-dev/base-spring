@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,19 +27,19 @@ public class StatusController {
     @PostMapping("/car-owner/my-car/status")
     public ResponseEntity<CarDto> updateStatus(@RequestBody CarDto carDto, HttpServletRequest request,
                                                @RequestParam(name = "status") String status){
-//        Optional<Car> carOptional = this.carRepository.findById(carDto.getId());
-//        if(carOptional.isPresent()){
-//            Car car = carOptional.get();
-//            List<Car> cars = new ArrayList<>();
-//            cars.add(car);
-//            Booking booking = this.bookingRepository.findByCars(cars);
-//            booking.setStatus(status);
-//            List<Booking>
-//            car.setBookings(booking);
-//            this.bookingRepository.save(booking);
-//
-//            this.carRepository.save(car);
-//        }
+        Optional<Car> carOptional = this.carRepository.findById(carDto.getId());
+        if(carOptional.isPresent()){
+            Car car = carOptional.get();
+            List<Booking> bookingList = carDto.getBookings();
+            int length = bookingList.size();
+            LocalDateTime now = LocalDateTime.now();
+            if(bookingList.get(length-1).getEndDate().isBefore(now)) {
+                bookingList.get(length - 1).setStatus(status);
+                this.bookingRepository.saveAll(bookingList);
+            }
+            car.setBookings(bookingList);
+            this.carRepository.save(car);
+        }
         return ResponseEntity.ok().body(carDto);
     }
 }
