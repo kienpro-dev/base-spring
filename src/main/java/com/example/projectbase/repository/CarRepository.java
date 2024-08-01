@@ -2,7 +2,6 @@ package com.example.projectbase.repository;
 
 import com.example.projectbase.domain.entity.Car;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
