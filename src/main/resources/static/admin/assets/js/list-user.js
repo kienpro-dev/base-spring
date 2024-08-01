@@ -12,7 +12,7 @@ function deleteUser(id, name) {
 	}).then((result) => {
 		if (result.isConfirmed) {
 			axios({
-				method: 'DELETE',
+				method: 'PUT',
 				url: baseUrl + "/admin/delete/" + id,
 				responseType: 'stream'
 			})

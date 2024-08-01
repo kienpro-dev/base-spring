@@ -19,11 +19,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -40,14 +42,17 @@ public class AuthController {
 
     private final RoleRepository roleRepository;
 
-    @PostMapping(value = UrlConstant.Auth.LOGIN)
-    @ResponseBody
-    public ResponseEntity<?> loginSubmit(@RequestBody LoginRequestDto login) {
-        if (!userService.existsByEmail(login.getEmail()) || !authService.checkEmailMatchPassword(login))
-            return VsResponseUtil.error(HttpStatus.INTERNAL_SERVER_ERROR, "Thông tin tài khoản không chính xác");
-        authService.autoLogin(login.getEmail(), login.getPassword());
-        return VsResponseUtil.success("Chúc mừng bạn đã đăng nhập thành công.");
-    }
+//    @PostMapping(value = UrlConstant.Auth.LOGIN)
+//    @ResponseBody
+//    public ResponseEntity<?> loginSubmit(Model model,@ModelAttribute LoginRequestDto loginRequestDto) {
+//
+//        if (!userService.existsByEmail(loginRequestDto.getEmail()) || !authService.checkEmailMatchPassword(loginRequestDto))
+//            return VsResponseUtil.error(HttpStatus.INTERNAL_SERVER_ERROR, "Thông tin tài khoản không chính xác");
+//        authService.autoLogin(loginRequestDto.getEmail(), loginRequestDto.getPassword());
+//        return VsResponseUtil.success("Chúc mừng bạn đã đăng nhập thành công.");
+//    }
+
+
 
     @PostMapping(value = UrlConstant.Auth.REGISTER)
     @ResponseBody
