@@ -29,7 +29,7 @@ public class UrlConstant {
         public static final String CHANGE_PASSWORD = PRE_FIX + "/change-password";
         public static final String FORGOT_PASSWORD = PRE_FIX + "/forgot-password";
         public static final String RESET_PASSWORD = FORGOT_PASSWORD + "/reset";
-        public static final String SUBMIT_RESET = FORGOT_PASSWORD + "/submit";
+        public static final String SUBMIT_RESET = RESET_PASSWORD + "/submit";
 
         private Auth() {
         }
