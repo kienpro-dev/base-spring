@@ -25,7 +25,7 @@ public class StatusController {
     private final BookingRepository bookingRepository;
 
     @PostMapping("/car-owner/my-car/status")
-    public ResponseEntity<CarDto> updateStatus(@RequestBody CarDto carDto, HttpServletRequest request,
+    public ResponseEntity<CarDto> updateStatus(@RequestBody CarDto carDto,
                                                @RequestParam(name = "status") String status){
         Optional<Car> carOptional = this.carRepository.findById(carDto.getId());
         if(carOptional.isPresent()){
