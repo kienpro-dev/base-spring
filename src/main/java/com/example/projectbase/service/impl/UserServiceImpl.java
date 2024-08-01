@@ -2,8 +2,10 @@ package com.example.projectbase.service.impl;
 
 import com.example.projectbase.constant.ErrorMessage;
 import com.example.projectbase.constant.SortByDataConstant;
+import com.example.projectbase.domain.dto.common.DataMailDto;
 import com.example.projectbase.domain.dto.pagination.PaginationFullRequestDto;
 import com.example.projectbase.domain.dto.pagination.PaginationResponseDto;
+import com.example.projectbase.domain.dto.request.MailRequestDto;
 import com.example.projectbase.domain.dto.request.RegisterRequestDto;
 import com.example.projectbase.domain.dto.request.UserUpdateRequestDto;
 import com.example.projectbase.domain.dto.response.UserDto;
@@ -14,14 +16,18 @@ import com.example.projectbase.repository.RoleRepository;
 import com.example.projectbase.repository.UserRepository;
 import com.example.projectbase.security.UserPrincipal;
 import com.example.projectbase.service.UserService;
+import com.example.projectbase.util.CryptionUtil;
 import com.example.projectbase.util.PaginationUtil;
+import com.example.projectbase.util.SendMailUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,9 +39,11 @@ public class UserServiceImpl implements UserService {
 
     private final UserMapper userMapper;
 
-    private final  BCryptPasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     private final RoleRepository roleRepository;
+
+    private final SendMailUtil sendMailUtil;
 
     @Override
     public UserDto getUserById(String userId) {
@@ -150,12 +158,25 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User> changePassword(String email, String password) {
-        return Optional.empty();
+        User user = userRepository.findByEmail(email).get();
+		user.setPassword(passwordEncoder.encode(password));
+		User userOld = userRepository.save(user);
+		return Optional.of(userOld);
     }
 
     @Override
     public void sendMail(String email, String url) throws MessagingException {
-
+        Object[] object = new Object[1];
+        object[0] = url + "/car/auth/forgot-password/reset?email="
+                + CryptionUtil.encrypt(email, "RentalCar");
+        List<Object[]> body = new ArrayList<>();
+        body.add(object);
+        DataMailDto mailInfo = new DataMailDto();
+        mailInfo.setFrom("Rental Car Online <RentalCar@gmail.com>");
+        mailInfo.setTo(email);
+        mailInfo.setSubject("Quên mật khẩu");
+        mailInfo.setBody(body);
+        sendMailUtil.sendWithFreeTemplate(mailInfo);
     }
 
     @Override

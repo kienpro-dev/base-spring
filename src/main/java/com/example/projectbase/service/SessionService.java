@@ -2,13 +2,15 @@ package com.example.projectbase.service;
 
 import javax.servlet.http.HttpSession;
 
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
+@AllArgsConstructor
 public class SessionService {
-	@Autowired
-	HttpSession session;
+
+	private final HttpSession session;
 
 	/**
 	 * Đọc giá trị của attribute trong session

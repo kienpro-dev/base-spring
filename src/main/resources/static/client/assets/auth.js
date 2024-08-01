@@ -39,7 +39,7 @@ function registerSubmit() {
 		.then(function(response) {
 			Swal.fire({
 				title: 'Thông báo đã đăng ký',
-				text: response.data,
+				text: response.data.message,
 				icon: 'success',
 				confirmButtonColor: '#3085d6',
 				confirmButtonText: 'Xác nhận'
@@ -53,7 +53,7 @@ function registerSubmit() {
 			Swal.fire({
 				icon: 'error',
 				title: 'Thông báo lỗi',
-				text: error.response.data,
+				text: error.response.data.message,
 			})
 		});
 }
@@ -79,7 +79,7 @@ function loginSubmit() {
 		.then(function(response) {
 			Swal.fire({
 				title: 'Thông báo đã đăng nhập',
-				text: response.data,
+				text: response.data.message,
 				icon: 'success',
 				confirmButtonColor: '#3085d6',
 				confirmButtonText: 'Xác nhận'
@@ -93,7 +93,7 @@ function loginSubmit() {
 			Swal.fire({
 				icon: 'error',
 				title: 'Thông báo lỗi',
-				text: error.response.data,
+				text: error.response.data.message,
 			})
 		});
 }
@@ -156,7 +156,7 @@ function changeSubmit() {
 		.then(function(response) {
 			Swal.fire({
 				title: 'Thông báo đã đổi mật khẩu',
-				text: response.data,
+				text: response.data.message,
 				icon: 'success',
 				confirmButtonColor: '#3085d6',
 				confirmButtonText: 'Xác nhận'
@@ -170,7 +170,7 @@ function changeSubmit() {
 			Swal.fire({
 				icon: 'error',
 				title: 'Thông báo lỗi',
-				text: error.response.data,
+				text: error.response.data.message,
 			})
 		});
 }
@@ -195,7 +195,7 @@ function forgotSubmit() {
 		.then(function(response) {
 			Swal.fire({
 				title: 'Đã gửi yêu cầu đổi mật khẩu',
-				text: response.data,
+				text: response.data.message,
 				icon: 'success',
 				confirmButtonColor: '#3085d6',
 				confirmButtonText: 'Xác nhận'
@@ -209,7 +209,7 @@ function forgotSubmit() {
 			Swal.fire({
 				icon: 'error',
 				title: 'Thông báo lỗi',
-				text: error.response.data,
+				text: error.response.data.message,
 			})
 		});
 }
