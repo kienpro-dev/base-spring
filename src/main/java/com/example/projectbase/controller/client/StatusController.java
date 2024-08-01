@@ -27,13 +27,17 @@ public class StatusController {
     @PostMapping("/car-owner/my-car/status")
     public ResponseEntity<CarDto> updateStatus(@RequestBody CarDto carDto,
                                                @RequestParam(name = "status") String status){
+        // available, stopped, booked
         Optional<Car> carOptional = this.carRepository.findById(carDto.getId());
         if(carOptional.isPresent()){
             Car car = carOptional.get();
             List<Booking> bookingList = carDto.getBookings();
             int length = bookingList.size();
             LocalDateTime now = LocalDateTime.now();
-            if(bookingList.get(length-1).getEndDate().isBefore(now)) {
+            if(status.equalsIgnoreCase("available")){
+
+            }
+            if(bookingList.get(length-1).getEndDate().isBefore(now) ) {
                 bookingList.get(length - 1).setStatus(status);
                 this.bookingRepository.saveAll(bookingList);
             }

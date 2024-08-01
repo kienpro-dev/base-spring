@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{client/layout.html}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add New Car</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
         .step { display: none; }
         .step.active { display: block; }
@@ -16,8 +17,8 @@
     </style>
 </head>
 <body>
-<div class="container mt-5">
-    <h1 class="mb-5">Add New Car</h1>
+<div layout:fragment="content" class="container mt-5">
+    <h1 class="mb-5 ">Add New Car</h1>
     <ul class="nav nav-steps mb-3">
         <li class="nav-item">
             <a class="nav-link" href="#" onclick="showStep(0)">Step 1: Basic</a>
@@ -41,7 +42,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="licensePlate">Name:</label>
-                        <input type="text" class="form-control"
+                        <input type="text" class="form-control" th:id="nameOfCar"
                                th:field="*{name}" required>
                     </div>
 
@@ -212,27 +213,19 @@
             <h2>Step 4: Finish</h2>
             <div class="form-group">
                 <label for="carName">Car Name:</label>
-                <input type="text" class="form-control" id="carName" name="carName" readonly>
-            </div>
-            <div class="form-group">
-                <label for="rating">Rating:</label>
-                <input type="number" class="form-control" id="rating" name="rating" readonly>
-            </div>
-            <div class="form-group">
-                <label for="numberOfRides">Number of Rides:</label>
-                <input type="number" class="form-control" id="numberOfRides" name="numberOfRides" readonly>
+                <span id="carName" name="carName" ></span>
             </div>
             <div class="form-group">
                 <label for="price">Price:</label>
-                <input type="number" class="form-control" id="price" name="price" readonly>
+                <span id="price" name="price" ></span>
             </div>
             <div class="form-group">
                 <label for="location">Location:</label>
-                <input type="text" class="form-control" id="location" name="location" readonly>
+                <span  id="location" name="location" ></span>
             </div>
             <div class="form-group">
                 <label for="status">Status:</label>
-                <input type="text" class="form-control" id="status" name="status" readonly>
+                <span id="status" name="status" ></span>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </div>
@@ -246,74 +239,5 @@
     </div>
 </div>
 
-<script>
-    let currentStep = 0;
-    const steps = document.querySelectorAll('.step');
-    const navLinks = document.querySelectorAll('.nav-steps .nav-link');
-
-    function showStep(step) {
-        steps.forEach((stepElement, index) => {
-            stepElement.classList.toggle('active', index === step);
-        });
-        navLinks.forEach((navLink, index) => {
-            navLink.classList.toggle('active', index === step);
-        });
-        document.getElementById('prevBtn').style.display = step === 0 ? 'none' : 'inline';
-        document.getElementById('nextBtn').style.display = step === steps.length - 1 ? 'none' : 'inline';
-        currentStep = step;
-    }
-
-    function nextStep() {
-        if (currentStep < steps.length - 1) {
-            showStep(currentStep + 1);
-        }
-    }
-
-    function prevStep() {
-        if (currentStep > 0) {
-            showStep(currentStep - 1);
-        }
-    }
-
-    function cancelForm() {
-        window.location.href = '/car-owner/car';
-    }
-
-    function submitForm() {
-        const formData = new FormData(document.getElementById('carForm'));
-        const data = {};
-        formData.forEach((value, key) => {
-            data[key] = value;
-        });
-
-        fetch('/car-owner/car/add', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        })
-            .then(response => response.json())
-            .then(data => {
-                alert('Car added successfully!');
-                window.location.href = '/car-owner/car';
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-    }
-
-    showStep(currentStep);
-</script>
-<script th:src="@{/shop/assets/js/jquery.min.js}"></script>
-<script th:src="@{/shop/assets/js/bootstrap.bundle.min.js}"></script>
-<script th:src="@{/shop/assets/js/jquery.hoverIntent.min.js}"></script>
-<script th:src="@{/shop/assets/js/jquery.waypoints.min.js}"></script>
-<script th:src="@{/shop/assets/js/superfish.min.js}"></script>
-<script th:src="@{/shop/assets/js/owl.carousel.min.js}"></script>
-<script th:src="@{/shop/assets/js/bootstrap-input-spinner.js}"></script>
-<script th:src="@{/shop/assets/js/jquery.magnific-popup.min.js}"></script>
-<script th:src="@{/shop/assets/js/jquery.plugin.min.js}"></script>
-<script th:src="@{/shop/assets/js/jquery.countdown.min.js}"></script>
-<script th:src="@{/shop/assets/js/nouislider.min.js}"></script>
-<script th:src="@{/shop/assets/js/jquery.elevateZoom.min.js}"></script>
+</body>
+</html>

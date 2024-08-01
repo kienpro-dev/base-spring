@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{client/layout.html}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,7 +18,7 @@
     </style>
 </head>
 <body>
-<div class="container mt-5">
+<div layout:fragment="content" class="container mt-5">
     <div class="row mb-5">
         <div class="col-md-12 d-flex justify-content-between">
             <h1>Edit car details</h1>
@@ -297,50 +299,4 @@
 
 
 </body>
-<script th:src="@{/shop/assets/js/jquery.min.js}"></script>
-<script th:src="@{/shop/assets/js/bootstrap.bundle.min.js}"></script>
-<script th:src="@{/shop/assets/js/jquery.hoverIntent.min.js}"></script>
-<script th:src="@{/shop/assets/js/jquery.waypoints.min.js}"></script>
-<script th:src="@{/shop/assets/js/superfish.min.js}"></script>
-<script th:src="@{/shop/assets/js/owl.carousel.min.js}"></script>
-<script th:src="@{/shop/assets/js/bootstrap-input-spinner.js}"></script>
-<script th:src="@{/shop/assets/js/jquery.magnific-popup.min.js}"></script>
-<script th:src="@{/shop/assets/js/jquery.plugin.min.js}"></script>
-<script th:src="@{/shop/assets/js/jquery.countdown.min.js}"></script>
-<script th:src="@{/shop/assets/js/nouislider.min.js}"></script>
-<script th:src="@{/shop/assets/js/jquery.elevateZoom.min.js}"></script>
-
-<script>
-    $(document).ready(function () {
-        const addtionalFuctions = $('#additionalF').text().split(',');
-        console.log(addtionalFuctions);
-        $('.form-check-input').each(function () {
-            if (addtionalFuctions.includes($(this).val())) {
-                $(this).prop('checked', true);
-            }
-        });
-
-
-        const terms = $('#terms').text().split(',');
-        $('.form-check-input').each(function () {
-            if (terms.includes($(this).val())) {
-                $(this).prop('checked', true);
-            }
-        });
-
-        let previousValue = $('#statusSelect').val();
-
-        $('#statusSelect').on('change', function () {
-            let newValue = $(this).val();
-            let confirmation = confirm("Are you sure you want to change the status?");
-
-            if (confirmation) {
-                console.log(newValue);
-                previousValue = newValue;
-            } else {
-                $('#statusSelect').val(previousValue);
-            }
-        });
-    });
-</script>
 </html>
