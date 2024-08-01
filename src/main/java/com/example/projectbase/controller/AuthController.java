@@ -42,15 +42,15 @@ public class AuthController {
 
     private final RoleRepository roleRepository;
 
-//    @PostMapping(value = UrlConstant.Auth.LOGIN)
-//    @ResponseBody
-//    public ResponseEntity<?> loginSubmit(Model model,@ModelAttribute LoginRequestDto loginRequestDto) {
-//
-//        if (!userService.existsByEmail(loginRequestDto.getEmail()) || !authService.checkEmailMatchPassword(loginRequestDto))
-//            return VsResponseUtil.error(HttpStatus.INTERNAL_SERVER_ERROR, "Thông tin tài khoản không chính xác");
-//        authService.autoLogin(loginRequestDto.getEmail(), loginRequestDto.getPassword());
-//        return VsResponseUtil.success("Chúc mừng bạn đã đăng nhập thành công.");
-//    }
+    @PostMapping(value = UrlConstant.Auth.LOGIN)
+    @ResponseBody
+    public ResponseEntity<?> loginSubmit(Model model,@ModelAttribute LoginRequestDto loginRequestDto) {
+
+        if (!userService.existsByEmail(loginRequestDto.getEmail()) || !authService.checkEmailMatchPassword(loginRequestDto))
+            return VsResponseUtil.error(HttpStatus.INTERNAL_SERVER_ERROR, "Thông tin tài khoản không chính xác");
+        authService.autoLogin(loginRequestDto.getEmail(), loginRequestDto.getPassword());
+        return VsResponseUtil.success("Chúc mừng bạn đã đăng nhập thành công.");
+    }
 
 
 
