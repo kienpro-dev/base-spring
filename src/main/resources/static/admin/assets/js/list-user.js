@@ -37,7 +37,23 @@ function viewUser(id) {
 		url: baseUrl + "/admin/view/" + id
 	})
 		.then(function(response) {
-		//	var avatar = response.data.avatar == null ? '/admin/assets/img/no-image.jpg' : '/uploads/' + response.data.avatar;
+            var phoneNumber = response.data.phoneNumber || 'Chưa cập nhật ...';
+            var dateOfBirth = response.data.dateOfBirth || 'Chưa cập nhật ...';
+            var nationalId = response.data.nationalId || 'Chưa cập nhật ...';
+            var drivingLicense = response.data.drivingLicense || 'Chưa cập nhật ...';
+            var address = response.data.address || 'Chưa cập nhật ...';
+            var role ;
+            if(response.data.role.name==='ROLE_ADMIN'){
+                role='Admin';
+            }
+            else if (response.data.role.name==='ROLE_USER'){
+                role='Người dùng';
+            }
+            else{
+                role="Chủ xe";
+            }
+
+
 			var wrapper = document.createElement('div');
 			wrapper.innerHTML = ``;
 			bodyViewUser.innerHTML = ``;
@@ -60,29 +76,29 @@ function viewUser(id) {
 										</tr>
 										<tr>
 											<th>Số điện thoại</th>
-											<td id="viewPhoneNumber">`+ response.data.phoneNumber + `</td>
+											<td id="viewPhoneNumber">${phoneNumber}</td>
 										</tr>
 
 										<tr>
 											<th>Ngày sinh</th>
-											<td id="viewUserDateOfBirth">`+ response.data.dateOfBirth + `</td>
+											<td id="viewUserDateOfBirth">${dateOfBirth}</td>
 										</tr>
 										<tr>
                                         	<th>Quốc gia</th>
-                                        	<td id="viewUserNationalId">`+ response.data.nationalId + `</td>
+                                        	<td id="viewUserNationalId">${nationalId}</td>
                                         </tr>
 										<tr>
 											<th>Bằng lái</th>
-											<td id="viewUserDrivingLicense">`+ response.data.drivingLicense + `</td>
+											<td id="viewUserDrivingLicense">${drivingLicense}</td>
 										</tr>
 										<tr>
 											<th>Địa chỉ</th>
-											<td id="viewUserAddress">`+ response.data.address + `</td>
+											<td id="viewUserAddress">${address}</td>
 										</tr>
 
 										<tr>
 											<th>Chức vụ</th>
-											<td id="viewUserRole">`+ response.data.role.name + `</td>
+											<td id="viewUserRole">${role}</td>
 										</tr>
 										<tr>
 											<th>Ngày tạo</th>
