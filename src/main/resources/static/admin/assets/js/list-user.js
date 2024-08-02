@@ -12,8 +12,8 @@ function deleteUser(id, name) {
 	}).then((result) => {
 		if (result.isConfirmed) {
 			axios({
-				method: 'DELETE',
-				url: baseUrl + "/users/delete/" + id,
+				method: 'PUT',
+				url: baseUrl + "/admin/delete/" + id,
 				responseType: 'stream'
 			})
 				.then(function(response) {
@@ -34,22 +34,32 @@ function viewUser(id) {
 	axios({
 		method: 'GET',
 		contentType: "application/json",
-		url: baseUrl + "/users/view/" + id
+		url: baseUrl + "/admin/view/" + id
 	})
 		.then(function(response) {
-			var avatar = response.data.avatar == null ? '/admin/assets/img/no-image.jpg' : '/uploads/' + response.data.avatar;
+            var phoneNumber = response.data.phoneNumber || 'Chưa cập nhật ...';
+            var dateOfBirth = response.data.dateOfBirth || 'Chưa cập nhật ...';
+            var nationalId = response.data.nationalId || 'Chưa cập nhật ...';
+            var drivingLicense = response.data.drivingLicense || 'Chưa cập nhật ...';
+            var address = response.data.address || 'Chưa cập nhật ...';
+            var role ;
+            if(response.data.role.name==='ROLE_ADMIN'){
+                role='Admin';
+            }
+            else if (response.data.role.name==='ROLE_USER'){
+                role='Người dùng';
+            }
+            else{
+                role="Chủ xe";
+            }
+
+
 			var wrapper = document.createElement('div');
 			wrapper.innerHTML = ``;
 			bodyViewUser.innerHTML = ``;
 			wrapper.innerHTML = `
 			<div class="row">
-							<div class="col-sm-12 col-lg-4">
-								<div class="card">
-									<img src="`+ avatar + `" class="card-img-top"
-										alt="...">
-								</div>
-							</div>
-							<div class="col-sm-12 col-lg-8">
+							<div class="col-sm-12 col-lg-12">
 								<table class="table table-borderless">
 									<tbody>
 										<tr>
@@ -57,40 +67,38 @@ function viewUser(id) {
 											<td id="viewUserId">`+ response.data.id + `</td>
 										</tr>
 										<tr>
-											<th>Tên đăng nhập</th>
-											<td id="viewUserUsername">`+ response.data.username + `</td>
+											<th>Họ tên</th>
+											<td id="viewUserFullname">`+ response.data.name + `</td>
 										</tr>
 										<tr>
 											<th>Email</th>
 											<td id="viewUserEmail">`+ response.data.email + `</td>
 										</tr>
 										<tr>
-											<th>Họ</th>
-											<td id="viewUserFirstName">`+ response.data.firstName + `</td>
+											<th>Số điện thoại</th>
+											<td id="viewPhoneNumber">${phoneNumber}</td>
 										</tr>
-										<tr>
-											<th>Tên</th>
-											<td id="viewUserLastName">`+ response.data.lastName + `</td>
-										</tr>
+
 										<tr>
 											<th>Ngày sinh</th>
-											<td id="viewUserBirthDay">`+ response.data.birthDay + `</td>
+											<td id="viewUserDateOfBirth">${dateOfBirth}</td>
+										</tr>
+										<tr>
+                                        	<th>Quốc gia</th>
+                                        	<td id="viewUserNationalId">${nationalId}</td>
+                                        </tr>
+										<tr>
+											<th>Bằng lái</th>
+											<td id="viewUserDrivingLicense">${drivingLicense}</td>
 										</tr>
 										<tr>
 											<th>Địa chỉ</th>
-											<td id="viewUserAddress">`+ response.data.address + `</td>
+											<td id="viewUserAddress">${address}</td>
 										</tr>
-										<tr>
-											<th>Giới tính</th>
-											<td id="viewUserGender">`+ response.data.gender + `</td>
-										</tr>
-										<tr>
-											<th>Truy cập</th>
-											<td id="viewUserLogin">`+ response.data.login + `</td>
-										</tr>
+
 										<tr>
 											<th>Chức vụ</th>
-											<td id="viewUserRole">`+ response.data.role + `</td>
+											<td id="viewUserRole">${role}</td>
 										</tr>
 										<tr>
 											<th>Ngày tạo</th>
@@ -99,10 +107,6 @@ function viewUser(id) {
 										<tr>
 											<th>Cập nhật lần cuối</th>
 											<td id="viewUserLastUpdate">`+ response.data.lastModifiedDate + `</td>
-										</tr>
-										<tr>
-											<th>Truy cập lần cuối</th>
-											<td id="viewUserLastLogin">`+ response.data.lastLoginDate + `</td>
 										</tr>
 									</tbody>
 								</table>

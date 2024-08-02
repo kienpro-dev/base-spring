@@ -47,6 +47,8 @@ public class User extends DateAuditing {
 
   private String drivingLicense;
 
+  private Boolean isActive;
+
   //Link to table Role
   @ManyToOne
   @JoinColumn(name = "role_id", foreignKey = @ForeignKey(name = "FK_USER_ROLE"))
