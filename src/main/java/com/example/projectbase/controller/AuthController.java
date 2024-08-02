@@ -17,6 +17,7 @@ import com.example.projectbase.util.CryptionUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -38,13 +39,13 @@ public class AuthController {
 
     private final SessionService sessionService;
 
-    private final PasswordEncoder passwordEncoder;
+    private final BCryptPasswordEncoder passwordEncoder;
 
     private final RoleRepository roleRepository;
 
     @PostMapping(value = UrlConstant.Auth.LOGIN)
     @ResponseBody
-    public ResponseEntity<?> loginSubmit(Model model,@ModelAttribute LoginRequestDto loginRequestDto) {
+    public ResponseEntity<?> loginSubmit(Model model,@RequestBody LoginRequestDto loginRequestDto) {
 
         if (!userService.existsByEmail(loginRequestDto.getEmail()) || !authService.checkEmailMatchPassword(loginRequestDto))
             return VsResponseUtil.error(HttpStatus.INTERNAL_SERVER_ERROR, "Thông tin tài khoản không chính xác");
