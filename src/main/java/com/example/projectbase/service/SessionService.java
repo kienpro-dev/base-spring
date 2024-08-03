@@ -3,11 +3,12 @@ package com.example.projectbase.service;
 import javax.servlet.http.HttpSession;
 
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class SessionService {
 
 	private final HttpSession session;
