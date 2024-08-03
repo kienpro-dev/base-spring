@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.Optional;
 
@@ -100,22 +101,24 @@ public class AuthController {
     }
 
     @GetMapping(value = UrlConstant.Auth.RESET_PASSWORD)
-    public String resetPassword(@RequestParam(name = "email") String email) {
-        sessionService.set("reset-password", CryptionUtil.decrypt(email, "RentalCar"));
+    public String resetPassword(Model model, @RequestParam(name = "email") String email) {
+//        sessionService.set("reset-password", CryptionUtil.decrypt(email, "RentalCar"));
+        model.addAttribute("email", email);
         return "auth/admin/reset-password";
     }
 
     @PostMapping(value = UrlConstant.Auth.SUBMIT_RESET)
     public String resetPasswordSubmit(Model model, @RequestParam(name = "password") String password,
-                                      @RequestParam(name = "againPassword") String againPassword, HttpServletRequest request,
-                                      HttpServletResponse response) {
+                                      @RequestParam(name = "againPassword") String againPassword, @RequestParam(name = "email") String email,
+                                      HttpServletRequest request, HttpServletResponse response) {
         if (!password.equals(againPassword)) {
             model.addAttribute("error", "Mật khẩu xác nhận không khớp với mật khẩu. Vui lòng nhập lại");
             return "auth/admin/reset-password";
         }
-        String email = sessionService.get("reset-password");
-        Optional<User> user = userService.changePassword(email, password);
-        sessionService.remove("reset-password");
+//        String email = sessionService.get("reset-password");
+
+        Optional<User> user = userService.changePassword(CryptionUtil.decrypt(email, "RentalCar"), password);
+//        sessionService.remove("reset-password");
         return "redirect:/car/home";
     }
 }
