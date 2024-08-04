@@ -165,7 +165,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void sendMail(String email, String url) throws MessagingException {
+    public void sendMail(String email, String url) throws Exception {
         Object[] object = new Object[1];
         object[0] = url + "/car/auth/forgot-password/reset?email="
                 + CryptionUtil.encrypt(email, "RentalCar");

@@ -54,7 +54,7 @@ public interface UserService {
 
     Optional<User> changePassword(String email, String password);
 
-    void sendMail(String email, String url) throws MessagingException;
+    void sendMail(String email, String url) throws Exception;
 
     boolean createUser(RegisterRequestDto requestDto);
 }

@@ -1,51 +1,60 @@
 package com.example.projectbase.util;
 
 import javax.crypto.Cipher;
+import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
-import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.util.Arrays;
 import java.util.Base64;
 
 public class CryptionUtil {
-	private static SecretKeySpec secretKey;
-	private static byte[] key;
+    public static SecretKeySpec secretKeySpec;
+    public static IvParameterSpec ivParameterSpec;
+    // Tạo khóa bí mật từ mật khẩu
+    public static void createSecretKey(final String myKey) throws Exception {
+        byte[] key = myKey.getBytes("UTF-8");
+        MessageDigest sha = MessageDigest.getInstance("SHA-1");
+        key = sha.digest(key);
+        key = Arrays.copyOf(key, 16); // Chỉ sử dụng 128 bit đầu tiên
+        secretKeySpec = new SecretKeySpec(key, "AES");
+    }
 
-	public static void setKey(final String myKey) {
-		MessageDigest sha = null;
-		try {
-			key = myKey.getBytes("UTF-8");
-			sha = MessageDigest.getInstance("SHA-1");
-			key = sha.digest(key);
-			key = Arrays.copyOf(key, 16);
-			secretKey = new SecretKeySpec(key, "AES");
-		} catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
-	}
+    // Tạo IV ngẫu nhiên
+    public static void createIv() {
+        byte[] iv = new byte[16];
+        new SecureRandom().nextBytes(iv);
+        ivParameterSpec = new IvParameterSpec(iv);
+    }
 
-	public static String encrypt(final String strToEncrypt, final String secret) {
-		try {
-			setKey(secret);
-			Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
-			cipher.init(Cipher.ENCRYPT_MODE, secretKey);
-			return Base64.getEncoder().encodeToString(cipher.doFinal(strToEncrypt.getBytes("UTF-8")));
-		} catch (Exception e) {
-			System.out.println("Error while encrypting: " + e.toString());
-		}
-		return null;
-	}
+    // Mã hóa
+    public static String encrypt(String strToEncrypt, String secretKey) throws Exception {
+        try {
+            createSecretKey(secretKey);
+            createIv();
+            Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+            cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec, ivParameterSpec);
+            byte[] encrypted = cipher.doFinal(strToEncrypt.getBytes("UTF-8"));
+            return Base64.getEncoder().encodeToString(encrypted);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
-	public static String decrypt(final String strToDecrypt, final String secret) {
-		try {
-			setKey(secret);
-			Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5PADDING");
-			cipher.init(Cipher.DECRYPT_MODE, secretKey);
-			return new String(cipher.doFinal(Base64.getDecoder().decode(strToDecrypt)));
-		} catch (Exception e) {
-			System.out.println("Error while decrypting: " + e.toString());
-		}
-		return null;
-	}
+    // Giải mã
+    public static String decrypt(String strToDecrypt, String secretKey) throws Exception {
+        try {
+            createSecretKey(secretKey);
+            Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+            cipher.init(Cipher.DECRYPT_MODE, secretKeySpec, ivParameterSpec);
+            byte[] decrypted = cipher.doFinal(Base64.getDecoder().decode(strToDecrypt));
+            return new String(decrypted, "UTF-8");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }
