@@ -29,7 +29,6 @@ function deleteUser(id, name) {
 }
 
 var bodyViewUser = document.getElementById('bodyViewUser');
-
 function viewUser(id) {
 	axios({
 		method: 'GET',
@@ -115,4 +114,8 @@ function viewUser(id) {
 			`;
 			bodyViewUser.append(wrapper);
 		});
+
 }
+
+
+
