@@ -3,7 +3,7 @@ package com.example.projectbase.controller;
 import com.example.projectbase.constant.RoleConstant;
 import com.example.projectbase.constant.UrlConstant;
 import com.example.projectbase.domain.dto.request.LoginRequestDto;
-import com.example.projectbase.domain.dto.request.UserUpdateRequestDto;
+import com.example.projectbase.domain.dto.request.UserRequestDto;
 import com.example.projectbase.domain.entity.User;
 import com.example.projectbase.repository.UserRepository;
 import com.example.projectbase.security.UserPrincipal;
@@ -49,8 +49,8 @@ public class AdminController {
     private final UserRepository userRepository;
 
     @GetMapping(UrlConstant.Auth.ADMIN_LOGIN)
-    public String getLoginForm(Model model){
-        model.addAttribute("loginRequestDto",new LoginRequestDto());
+    public String getLoginForm(Model model) {
+        model.addAttribute("loginRequestDto", new LoginRequestDto());
         return "auth/admin/login";
     }
 
@@ -62,11 +62,13 @@ public class AdminController {
         }
         return null;
     }
+
     @GetMapping(UrlConstant.Admin.ADMIN_HOME)
     public String getAdminPage(Model model) {
-
+        model.addAttribute("updateDto", new UserRequestDto());
         return "admin/home/index";
     }
+
     @PostMapping(UrlConstant.Auth.ADMIN_LOGIN)
     public String loginSubmit(Model model, @Valid @ModelAttribute LoginRequestDto loginRequestDto, BindingResult result,
                               HttpServletRequest request, HttpServletResponse response) {
@@ -76,7 +78,7 @@ public class AdminController {
             return "auth/admin/login";
         }
         User user = userRepository.findByEmail(loginRequestDto.getEmail()).orElse(null);
-        if (user==null) {
+        if (user == null) {
             model.addAttribute("error", "Thông tin tài khoản không chính xác");
             return "auth/admin/login";
         }
@@ -95,7 +97,6 @@ public class AdminController {
         authService.autoLogin(loginRequestDto.getEmail(), loginRequestDto.getPassword());
         return "redirect:/admin/home";
     }
-
 
     @GetMapping(value = UrlConstant.Admin.USERS_MANAGEMENT)
     public String list(Model model, @RequestParam(name = "field") Optional<String> field,
@@ -124,7 +125,6 @@ public class AdminController {
         return "admin/users/user-list";
     }
 
-
     @PutMapping(value = UrlConstant.Admin.DELETE_USER)
     public ResponseEntity<Void> deleteApi(@PathVariable(name = "id") String id) throws IOException {
         userService.deleteById(id);
@@ -132,9 +132,12 @@ public class AdminController {
     }
 
     @GetMapping(value = UrlConstant.Admin.VIEW_USER)
-    public ResponseEntity<User> viewApi(@PathVariable(name = "id") String id) {
+    public ResponseEntity<?> viewApi(@PathVariable(name = "id") String id, Model model) {
         User user = userService.findById(id);
-        return new ResponseEntity<User>(user, HttpStatus.OK);
+        if (user.getRole().getName().equals(RoleConstant.ADMIN)) {
+            return new ResponseEntity<UserRequestDto>(new UserRequestDto(user), HttpStatus.OK);
+        }
+        else return new ResponseEntity<User>(user,HttpStatus.OK);
     }
 
     @GetMapping(value = UrlConstant.Admin.LOGOUT_ADMIN)
@@ -143,5 +146,12 @@ public class AdminController {
         return "redirect:/auth/admin/login";
     }
 
+    @PutMapping(value = UrlConstant.Admin.UPDATE_INFOR)
+    public ResponseEntity<Void> updateAPI(@ModelAttribute UserRequestDto updateDto, Model model) throws IOException {
+        if (!userService.updateUser(updateDto)) {
+            model.addAttribute("error", "Cập nhật không thành công!");
+        }
+        return new ResponseEntity<Void>(HttpStatus.OK);
+    }
 
 }

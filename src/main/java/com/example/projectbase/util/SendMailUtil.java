@@ -121,5 +121,4 @@ public class SendMailUtil {
         return stringWriter.getBuffer().toString();
     }
 
-
 }

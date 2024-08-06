@@ -19,6 +19,7 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -87,10 +88,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
                         "/car/like/**",
                         "/car/order/**")
                 .permitAll().and()
-                //Chỉ có user mới có thể truy cập
-                .authorizeRequests()
-                .antMatchers()
-                .access("hasRole('ROLE_USER')").and()
+
                 //Chỉ có admin mới có thể truy cập
                 .authorizeRequests()
                 .antMatchers(
@@ -102,7 +100,11 @@ public class WebMvcConfig implements WebMvcConfigurer {
                         "/products/**",
                         "/orders/**",
                         "/statistics/**")
-                .access("hasRole('ROLE_ADMIN')")
+                .access("hasRole('ROLE_ADMIN')").and()
+                //Chỉ có user mới có thể truy cập
+                .authorizeRequests()
+                .antMatchers()
+                .access("hasRole('ROLE_USER')")
                 .anyRequest().authenticated().and()
                 .exceptionHandling()
                     .accessDeniedHandler(accessDeniedHandler())
@@ -130,7 +132,6 @@ public class WebMvcConfig implements WebMvcConfigurer {
         registry.addViewController("/error/404").setViewName("auth/error/admin/404");
     }
 
-
     @Bean
     public WebServerFactoryCustomizer<ConfigurableServletWebServerFactory> containerCustomizer() {
         return container -> {
@@ -138,7 +139,6 @@ public class WebMvcConfig implements WebMvcConfigurer {
                     "/error/404"));
         };
     }
-
 
 }
 

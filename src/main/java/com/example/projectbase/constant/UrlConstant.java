@@ -1,16 +1,18 @@
 package com.example.projectbase.constant;
 
+import org.springframework.security.core.parameters.P;
+
 public class UrlConstant {
     public static final String HOME = "/home";
 
     public static class Admin {
         private static final String PRE_FIX = "/admin";
 
-
         public static final String ADMIN_HOME = PRE_FIX + "/home";
         public static final String USERS_MANAGEMENT = PRE_FIX + "/users";
         public static final String DELETE_USER = PRE_FIX + "/delete/{id}";
         public static final String VIEW_USER = PRE_FIX + "/view/{id}";
+        public static final String UPDATE_INFOR= PRE_FIX+"/update";
         public static final String LOGOUT_ADMIN = PRE_FIX + "/logout";
 
         private Admin() {
