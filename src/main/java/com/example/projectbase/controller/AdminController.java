@@ -72,7 +72,7 @@ public class AdminController {
     @PostMapping(UrlConstant.Auth.ADMIN_LOGIN)
     public String loginSubmit(Model model, @Valid @ModelAttribute LoginRequestDto loginRequestDto, BindingResult result,
                               HttpServletRequest request, HttpServletResponse response) {
-        authService.logoutMvc(request, response);
+       // authService.logoutMvc(request, response);
         if (loginRequestDto.getEmail().trim().isEmpty() || loginRequestDto.getPassword().trim().isEmpty()) {
             model.addAttribute("error", "Vui lòng điền đầy đủ thông tin");
             return "auth/admin/login";

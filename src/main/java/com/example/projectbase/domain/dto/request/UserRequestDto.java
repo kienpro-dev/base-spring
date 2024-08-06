@@ -34,18 +34,19 @@ public class UserRequestDto {
         this.address = user.getAddress();
     }
 
-    public static String formatDate(LocalDateTime localDate) {
+    public static String formatDate(LocalDateTime localDateTime) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        return localDate.format(formatter);
+        return localDateTime.format(formatter);
     }
 
-    private LocalDate convertToLocalDate(String date) {
+    private LocalDateTime convertToLocalDateTime(String date) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        return LocalDate.parse(date, formatter);
+        LocalDate localDate = LocalDate.parse(date, formatter);
+        return localDate.atStartOfDay(ZoneId.of("UTC")).withZoneSameInstant(ZoneId.systemDefault()).toLocalDateTime();
     }
 
     public LocalDateTime getDateOfBirth() {
-        return convertToLocalDate(dateOfBirth).atStartOfDay();
+        return convertToLocalDateTime(this.dateOfBirth);
     }
 }
 
