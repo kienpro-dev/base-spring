@@ -55,7 +55,6 @@ public class AuthController {
     }
 
 
-
     @PostMapping(value = UrlConstant.Auth.REGISTER)
     @ResponseBody
     public ResponseEntity<?> registerSubmit(@RequestBody RegisterRequestDto register) {
