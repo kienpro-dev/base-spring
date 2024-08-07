@@ -54,10 +54,6 @@ public class User extends DateAuditing {
   @JoinColumn(name = "role_id", foreignKey = @ForeignKey(name = "FK_USER_ROLE"))
   private Role role;
 
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "userRent")
-  @JsonIgnore
-  private List<Car> carRent = new ArrayList<>();
-
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "userOwn")
   @JsonIgnore
   private List<Car> carOwn = new ArrayList<>();

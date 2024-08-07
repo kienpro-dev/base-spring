@@ -104,7 +104,12 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 //Chỉ có user mới có thể truy cập
                 .authorizeRequests()
                 .antMatchers()
-                .access("hasRole('ROLE_USER')")
+                .access("hasRole('ROLE_USER')").and()
+                .authorizeRequests()
+                .antMatchers(
+                        "/car-owner/**"
+                )
+                .access("hasRole('ROLE_CAR_OWNER')")
                 .anyRequest().authenticated().and()
                 .exceptionHandling()
                     .accessDeniedHandler(accessDeniedHandler())
