@@ -44,11 +44,11 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public PaginationResponseDto<CarDto> getCars(PaginationFullRequestDto request) {
+    public PaginationResponseDto<CarDto> getCars(PaginationFullRequestDto request, User userOwn) {
         Pageable pageable = PaginationUtil.buildPageable(request, SortByDataConstant.CAR);
-        Page<Car> carPage = this.carRepository.findAll(pageable);
+        Page<Car> carPage = this.carRepository.findByUserOwn(pageable, userOwn);
         List<CarDto> carDtos = carMapper.toCarDtos(carPage.getContent());
-        PagingMeta pagingMeta = new PagingMeta(carPage.getTotalElements(), carPage.getSize(), carPage.getNumber(), carPage.getTotalPages(), SortByDataConstant.CAR.getSortBy("name"), CommonConstant.SORT_TYPE_DESC);
+        PagingMeta pagingMeta = new PagingMeta(carPage.getTotalElements(), carPage.getSize(), carPage.getNumber(), carPage.getTotalPages(), request.getSortBy(), request.getIsAscending().toString());
         return new PaginationResponseDto<>(pagingMeta,carDtos);
     }
 

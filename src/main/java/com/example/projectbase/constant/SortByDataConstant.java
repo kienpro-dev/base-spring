@@ -20,12 +20,12 @@ public enum SortByDataConstant implements SortByInterface {
         @Override
         public String getSortBy(String sortBy) {
           switch (sortBy) {
-              case "name":
-                return "name";
+              case "createdDate":
+                return "created_date";
               case "lastModifiedDate":
                 return "last_modified_date";
               default:
-                return "created_date";
+                return "name";
           }
         }
     }

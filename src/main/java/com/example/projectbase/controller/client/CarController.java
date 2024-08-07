@@ -1,5 +1,7 @@
 package com.example.projectbase.controller.client;
 
+import com.example.projectbase.constant.CommonConstant;
+import com.example.projectbase.constant.SortByDataConstant;
 import com.example.projectbase.domain.dto.pagination.PaginationFullRequestDto;
 import com.example.projectbase.domain.dto.pagination.PaginationResponseDto;
 import com.example.projectbase.domain.dto.request.CarCreateDTO;
@@ -8,6 +10,7 @@ import com.example.projectbase.domain.entity.Booking;
 import com.example.projectbase.domain.entity.Document;
 import com.example.projectbase.domain.entity.Image;
 import com.example.projectbase.domain.entity.User;
+import com.example.projectbase.security.CurrentUser;
 import com.example.projectbase.security.UserPrincipal;
 import com.example.projectbase.service.*;
 import lombok.RequiredArgsConstructor;
@@ -46,7 +49,8 @@ public class CarController {
                             @RequestParam(name = "registrationPaper", required = false) MultipartFile papers,
                             @RequestParam(name = "certificates", required = false) MultipartFile cers,
                             @RequestParam(name = "insurance", required = false) MultipartFile ins,
-                            @RequestParam(name = "carImages") MultipartFile[] carImages){
+                            @RequestParam(name = "carImages") MultipartFile[] carImages,
+                            @CurrentUser UserPrincipal userPrincipal){
         List<FieldError> errors = result.getFieldErrors();
         for (FieldError error : errors ) {
             System.out.println (error.getField() + " - " + error.getDefaultMessage());
@@ -77,12 +81,16 @@ public class CarController {
             carCreateDto.setImages(urls);
         }
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if(authentication != null && authentication.getPrincipal() instanceof UserDetails){
-            UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
-            User userOwn = this.userService.findById(userPrincipal.getId());
-            carCreateDto.setUserOwn(userOwn);
-        }
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        if(authentication != null && authentication.getPrincipal() instanceof UserDetails){
+//            UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
+//            User userOwn = this.userService.findById(userPrincipal.getId());
+//            carCreateDto.setUserOwn(userOwn);
+//        }
+//
+        User userOwn = this.userService.findById(userPrincipal.getId());
+        carCreateDto.setUserOwn(userOwn);
+
 
         carCreateDto.setDocument(document);
         CarDto carDto = this.carService.handleSaveCar(carCreateDto);
@@ -95,16 +103,19 @@ public class CarController {
                           @RequestParam(name = "keyword" , required = false) String keyword,
                           @RequestParam(name = "page", required = false, defaultValue = "1") int page,
                           @RequestParam(name = "size", required = false, defaultValue = "4") int size,
-                          @RequestParam(name = "sortBy", required = false, defaultValue = "name") String sortBy,
-                          @RequestParam(name = "isAscending", required = false, defaultValue = "true") boolean isAscending) {
+                          @RequestParam(name = "sortBy", required = false, defaultValue = "createdDate") String sortBy,
+                          @RequestParam(name = "isAscending", required = false, defaultValue = "true") boolean isAscending,
+                          @CurrentUser UserPrincipal userPrincipal) {
         PaginationFullRequestDto requestDto = new PaginationFullRequestDto();
         requestDto.setKeyword(keyword);
-        requestDto.setPageNum(page - 1);
+        requestDto.setPageNum(page);
         requestDto.setPageSize(size);
-        requestDto.setSortBy(sortBy);
+        requestDto.setSortBy(SortByDataConstant.CAR.getSortBy(sortBy));
         requestDto.setIsAscending(isAscending);
 
-        PaginationResponseDto<CarDto> carPage = this.carService.getCars(requestDto);
+        User userOwn = this.userService.findById(userPrincipal.getId());
+
+        PaginationResponseDto<CarDto> carPage = this.carService.getCars(requestDto, userOwn);
         List<CarDto> cars = carPage.getItems();
         model.addAttribute("cars", cars);
         model.addAttribute("currentPage", page);

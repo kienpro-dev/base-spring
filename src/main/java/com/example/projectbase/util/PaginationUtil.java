@@ -2,6 +2,7 @@ package com.example.projectbase.util;
 
 import com.example.projectbase.constant.CommonConstant;
 import com.example.projectbase.constant.SortByDataConstant;
+import com.example.projectbase.domain.dto.pagination.PaginationFullRequestDto;
 import com.example.projectbase.domain.dto.pagination.PaginationRequestDto;
 import com.example.projectbase.domain.dto.pagination.PaginationSortRequestDto;
 import com.example.projectbase.domain.dto.pagination.PagingMeta;
