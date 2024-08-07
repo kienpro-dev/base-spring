@@ -6,19 +6,34 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 public class UserDto extends DateAuditingDto {
 
-  private String id;
+    private String id;
 
-  private String email;
+    private String email;
 
-  private String name;
+    private String roleName;
 
-  private String roleName;
+    private String name;
+
+    private String nationalId;
+
+    private String address;
+
+    private LocalDateTime dateOfBirth;
+
+    private String phoneNumber;
+
+    private String drivingLicense;
+
+    private boolean isActive;
+
 
 }
 

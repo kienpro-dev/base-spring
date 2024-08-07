@@ -8,12 +8,20 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@AllArgsConstructor
-@RequestMapping("/car")
-@Controller
+@CarMvc
 public class HomeController {
     @GetMapping(UrlConstant.HOME)
-    public String getPage(Model model) {
+    public String home(Model model) {
         return "client/home/index";
+    }
+
+    @GetMapping(UrlConstant.ABOUT)
+    public String about() {
+        return "client/about/about";
+    }
+
+    @GetMapping(UrlConstant.CONTACT)
+    public String contact() {
+        return "client/contact/contact";
     }
 }
