@@ -158,8 +158,8 @@ function changeSubmit() {
 	}
 	axios.post(baseUrl + '/car/auth/change-password', {
 		password: changePassword.value,
-		retype_password: changeRetypePassword.value,
-		retype_password2: changeRetypePassword2.value,
+		newPassword: changeRetypePassword.value,
+		repeatNewPassword: changeRetypePassword2.value,
 	})
 		.then(function(response) {
 			Swal.fire({
