@@ -30,7 +30,7 @@
                             </ul>
                             <div class="tab-content" id="tab-content-5">
                                 <form class="tab-pane fade show active" id="signin"
-                                     role="tabpanel" aria-labelledby="signin-tab">
+                                      role="tabpanel" aria-labelledby="signin-tab">
                                     <div class="form-group">
                                         <label for="login_email">Email *</label> <input
                                             type="text" class="form-control" id="login_email"
@@ -56,7 +56,7 @@
                                 </form>
                                 <!-- .End .tab-pane -->
                                 <form class="tab-pane fade" id="register" role="tabpanel"
-                                     aria-labelledby="register-tab">
+                                      aria-labelledby="register-tab">
                                     <div class="form-group">
                                         <label for="register_name">Tên người dùng *</label> <input
                                             type="text" class="form-control" id="register_name"
@@ -90,10 +90,23 @@
                                             name="register_retype_password" required>
                                     </div>
 
+                                    <div class="form-group" style="display: flex; justify-content: space-between">
+                                        <div style="align-items: center">
+                                            <input type="radio" id="customer" name="role" value="ROLE_USER" checked>
+                                            <label for="customer">Customer</label>
+                                        </div>
+                                        <div style="align-items: center">
+                                            <label for="car-owner">Car Owner</label>
+                                            <input type="radio" id="car-owner" name="role" value="ROLE_CAR_OWNER">
+                                        </div>
+                                    </div>
+
                                     <div class="form-footer">
                                         <button type="submit" class="btn btn-outline-primary-2" id="register_submit">
                                             <span>ĐĂNG KÝ</span> <i class="icon-long-arrow-right"></i>
                                         </button>
+
+
                                     </div>
                                     <!-- End .form-footer -->
                                 </form>
