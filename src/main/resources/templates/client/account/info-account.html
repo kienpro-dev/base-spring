@@ -48,11 +48,11 @@
 								<li class="nav-item"><a class="nav-link"
 									id="tab-orders-link" data-toggle="tab" href="#tab-orders"
 									role="tab" aria-controls="tab-orders" aria-selected="false">Đặt
-										hàng</a></li>
+										xe</a></li>
 								<li class="nav-item" sec:authorize="isAuthenticated()"><a
 									class="nav-link" id="tab-address-link" data-toggle="tab"
 									href="#tab-address" role="tab" aria-controls="tab-address"
-									aria-selected="false">Địa chỉ đặt hàng</a></li>
+									aria-selected="false">Địa chỉ đặt xe</a></li>
 								<li class="nav-item" sec:authorize="isAuthenticated()">
 									<a
 									class="nav-link" id="tab-account-link" data-toggle="tab"
@@ -62,7 +62,7 @@
 									</a>
 								</li>
 								<li class="nav-item" sec:authorize="isAuthenticated()">
-									<a class="nav-link" th:onclick="logout()" 
+									<a class="nav-link" th:onclick="logout()"
 									style="cursor: pointer;"
 									onmouseenter="this.style.color = '#fcb941'"
 									onmouseleave="this.style.color = '#333'"
@@ -78,7 +78,7 @@
 									role="tabpanel" aria-labelledby="tab-dashboard-link">
 									<p>
 										Chào <span class="font-weight-normal text-dark">bạn</span> <br>
-										Đây là trang chính của bảng điều kiển, ở đây bạn có thể tuỳ
+										Đây là trang chính của bảng điều khiển, ở đây bạn có thể tuỳ
 										chỉnh thông tin tài khoản nếu bạn đã đăng nhập, nếu bạn chưa
 										có tài khoản hãy tạo ngay để trải nghiệm trang web tốt hơn.
 									</p>
@@ -87,7 +87,7 @@
 
 								<div class="tab-pane fade" id="tab-orders" role="tabpanel"
 									aria-labelledby="tab-orders-link">
-									<p>Bạn chưa có đơn hàng nào.</p>
+									<p>Bạn chưa có đơn đặt nào.</p>
 									<a th:href="@{/car/client}" class="btn btn-outline-primary-2"><span>Cửa
 											hàng</span><i class="icon-long-arrow-right"></i></a>
 								</div>
@@ -103,18 +103,17 @@
 										<div class="col-lg-6">
 											<div class="card card-dashboard">
 												<div class="card-body">
-													<h3 class="card-title">Địa chỉ đặt hàng</h3>
+													<h3 class="card-title">Địa chỉ đặt xe</h3>
 													<!-- End .card-title -->
 
 													<!-- Hiễn thị -->
 													<p th:if="${orderAddress == null}">Bạn chưa có địa chỉ
-														đặt hàng</p>
+														đặt xe</p>
 
 													<div th:if="${orderAddress != null}">
-														<p th:text="${orderAddress.firstName}"></p>
-														<p th:text="${orderAddress.lastName}"></p>
+														<p th:text="${orderAddress.name}"></p>
 														<p th:text="${orderAddress.address}"></p>
-														<p th:text="${orderAddress.phone}"></p>
+														<p th:text="${orderAddress.phoneNumber}"></p>
 														<p th:text="${orderAddress.email}"></p>
 													</div>
 												</div>
@@ -134,15 +133,13 @@
 														th:action="@{/car/account/info-account/order-address}"
 														method="POST" th:object="${orderAddressDto}">
 
-														<input type="hidden" th:field="*{id}"> <label>Họ
+														<label>Họ tên
 															*</label> <input type="text" class="form-control" required
-															th:field="*{firstName}"> <label>Tên *</label> <input
-															type="text" class="form-control" required
-															th:field="*{lastName}"> <label>Địa chỉ *</label>
+															th:field="*{name}"> <label>Địa chỉ *</label>
 														<input type="text" class="form-control" required
 															th:field="*{address}"> <label>Số điện
 															thoại *</label> <input type="text" class="form-control" required
-															th:field="*{phone}"> <label>Email *</label> <input
+															th:field="*{phoneNumber}"> <label>Email *</label> <input
 															type="email" class="form-control" required
 															th:field="*{email}" readonly>
 
@@ -169,34 +166,31 @@
 										enctype="multipart/form-data">
 										<div class="card card-dashboard">
 											<div class="card-body">
-												<p th:text="${userDto.username}"></p>
-												<p th:text="${userDto.email}"></p>
-												<p
-													th:text="${userDto.login == true ? 'Cho phép' : 'Hạn chế'}"></p>
+												<p >Tên người dùng: <span th:text="${userDto.name}"></span></p>
+												<p >Email: <span th:text="${userDto.email}"></span></p>
+												<p >Trạng thái tài khoản: <span th:text="${userDto.isActive == true ? 'Cho phép' : 'Hạn chế'}"></span></p>
 											</div>
 										</div>
-										<input type="hidden" th:field="*{id}"> <input
-											type="hidden" th:field="*{username}"> <input
-											type="hidden" th:field="*{email}"> <input
-											type="hidden" th:field="*{login}"> <input
-											type="hidden" th:field="*{role}">
+										<input type="hidden" th:field="*{id}">  <input
+											type="hidden" th:field="*{email}">  <input
+											type="hidden" th:field="*{roleName}">
 										<div class="row">
 											<div class="col-sm-6">
-												<label>Họ *</label> <input type="text" class="form-control"
-													required th:field="*{firstName}"> <small
+												<label>Họ tên*</label> <input type="text" class="form-control"
+													required th:field="*{name}"> <small
 													class="form-text text-danger"
-													th:if="${#fields.hasErrors('firstName')}"
-													th:errors="*{firstName}">Italic
+													th:if="${#fields.hasErrors('name')}"
+													th:errors="*{name}">Italic
 													text.</small>
 											</div>
 											<!-- End .col-sm-6 -->
 
 											<div class="col-sm-6">
-												<label>Tên *</label> <input type="text" class="form-control"
-													required th:field="*{lastName}"> <small
+												<label>Mã số định danh *</label> <input type="text" class="form-control"
+													required th:field="*{nationalId}"> <small
 													class="form-text text-danger"
-													th:if="${#fields.hasErrors('lastName')}"
-													th:errors="*{lastName}">Italic text.</small>
+													th:if="${#fields.hasErrors('nationalId')}"
+													th:errors="*{nationalId}">Italic text.</small>
 											</div>
 											<!-- End .col-sm-6 -->
 										</div>
@@ -213,41 +207,25 @@
 										</div>
 
 										<label>Ngày sinh</label> <input type="date"
-											class="form-control" required th:field="*{birthDay}">
-
-										<div class="row">
-											<label>Giới tính</label>
-											<div class="form-check">
-												<input class="form-check-input" type="radio" name="gender"
-													id="male" th:field="*{gender}" th:value="true"
-													th:checked="${gender} == true ? true : false"> <label
-													class="form-check-label" for="male"> Nam </label>
-											</div>
-											<div class="form-check">
-												<input class="form-check-input" type="radio" name="gender"
-													id="female" th:field="*{gender}" th:value="false"
-													th:checked="${gender} == false ? true : false"> <label
-													class="form-check-label" for="female"> Nữ </label>
-											</div>
-										</div>
+											class="form-control" required th:field="*{dateOfBirth}">
 
 										<div class="row">
 											<div class="col-sm-6">
-												<label>Hình ảnh</label> <input type="file"
-													class="form-control" id="file" name="file"
-													onchange="readImageUser(this);">
+												<label>Số điện thoại *</label> <input type="text" class="form-control"
+													required th:field="*{phoneNumber}"> <small
+													class="form-text text-danger"
+													th:if="${#fields.hasErrors('phoneNumber')}"
+													th:errors="*{phoneNumber}">Italic text.</small>
 											</div>
 											<div class="col-sm-6">
-												<div class="product text-center w-50">
-													<figure class="product-media">
-														<img th:src="@{/client/assets/images/no-image.jpg}"
-															alt="Product image" class="product-image"
-															id="change__info__avatar">
-													</figure>
-												</div>
+												<label>Bằng lái *</label> <input type="text" class="form-control"
+													required th:field="*{drivingLicense}"> <small
+													class="form-text text-danger"
+													th:if="${#fields.hasErrors('drivingLicense')}"
+													th:errors="*{drivingLicense}">Italic text.</small>
 											</div>
-										</div>
 
+										</div>
 										<button type="submit" class="btn btn-outline-primary-2">
 											<span>CẬP NHẬT</span> <i class="icon-long-arrow-right"></i>
 										</button>
