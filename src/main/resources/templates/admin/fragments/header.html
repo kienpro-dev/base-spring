@@ -24,7 +24,8 @@
                         class="nav-link nav-profile d-flex align-items-center pe-0"
                         href="#" data-bs-toggle="dropdown"><span
                         class="d-none d-md-block dropdown-toggle ps-2"
-                        th:text="${currentUser} != null ? ${currentUser.name} : 'anonymous user'"></span> </a> <!-- End Profile Iamge Icon -->
+                        th:text="${currentUser} != null ? ${currentUser.name} : 'anonymous user'"></span> </a>
+                    <!-- End Profile Iamge Icon -->
 
                     <ul
                             class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
@@ -35,16 +36,15 @@
                             <hr class="dropdown-divider">
                         </li>
 
-                        <li th:if="${currentUser != null}"  >
-                        <a class="dropdown-item d-flex align-items-center"
-                           role="button"
-                           data-bs-toggle="modal" data-bs-target="#viewUser"
-                           th:data-id="${currentUser.id}"
-                           th:onclick="viewUser(this.getAttribute('data-id')"
-
-                        > <i class="bi bi-person"></i> <span>Thông
+                        <li th:if="${currentUser != null}">
+                            <a class="dropdown-item d-flex align-items-center"
+                               role="button"
+                               data-bs-toggle="modal" data-bs-target="#viewAdmin"
+                               th:data-id="${currentUser.id}"
+                               th:onclick="viewAdmin(this.getAttribute('data-id'))"
+                            > <i class="bi bi-person"></i> <span>Thông
 										tin cá nhân</span>
-                        </a></li>
+                            </a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
@@ -62,7 +62,31 @@
         <!-- End Icons Navigation -->
 
     </header>
+    <div class="modal fade" id="viewAdmin" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Thông tin người dùng</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="bodyViewAdmin" >
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="updateButton" data-bs-dismiss="modal">
+                        Cập nhật
+                    </button>
+                    <button type="button" class="btn btn-secondary"
+                            data-bs-dismiss="modal">Đóng
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
 </div>
+
 </body>
 
 </html>

@@ -3,14 +3,13 @@ package com.example.projectbase.service;
 import com.example.projectbase.domain.dto.pagination.PaginationFullRequestDto;
 import com.example.projectbase.domain.dto.pagination.PaginationResponseDto;
 import com.example.projectbase.domain.dto.request.RegisterRequestDto;
-import com.example.projectbase.domain.dto.request.UserUpdateRequestDto;
+import com.example.projectbase.domain.dto.request.UserRequestDto;
 import com.example.projectbase.domain.dto.response.UserDto;
 import com.example.projectbase.domain.entity.User;
 import com.example.projectbase.security.UserPrincipal;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import javax.mail.MessagingException;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,7 +31,7 @@ public interface UserService {
 
     void updateLastLoginDate(User user);
 
-    boolean updateUser(String id, UserUpdateRequestDto requestDto);
+    boolean updateUser(UserRequestDto requestDto);
 
     Page<User> findAllUser(Pageable pageable);
 
@@ -54,7 +53,7 @@ public interface UserService {
 
     Optional<User> changePassword(String email, String password);
 
-    void sendMail(String email, String url) throws MessagingException;
+    void sendMail(String email, String url) throws Exception;
 
     boolean createUser(RegisterRequestDto requestDto);
 }

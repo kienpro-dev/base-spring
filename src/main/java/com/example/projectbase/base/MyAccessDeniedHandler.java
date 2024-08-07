@@ -27,6 +27,6 @@ public class MyAccessDeniedHandler implements AccessDeniedHandler {
 		// System.out.println(userDetails.getPassword() + userDetails.getUsername()+
 		// userDetails.getAuthorities());
 		authService.logoutMvc(httpServletRequest, httpServletResponse);
-		httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + "error/admin/403");
+		httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + "/error/403");
 	}
 }

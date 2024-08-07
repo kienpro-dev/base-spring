@@ -5,9 +5,8 @@ import com.example.projectbase.constant.SortByDataConstant;
 import com.example.projectbase.domain.dto.common.DataMailDto;
 import com.example.projectbase.domain.dto.pagination.PaginationFullRequestDto;
 import com.example.projectbase.domain.dto.pagination.PaginationResponseDto;
-import com.example.projectbase.domain.dto.request.MailRequestDto;
 import com.example.projectbase.domain.dto.request.RegisterRequestDto;
-import com.example.projectbase.domain.dto.request.UserUpdateRequestDto;
+import com.example.projectbase.domain.dto.request.UserRequestDto;
 import com.example.projectbase.domain.dto.response.UserDto;
 import com.example.projectbase.domain.entity.User;
 import com.example.projectbase.domain.mapper.UserMapper;
@@ -22,12 +21,14 @@ import com.example.projectbase.util.SendMailUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.mail.MessagingException;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -94,17 +95,17 @@ public class UserServiceImpl implements UserService {
 
     }
 
+
     @Override
-    public boolean updateUser(String id, UserUpdateRequestDto requestDto) {
-        Optional<User> user=userRepository.findById(id);
+    public boolean updateUser(UserRequestDto requestDto) {
+        Optional<User> user=userRepository.findById(requestDto.getId());
         if(user.isPresent()){
             user.get().setName(requestDto.getName());
             user.get().setDateOfBirth(requestDto.getDateOfBirth());
             user.get().setAddress(requestDto.getAddress());
-            user.get().setNationalId(requestDto.getNationalId());
             user.get().setPhoneNumber(requestDto.getPhoneNumber());
             user.get().setEmail(requestDto.getEmail());
-            user.get().setDrivingLicense(requestDto.getDrivingLicense());
+            user.get().setNationalId(requestDto.getNationalId());
             userRepository.save(user.get());
             return true;
         }
@@ -165,7 +166,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void sendMail(String email, String url) throws MessagingException {
+    public void sendMail(String email, String url) throws Exception {
         Object[] object = new Object[1];
         object[0] = url + "/car/auth/forgot-password/reset?email="
                 + CryptionUtil.encrypt(email, "RentalCar");

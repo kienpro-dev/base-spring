@@ -24,9 +24,7 @@ public interface UserRepository extends JpaRepository<User, String> {
   @Query("SELECT u FROM User u WHERE u.email = ?1")
   Optional<User> findByEmail(String email);
 
-
   Page<User> findByOrderByCreatedDateDesc(Pageable pageable);
-
 
   default User getUser(UserPrincipal currentUser) {
     return findByEmail(currentUser.getUsername())
@@ -44,6 +42,5 @@ public interface UserRepository extends JpaRepository<User, String> {
   @Modifying
   @Query("UPDATE User u SET u.isActive = false WHERE u.id = ?1")
   void deactivateUser( String id);
-
 
 }
