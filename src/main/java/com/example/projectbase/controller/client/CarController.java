@@ -7,10 +7,9 @@ import com.example.projectbase.domain.dto.response.CarDto;
 import com.example.projectbase.domain.entity.Booking;
 import com.example.projectbase.domain.entity.Document;
 import com.example.projectbase.domain.entity.Image;
-import com.example.projectbase.service.CarService;
-import com.example.projectbase.service.CloudinaryService;
-import com.example.projectbase.service.CustomUserDetailsService;
-import com.example.projectbase.service.ImageService;
+import com.example.projectbase.domain.entity.User;
+import com.example.projectbase.security.UserPrincipal;
+import com.example.projectbase.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -34,6 +33,7 @@ public class CarController {
     private final CarService carService;
     private final CloudinaryService cloudinaryService;
     private final ImageService imageService;
+    private final UserService userService;
 
     @GetMapping("/car/add")
     public String addCar(Model model, @ModelAttribute("carCreateDto") CarCreateDTO carCreateDto){
@@ -75,6 +75,13 @@ public class CarController {
         if(carImages != null){
             List<String> urls = cloudinaryService.uploadImages(carImages);
             carCreateDto.setImages(urls);
+        }
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if(authentication != null && authentication.getPrincipal() instanceof UserDetails){
+            UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
+            User userOwn = this.userService.findById(userPrincipal.getId());
+            carCreateDto.setUserOwn(userOwn);
         }
 
         carCreateDto.setDocument(document);
@@ -152,6 +159,13 @@ public class CarController {
                 }
                 carDto.setImages(imageList);
             }
+        }
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if(authentication != null && authentication.getPrincipal() instanceof UserDetails){
+            UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
+            User userOwn = this.userService.findById(userPrincipal.getId());
+            carDto.setUserOwn(userOwn);
         }
 
 

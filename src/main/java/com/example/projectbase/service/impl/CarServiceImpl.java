@@ -92,10 +92,6 @@ public class CarServiceImpl implements CarService {
             imageList.add(im);
         }
 
-        Optional<User> userOptional = this.userRepository.findById("25bdbc83-c45c-4d07-af86-40e18680ff13");
-        User userOwn = userOptional.get();
-        carCreateDTO.setUserOwn(userOwn);
-
         Car newCar = new Car();
         newCar.setName(carCreateDTO.getName());
         newCar.setLicensePlate(carCreateDTO.getLicensePlate());
@@ -116,7 +112,7 @@ public class CarServiceImpl implements CarService {
         newCar.setTermOfUse(carCreateDTO.getTermOfUse());
         newCar.setDocument(document);
         newCar.setImages(imageList);
-        newCar.setUserOwn(userOwn);
+        newCar.setUserOwn(carCreateDTO.getUserOwn());
 
 
         Car savedCar = this.carRepository.save(newCar);
@@ -146,8 +142,6 @@ public class CarServiceImpl implements CarService {
                 }
             }
 
-            Optional<User> userOptional = this.userRepository.findById("25bdbc83-c45c-4d07-af86-40e18680ff13");
-            User userOwn = userOptional.get();
 
 
             currentCar.setName(carDto.getName());
@@ -169,7 +163,7 @@ public class CarServiceImpl implements CarService {
             currentCar.setTermOfUse(carDto.getTermOfUse());
             currentCar.setDocument(carDto.getDocument());
             currentCar.setImages(imageList);
-            currentCar.setUserOwn(userOwn);
+            currentCar.setUserOwn(carDto.getUserOwn());
             this.carRepository.save(currentCar);
             if(imageList != null){
                 this.imageRepository.saveAll(imageList);
