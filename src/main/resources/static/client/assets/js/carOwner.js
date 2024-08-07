@@ -69,33 +69,4 @@ function updateStep4() {
 }
 
 
-$(document).ready(function() {
-    const addtionalFuctions = $('#additionalF').text().split(',');
-    console.log(addtionalFuctions);
-    $('.form-check-input').each(function () {
-        if (addtionalFuctions.includes($(this).val())) {
-            $(this).prop('checked', true);
-        }
-    });
 
-    const terms = $('#terms').text().split(',');
-    $('.form-check-input').each(function () {
-        if (terms.includes($(this).val())) {
-            $(this).prop('checked', true);
-        }
-    });
-
-    let previousValue = $('#statusSelect').val();
-
-    $('#statusSelect').on('change', function () {
-        let newValue = $(this).val();
-        let confirmation = confirm("Are you sure you want to change the status?");
-
-        if (confirmation) {
-            console.log(newValue);
-            previousValue = newValue;
-        } else {
-            $('#statusSelect').val(previousValue);
-        }
-    });
-});

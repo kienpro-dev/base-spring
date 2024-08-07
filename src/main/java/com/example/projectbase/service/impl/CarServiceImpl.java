@@ -136,9 +136,11 @@ public class CarServiceImpl implements CarService {
         Optional<Car> carOptional = this.carRepository.findById(carDto.getId());
         if(carOptional.isPresent()){
             Car currentCar = carOptional.get();
-            this.imageService.deleteImagesByCarId(currentCar.getId());
+
             List<Image> imageList = carDto.getImages();
             if(imageList != null){
+                this.imageService.deleteImagesByCarId(currentCar.getId());
+                currentCar.getImages().clear();
                 for(Image image: imageList){
                     image.setCar(currentCar);
                 }
@@ -169,7 +171,9 @@ public class CarServiceImpl implements CarService {
             currentCar.setImages(imageList);
             currentCar.setUserOwn(userOwn);
             this.carRepository.save(currentCar);
-            this.imageRepository.saveAll(imageList);
+            if(imageList != null){
+                this.imageRepository.saveAll(imageList);
+            }
             return carMapper.toCarDto(currentCar);
         }
         return null;

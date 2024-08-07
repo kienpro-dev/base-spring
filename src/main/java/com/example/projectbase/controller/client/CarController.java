@@ -4,11 +4,17 @@ import com.example.projectbase.domain.dto.pagination.PaginationFullRequestDto;
 import com.example.projectbase.domain.dto.pagination.PaginationResponseDto;
 import com.example.projectbase.domain.dto.request.CarCreateDTO;
 import com.example.projectbase.domain.dto.response.CarDto;
+import com.example.projectbase.domain.entity.Booking;
 import com.example.projectbase.domain.entity.Document;
 import com.example.projectbase.domain.entity.Image;
 import com.example.projectbase.service.CarService;
 import com.example.projectbase.service.CloudinaryService;
+import com.example.projectbase.service.CustomUserDetailsService;
+import com.example.projectbase.service.ImageService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -27,6 +33,7 @@ import java.util.Optional;
 public class CarController {
     private final CarService carService;
     private final CloudinaryService cloudinaryService;
+    private final ImageService imageService;
 
     @GetMapping("/car/add")
     public String addCar(Model model, @ModelAttribute("carCreateDto") CarCreateDTO carCreateDto){
@@ -101,6 +108,12 @@ public class CarController {
     @GetMapping("/my-car/{id}")
     public String viewDetails(Model model, @PathVariable String id){
         CarDto carDto = this.carService.getCarById(id);
+        List<Booking> bookings = carDto.getBookings();
+        Booking lastBooking = null;
+        if (!bookings.isEmpty()) {
+            lastBooking = bookings.get(bookings.size() - 1);
+        }
+        model.addAttribute("lastBooking", lastBooking);
         model.addAttribute("carDto", carDto);
         model.addAttribute("id", id);
         return "client/carOwner/details";
@@ -110,7 +123,7 @@ public class CarController {
     public String upadteCar(Model model,
                             @ModelAttribute("carDto") @Valid CarDto carDto,
                             BindingResult result,
-                            @RequestParam(name = "carImages") MultipartFile[] carImages){
+                            @RequestParam(name = "carImages", required = false) MultipartFile[] carImages){
         List<FieldError> errors = result.getFieldErrors();
         for (FieldError error : errors ) {
             System.out.println (error.getField() + " - " + error.getDefaultMessage());
@@ -122,15 +135,23 @@ public class CarController {
         CarDto carX = this.carService.getCarById(carDto.getId());
         model.addAttribute("carDto", carX);
 
-        if(carImages != null){
-            List<String> urls = cloudinaryService.uploadImages(carImages);
-            List<Image> imageList = new ArrayList<>();
-            for(String url : urls){
-                Image image = new Image();
-                image.setUrl(url);
-                imageList.add(image);
+        if(carImages != null && carImages.length > 0){
+            List<MultipartFile> nonEmptyFiles = new ArrayList<>();
+            for (MultipartFile file : carImages) {
+                if (!file.isEmpty()) {
+                    nonEmptyFiles.add(file);
+                }
             }
-            carDto.setImages(imageList);
+            if (!nonEmptyFiles.isEmpty()) {
+                List<String> urls = this.cloudinaryService.uploadImages(nonEmptyFiles.toArray(new MultipartFile[0]));
+                List<Image> imageList = new ArrayList<>();
+                for(String url : urls){
+                    Image image = new Image();
+                    image.setUrl(url);
+                    imageList.add(image);
+                }
+                carDto.setImages(imageList);
+            }
         }
 
 
