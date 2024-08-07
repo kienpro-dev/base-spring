@@ -201,6 +201,11 @@
 											<li>
 												<a href="#change-modal" data-toggle="modal">Đổi mật khẩu</a>
 											</li>
+
+											<li th:if="${role}">
+												<a th:href="@{/car-owner/my-car}">Danh sách xe</a>
+											</li>
+
 											<li>
 												<a style="color: #999999; cursor: pointer;" onmouseenter="this.style.color = '#fcb941'"
 													onmouseleave="this.style.color = '#999999'" th:onclick="logout()">Đăng xuất</a>

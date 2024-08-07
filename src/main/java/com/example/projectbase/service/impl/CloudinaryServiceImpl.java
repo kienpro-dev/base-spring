@@ -21,7 +21,7 @@ public class CloudinaryServiceImpl implements CloudinaryService {
     @Override
     public String uploadImage(MultipartFile file) {
         try {
-            if (file != null) {
+            if (!file.isEmpty()) {
                 Map uploadResult = cloudinary.uploader().upload(file.getBytes(), ObjectUtils.emptyMap());
                 return uploadResult.get("url").toString();
             }

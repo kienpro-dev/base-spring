@@ -1,11 +1,9 @@
 package com.example.projectbase.controller.client;
 
-import com.example.projectbase.constant.CommonConstant;
 import com.example.projectbase.domain.dto.pagination.PaginationFullRequestDto;
 import com.example.projectbase.domain.dto.pagination.PaginationResponseDto;
 import com.example.projectbase.domain.dto.request.CarCreateDTO;
 import com.example.projectbase.domain.dto.response.CarDto;
-import com.example.projectbase.domain.entity.Car;
 import com.example.projectbase.domain.entity.Document;
 import com.example.projectbase.domain.entity.Image;
 import com.example.projectbase.service.CarService;
@@ -38,9 +36,9 @@ public class CarController {
     @PostMapping("/car/add")
     public String addNewCar(Model model, @Valid @ModelAttribute("carCreateDto") CarCreateDTO carCreateDto,
                             BindingResult result,
-                            @RequestParam(name = "registrationPaper") MultipartFile papers,
-                            @RequestParam(name = "certificates") MultipartFile cers,
-                            @RequestParam(name = "insurance") MultipartFile ins,
+                            @RequestParam(name = "registrationPaper", required = false) MultipartFile papers,
+                            @RequestParam(name = "certificates", required = false) MultipartFile cers,
+                            @RequestParam(name = "insurance", required = false) MultipartFile ins,
                             @RequestParam(name = "carImages") MultipartFile[] carImages){
         List<FieldError> errors = result.getFieldErrors();
         for (FieldError error : errors ) {
@@ -50,6 +48,7 @@ public class CarController {
         if (result.hasErrors()) {
             return "client/carOwner/createcar";
         }
+
         Document document = new Document();
         if(papers != null){
             String url = cloudinaryService.uploadImage(papers);

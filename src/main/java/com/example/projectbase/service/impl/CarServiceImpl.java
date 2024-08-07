@@ -65,15 +65,24 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public CarDto handleSaveCar(CarCreateDTO carCreateDTO) {
-        String registrationFile = carCreateDTO.getDocument().getRegistrationUrl();
-        String insuranceFile = carCreateDTO.getDocument().getInsuranceUrl();
-        String certificateFile = carCreateDTO.getDocument().getCertificateUrl();
+        Document.DocumentBuilder documentBuilder = Document.builder();
 
-        Document document = Document.builder()
-                .certificateUrl(certificateFile)
-                .insuranceUrl(insuranceFile)
-                .registrationUrl(registrationFile)
-                .build();
+        String registrationFile = carCreateDTO.getDocument() != null ? carCreateDTO.getDocument().getRegistrationUrl() : null;
+        if (registrationFile != null) {
+            documentBuilder.registrationUrl(registrationFile);
+        }
+
+        String insuranceFile = carCreateDTO.getDocument() != null ? carCreateDTO.getDocument().getInsuranceUrl() : null;
+        if (insuranceFile != null) {
+            documentBuilder.insuranceUrl(insuranceFile);
+        }
+
+        String certificateFile = carCreateDTO.getDocument() != null ? carCreateDTO.getDocument().getCertificateUrl() : null;
+        if (certificateFile != null) {
+            documentBuilder.certificateUrl(certificateFile);
+        }
+
+        Document document = documentBuilder.build();
 
         List<String> images = carCreateDTO.getImages();
         List<Image> imageList = new ArrayList<>();
@@ -116,6 +125,8 @@ public class CarServiceImpl implements CarService {
         for(Image image: imageList){
             image.setCar(savedCar);
         }
+        document.setCar(savedCar);
+        this.documentRepository.save(document);
         this.imageRepository.saveAll(imageList);
         return carMapper.toCarDto(savedCar);
     }
