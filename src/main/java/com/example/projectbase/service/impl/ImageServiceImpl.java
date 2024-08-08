@@ -40,7 +40,7 @@ public class ImageServiceImpl implements ImageService {
     @Override
     @Transactional
     public void deleteImagesByCarId(String carId) {
-        this.imageRepository.deleteAllByCarId(carId);
+        this.imageRepository.deleteAllByCarId2(carId);
     }
 
     @Override
