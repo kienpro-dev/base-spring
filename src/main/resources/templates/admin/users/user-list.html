@@ -32,7 +32,7 @@
                         <div class="row mt-2">
                             <div class="col-sm-2 col-lg-2">
                                 <form
-                                        th:action="@{/admin/users(field=${field}, keywords=${keywords})}">
+                                        th:action="@{/admin-page/users(field=${field}, keywords=${keywords})}">
                                     <label> <select class="form-select" name="size"
                                                     id="size" onchange="this.form.submit()">
                                         <option value="5" th:selected="${resultPage.size == 5}">5</option>
@@ -46,7 +46,7 @@
                             </div>
                             <div class="col-sm8 col-lg-8"></div>
                             <div class="col-sm-2 col-lg-2 justify-content-end">
-                                <form th:action="@{/admin/users(field=${field}, size=${size})}">
+                                <form th:action="@{/admin-page/users(field=${field}, size=${size})}">
                                     <div class="input-group mb-3">
                                         <input type="text" class="form-control" name="keywords"
                                                id="keywords" placeholder="Tìm kiếm theo tên đăng nhập"
@@ -65,30 +65,30 @@
                             <tr>
                                 <th scope="col">#</th>
                                 <th scope="col"><a
-                                        th:href="@{/admin/users(field=email, size=${size}, keywords=${keywords})}">Tên
+                                        th:href="@{/admin-page/users(field=email, size=${size}, keywords=${keywords})}">Tên
                                     đăng nhập</a></th>
                                 <th scope="col"><a
-                                        th:href="@{/admin/users(field=phoneNumber, size=${size}, keywords=${keywords})}">Số
+                                        th:href="@{/admin-page/users(field=phoneNumber, size=${size}, keywords=${keywords})}">Số
                                     điện thoại</a></th>
                                 <th scope="col"><a
-                                        th:href="@{/admin/users(field=name, size=${size}, keywords=${keywords})}">Họ
+                                        th:href="@{/admin-page/users(field=name, size=${size}, keywords=${keywords})}">Họ
                                     và tên</a></th>
                                 <th scope="col"><a
-                                        th:href="@{/admin/users(field=dateOfBirth, size=${size}, keywords=${keywords})}">Ngày
+                                        th:href="@{/admin-page/users(field=dateOfBirth, size=${size}, keywords=${keywords})}">Ngày
                                     sinh</a></th>
                                 <th scope="col"><a
-                                        th:href="@{/admin/users(field=nationalId, size=${size}, keywords=${keywords})}">Quốc
+                                        th:href="@{/admin-page/users(field=nationalId, size=${size}, keywords=${keywords})}">Quốc
                                     gia</a></th>
 
                                 <th scope="col"><a
-                                        th:href="@{/admin/users(field=nationalId, size=${size}, keywords=${keywords})}">Bằng
+                                        th:href="@{/admin-page/users(field=nationalId, size=${size}, keywords=${keywords})}">Bằng
                                     lái</a></th>
                                 <th scope="col"><a
-                                        th:href="@{/admin/users(field=nationalId, size=${size}, keywords=${keywords})}">Địa
+                                        th:href="@{/admin-page/users(field=nationalId, size=${size}, keywords=${keywords})}">Địa
                                     chỉ</a></th>
 
                                 <th scope="col"><a
-                                        th:href="@{/admin/users(field=role, size=${size}, keywords=${keywords})}">Chức
+                                        th:href="@{/admin-page/users(field=role, size=${size}, keywords=${keywords})}">Chức
                                     vụ</a></th>
                                 <th></th>
                             </tr>
@@ -137,7 +137,7 @@
                                 <li
                                         th:class="${resultPage.number + 1 == 1} ? 'page-item active' : 'page-item'">
                                     <a class="page-link"
-                                       th:href="@{/admin/users(field=${field}, page=${1}, size=${resultPage.size}, keywords=${keywords})}"
+                                       th:href="@{/admin-page/users(field=${field}, page=${1}, size=${resultPage.size}, keywords=${keywords})}"
                                        tabindex="-1" aria-disabled="true">Previous</a>
                                 </li>
 
@@ -145,14 +145,14 @@
                                     th:if="${resultPage.totalPages > 1}"
                                     th:class="${pageNumber == resultPage.number + 1} ? 'page-item active' : 'page-item'">
                                     <a class="page-link"
-                                       th:href="@{/admin/users(field=${field}, page=${pageNumber}, size=${resultPage.size}, keywords=${keywords})}"
+                                       th:href="@{/admin-page/users(field=${field}, page=${pageNumber}, size=${resultPage.size}, keywords=${keywords})}"
                                        th:text="${pageNumber}">1</a>
                                 </li>
 
                                 <li
                                         th:class="${resultPage.number + 1 == resultPage.totalPages} ? 'page-item active' : 'page-item'">
                                     <a class="page-link"
-                                       th:href="@{/admin/users(field=${field}, page=${resultPage.totalPages}, size=${resultPage.size}, keywords=${keywords})}">Next</a>
+                                       th:href="@{/admin-page/users(field=${field}, page=${resultPage.totalPages}, size=${resultPage.size}, keywords=${keywords})}">Next</a>
                                 </li>
                             </ul>
                         </nav>
