@@ -53,6 +53,7 @@ public class ProjectBaseApplication {
       if (roleRepository.count() == 0) {
         roleRepository.save(new Role(null, RoleConstant.ADMIN, null));
         roleRepository.save(new Role(null, RoleConstant.USER, null));
+        roleRepository.save(new Role(null, RoleConstant.CAR_OWNER, null));
       }
       //init admin
       if (userRepository.count() == 0) {

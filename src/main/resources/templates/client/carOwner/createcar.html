@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{client/layout.html}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Car</title>
+    <style>
+        .step { display: none; }
+        .step.active { display: block; }
+        .nav-steps .nav-link.active { background-color: #007bff; color: white; }
+        .nav-steps { width: 100%; background-color: lightgrey; display: flex; }
+        .nav-steps .nav-item { flex: 1; text-align: center; }
+        .nav-buttons { display: flex; justify-content: center; gap: 10px; }
+        .nav-buttons button { height: 38px; }
+    </style>
+</head>
+<body>
+<div layout:fragment="content" class="container mt-5">
+    <h1 class="mb-5 ">Add New Car</h1>
+    <ul class="nav nav-steps mb-3">
+        <li class="nav-item">
+            <a class="nav-link" href="#" onclick="showStep(0)">Step 1: Basic</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#" onclick="showStep(1)">Step 2: Details</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#" onclick="showStep(2)">Step 3: Pricing</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#" onclick="showStep(3)">Step 4: Finish</a>
+        </li>
+    </ul>
+    <form id="carForm" method="post" th:action="@{/car-owner/car/add}"
+          enctype="multipart/form-data" th:object="${carCreateDto}">
+        <!-- Step 1: Basic Information -->
+        <div class="step active">
+        <h2>Step 1: Basic Information</h2>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="licensePlate">Name:</label>
+                    <input type="text" class="form-control" th:id="nameOfCar"
+                           th:field="*{name}">
+                    <div class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="licensePlate">License Plate:</label>
+                    <input type="text" class="form-control" id="licensePlate" name="licensePlate"
+                           th:field="*{licensePlate}">
+                    <div class="text-danger" th:if="${#fields.hasErrors('licensePlate')}" th:errors="*{licensePlate}"></div>
+                </div>
+                <div class="form-group">
+                    <label for="color">Color:</label>
+                    <input type="text" class="form-control" id="color" name="color"
+                           th:field="*{color}">
+                    <div class="text-danger" th:if="${#fields.hasErrors('color')}" th:errors="*{color}"></div>
+                </div>
+                <div class="form-group">
+                    <label for="brand">Brand:</label>
+                    <input type="text" class="form-control" id="brand" name="brand"
+                           th:field="*{brand}">
+                    <div class="text-danger" th:if="${#fields.hasErrors('brand')}" th:errors="*{brand}"></div>
+                </div>
+                <div class="form-group">
+                    <label for="model">Model:</label>
+                    <input type="text" class="form-control" id="model" name="model"
+                           th:field="*{model}">
+                    <div class="text-danger" th:if="${#fields.hasErrors('model')}" th:errors="*{model}"></div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="productionYear">Production Year:</label>
+                    <input type="number" class="form-control" id="productionYear" name="productionYear"
+                           th:field="*{productionYear}">
+                    <div class="text-danger" th:if="${#fields.hasErrors('productionYear')}" th:errors="*{productionYear}"></div>
+                </div>
+                <div class="form-group">
+                    <label for="numberOfSeats">Number of Seats:</label>
+                    <input type="number" class="form-control" id="numberOfSeats" name="numberOfSeats"
+                           th:field="*{numberOfSeats}">
+                    <div class="text-danger" th:if="${#fields.hasErrors('numberOfSeats')}" th:errors="*{numberOfSeats}"></div>
+                </div>
+                <div class="form-group">
+                    <label for="transmission">Transmission:</label>
+                    <input type="text" class="form-control" id="transmission" name="transmission"
+                           th:field="*{transmissionType}">
+                    <div class="text-danger" th:if="${#fields.hasErrors('transmissionType')}" th:errors="*{transmissionType}"></div>
+                </div>
+                <div class="form-group">
+                    <label for="fuel">Fuel:</label>
+                    <input type="text" class="form-control" id="fuel" name="fuel"
+                           th:field="*{fuelType}">
+                    <div class="text-danger" th:if="${#fields.hasErrors('fuelType')}" th:errors="*{fuelType}"></div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="registrationPaper">Registration Paper:</label>
+            <input type="file" class="form-control" id="registrationPaper"
+                   name="registrationPaper" >
+        </div>
+        <div class="form-group">
+            <label>Certificate of Inspection:</label>
+            <input type="file" class="form-control" name="certificates">
+        </div>
+        <div class="form-group">
+            <label>Insurance:</label>
+            <input type="file" class="form-control" name="insurance">
+        </div>
+    </div>
+        <!-- Step 2: Details -->
+        <div class="step">
+            <h2>Step 2: Details</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="mileage">Mileage:</label>
+                        <input type="number" class="form-control" id="mileage" name="mileage"
+                               th:field="*{mileage}">
+                        <div class="text-danger" th:if="${#fields.hasErrors('mileage')}" th:errors="*{mileage}"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="fuelConsumption">Fuel Consumption:</label>
+                        <input type="number" class="form-control" id="fuelConsumption" name="fuelConsumption"
+                               th:field="*{fuelConsumption}">
+                        <div class="text-danger" th:if="${#fields.hasErrors('fuelConsumption')}" th:errors="*{fuelConsumption}"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Address:</label>
+                        <input type="text" class="form-control" id="address" name="address"
+                               th:field="*{address}">
+                        <div class="text-danger" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Description:</label>
+                        <textarea class="form-control" id="description" name="description"
+                                  th:field="*{description}"></textarea>
+                        <div class="text-danger" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="frontImage">Image:</label>
+                        <input type="file" class="form-control" id="frontImage" name="carImages" multiple>
+                    </div>
+                    <div class="form-group">
+                        <label>Additional Functions:</label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" th:field="*{additionalFunctions}" id="bluetooth" name="additionalFunctions" value="Bluetooth">
+                            <label class="form-check-label" for="bluetooth">Bluetooth</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" th:field="*{additionalFunctions}" id="camera" name="additionalFunctions" value="Camera">
+                            <label class="form-check-label" for="camera">Camera</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" th:field="*{additionalFunctions}" id="gps" name="additionalFunctions" value="GPS">
+                            <label class="form-check-label" for="gps">GPS</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" th:field="*{additionalFunctions}" id="childLock" name="additionalFunctions" value="Child Lock">
+                            <label class="form-check-label" for="childLock">Child Lock</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" th:field="*{additionalFunctions}" id="childSeat" name="additionalFunctions" value="Child Seat">
+                            <label class="form-check-label" for="childSeat">Child Seat</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" th:field="*{additionalFunctions}" id="dvd" name="additionalFunctions" value="DVD">
+                            <label class="form-check-label" for="dvd">DVD</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" th:field="*{additionalFunctions}" id="usb" name="additionalFunctions" value="USB">
+                            <label class="form-check-label" for="usb">USB</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Step 3: Pricing -->
+        <div class="step">
+            <h2>Step 3: Pricing</h2>
+            <div class="form-group">
+                <label for="basePrice">Base Price:</label>
+                <input type="number" class="form-control" id="basePrice" name="basePrice"
+                       th:field="*{basePrice}">
+                <div class="text-danger" th:if="${#fields.hasErrors('basePrice')}" th:errors="*{basePrice}"></div>
+            </div>
+            <div class="form-group">
+                <label for="deposit">Required Deposit:</label>
+                <input type="number" class="form-control" id="deposit" name="deposit"
+                       th:field="*{deposit}">
+                <div class="text-danger" th:if="${#fields.hasErrors('deposit')}" th:errors="*{deposit}"></div>
+            </div>
+            <div class="form-group">
+                <label>Term of Use:</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="No Smoking"
+                           th:field="*{termOfUse}">
+                    <label class="form-check-label">No Smoking</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="No Pet"
+                           th:field="*{termOfUse}">
+                    <label class="form-check-label">No Pet</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="No Food in Car"
+                           th:field="*{termOfUse}">
+                    <label class="form-check-label" >No Food in Car</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="Other"
+                           th:field="*{termOfUse}">
+                    <label class="form-check-label" >Other</label>
+                </div>
+                <input type="text" class="form-control mt-2"
+                       th:field="*{termOfUse}" placeholder="Specify other terms">
+            </div>
+        </div>
+        <!-- Step 4: Finish -->
+        <div class="step">
+            <h2>Step 4: Finish</h2>
+            <div class="form-group">
+                <label for="carName">Car Name:</label>
+                <span id="carName" name="carName" ></span>
+            </div>
+            <div class="form-group">
+                <label for="price">Price:</label>
+                <span id="price" name="price" ></span>
+            </div>
+            <div class="form-group">
+                <label for="location">Location:</label>
+                <span  id="location" name="location" ></span>
+            </div>
+            <div class="form-group">
+                <label for="status">Status:</label>
+                <span id="status" name="status" ></span>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </form>
+
+
+    <div class="nav-buttons mt-3">
+        <button id="prevBtn" class="btn btn-secondary" onclick="prevStep()">Previous</button>
+        <button id="cancelBtn" class="btn btn-danger" onclick="cancelForm()">Cancel</button>
+        <button id="nextBtn" class="btn btn-primary" onclick="nextStep()">Next</button>
+    </div>
+</div>
+
+</body>
+</html>

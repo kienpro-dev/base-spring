@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{client/layout.html}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car details</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .car-card {
+            margin-bottom: 20px;
+        }
+        .car-card img {
+            width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+<div layout:fragment="content" class="container mt-5">
+    <div class="row mb-5">
+        <div class="col-md-12 d-flex justify-content-between">
+            <h1>Edit car details</h1>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-md-12 car-card">
+            <div class="card">
+                <div class="row no-gutters">
+                    <div class="col-md-6">
+                        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                            <ol class="carousel-indicators">
+                                <li th:each="image, iterStat : ${carDto.images}" th:data-slide-to="${iterStat.index}" th:classappend="${iterStat.index == 0} ? 'active'"></li>
+                            </ol>
+                            <div class="carousel-inner">
+                                <div th:each="image, iterStat : ${carDto.images}" th:classappend="${iterStat.index == 0} ? 'active'" class="carousel-item">
+                                    <img th:src="@{${image.url}}" class="d-block w-100" alt="Car Image">
+                                </div>
+                            </div>
+                            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-6 car-details d-flex flex-column justify-content-between">
+                        <div class="card-body">
+                            <h5 class="card-title" th:text="${carDto.name}">Car Name</h5>
+                            <p class="card-text">No. of rides: <span th:text="${carDto.bookings.size()}">0</span></p>
+                            <p class="card-text">Price: <span th:text="${carDto.basePrice}">0</span></p>
+                            <p class="card-text">Location: <span th:text="${carDto.address}">Location</span></p>
+                            <label class="form-label">Status:</label>
+                            <select class="form-control" id="statusSelect">
+                                <option value="available" selected style="color: #00ff80">Available</option>
+                                <option value="stopped" style="color: #a52834">Stopped</option>
+                            </select>
+                        </div>
+                        <div class="card-footer">
+                            <a href="" class="btn btn-success">Confirm deposit</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <form th:action="@{/car-owner/my-car/upadte}" method="POST"
+           enctype="multipart/form-data" th:object="${carDto}">
+        <input type="hidden" th:field="*{id}" />
+        <div class="row">
+            <div class="col-12">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#basic" data-toggle="tab">Basic Information</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#details" data-toggle="tab">Details</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#pricing" data-toggle="tab">Pricing</a>
+                    </li>
+                </ul>
+                <div class="tab-content mt-3">
+                    <div class="tab-pane fade show active" id="basic">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="licensePlate">Name:</label>
+                                    <input type="text" class="form-control" th:id="nameOfCar"
+                                           th:field="*{name}">
+                                    <div class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="licensePlate">License Plate:</label>
+                                    <input type="text" class="form-control" id="licensePlate" name="licensePlate"
+                                           th:field="*{licensePlate}">
+                                    <div class="text-danger" th:if="${#fields.hasErrors('licensePlate')}" th:errors="*{licensePlate}"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="color">Color:</label>
+                                    <input type="text" class="form-control" id="color" name="color"
+                                           th:field="*{color}">
+                                    <div class="text-danger" th:if="${#fields.hasErrors('color')}" th:errors="*{color}"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="brand">Brand:</label>
+                                    <input type="text" class="form-control" id="brand" name="brand"
+                                           th:field="*{brand}">
+                                    <div class="text-danger" th:if="${#fields.hasErrors('brand')}" th:errors="*{brand}"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="model">Model:</label>
+                                    <input type="text" class="form-control" id="model" name="model"
+                                           th:field="*{model}">
+                                    <div class="text-danger" th:if="${#fields.hasErrors('model')}" th:errors="*{model}"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="productionYear">Production Year:</label>
+                                    <input type="number" class="form-control" id="productionYear" name="productionYear"
+                                           th:field="*{productionYear}">
+                                    <div class="text-danger" th:if="${#fields.hasErrors('productionYear')}" th:errors="*{productionYear}"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="numberOfSeats">Number of Seats:</label>
+                                    <input type="number" class="form-control" id="numberOfSeats" name="numberOfSeats"
+                                           th:field="*{numberOfSeats}">
+                                    <div class="text-danger" th:if="${#fields.hasErrors('numberOfSeats')}" th:errors="*{numberOfSeats}"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="transmission">Transmission:</label>
+                                    <input type="text" class="form-control" id="transmission" name="transmission"
+                                           th:field="*{transmissionType}">
+                                    <div class="text-danger" th:if="${#fields.hasErrors('transmissionType')}" th:errors="*{transmissionType}"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="fuel">Fuel:</label>
+                                    <input type="text" class="form-control" id="fuel" name="fuel"
+                                           th:field="*{fuelType}">
+                                    <div class="text-danger" th:if="${#fields.hasErrors('fuelType')}" th:errors="*{fuelType}"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <p><strong>Documents:</strong></p>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <table class="table table-bordered table-hover">
+                                    <thead class="thead-dark">
+                                    <tr>
+                                        <th style="width: 5%;">No</th>
+                                        <th style="width: 30%;">Name</th>
+                                        <th style="width: 35%;">Note</th>
+                                        <th style="width: 30%;">Link</th>
+                                    </tr>
+                                    </thead>
+                                    <input type="hidden" th:field="*{document.registrationUrl}" />
+                                    <input type="hidden" th:field="*{document.certificateUrl}" />
+                                    <input type="hidden" th:field="*{document.insuranceUrl}" />
+                                    <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>Registration paper</td>
+                                        <td><span th:text="${carDto.document.registrationUrl == null} ? 'Not available' : 'Verified'"></span></td>
+                                        <td><a th:if="${carDto.document.registrationUrl != null}" th:href="@{${carDto.document.registrationUrl}}" target="_blank">View Document</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td>Certificate of Inspection</td>
+                                        <td><span th:text="${carDto.document.certificateUrl == null} ? 'Not available' : 'Verified'"></span></td>
+                                        <td><a th:if="${carDto.document.certificateUrl != null}" th:href="@{${carDto.document.certificateUrl}}" target="_blank">View Document</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>3</td>
+                                        <td>Insurance</td>
+                                        <td><span th:text="${carDto.document.insuranceUrl == null} ? 'Not available' : 'Verified'"></span></td>
+                                        <td><a th:if="${carDto.document.insuranceUrl != null}" th:href="@{${carDto.document.insuranceUrl}}" target="_blank">View Document</a></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="details">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="mileage">Mileage:</label>
+                                    <input type="number" class="form-control" id="mileage" name="mileage"
+                                           th:field="*{mileage}">
+                                    <div class="text-danger" th:if="${#fields.hasErrors('mileage')}" th:errors="*{mileage}"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="fuelConsumption">Fuel Consumption:</label>
+                                    <input type="number" class="form-control" id="fuelConsumption" name="fuelConsumption"
+                                           th:field="*{fuelConsumption}">
+                                    <div class="text-danger" th:if="${#fields.hasErrors('fuelConsumption')}" th:errors="*{fuelConsumption}"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="address">Address:</label>
+                                    <input type="text" class="form-control" id="address" name="address"
+                                           th:field="*{address}">
+                                    <div class="text-danger" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="description">Description:</label>
+                                    <textarea class="form-control" id="description" name="description"
+                                              th:field="*{description}"></textarea>
+                                    <div class="text-danger" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="frontImage">Image:</label>
+                                    <input type="file" class="form-control" id="frontImage" name="carImages" multiple>
+                                </div>
+                                <div class="form-group">
+                                    <label>Additional Functions:</label>
+                                    <span th:id="additionalF" style="display: none" th:text="${carDto.getAdditionalFunctions()}"></span>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" th:field="*{additionalFunctions}" id="bluetooth" name="additionalFunctions" value="Bluetooth">
+                                        <label class="form-check-label" for="bluetooth">Bluetooth</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" th:field="*{additionalFunctions}" id="camera" name="additionalFunctions" value="Camera">
+                                        <label class="form-check-label" for="camera">Camera</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" th:field="*{additionalFunctions}" id="gps" name="additionalFunctions" value="GPS">
+                                        <label class="form-check-label" for="gps">GPS</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" th:field="*{additionalFunctions}" id="childLock" name="additionalFunctions" value="Child Lock">
+                                        <label class="form-check-label" for="childLock">Child Lock</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" th:field="*{additionalFunctions}" id="childSeat" name="additionalFunctions" value="Child Seat">
+                                        <label class="form-check-label" for="childSeat">Child Seat</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" th:field="*{additionalFunctions}" id="dvd" name="additionalFunctions" value="DVD">
+                                        <label class="form-check-label" for="dvd">DVD</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" th:field="*{additionalFunctions}" id="usb" name="additionalFunctions" value="USB">
+                                        <label class="form-check-label" for="usb">USB</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="pricing">
+                        <div class="form-group">
+                            <label for="basePrice">Base Price:</label>
+                            <input type="number" class="form-control" id="basePrice" name="basePrice"
+                                   th:field="*{basePrice}" required>
+                            <div class="text-danger" th:if="${#fields.hasErrors('basePrice')}" th:errors="*{basePrice}"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="deposit">Required Deposit:</label>
+                            <input type="number" class="form-control" id="deposit" name="deposit"
+                                   th:field="*{deposit}" required>
+                            <div class="text-danger" th:if="${#fields.hasErrors('deposit')}" th:errors="*{deposit}"></div>
+                        </div>
+                        <div class="form-group">
+                            <label>Term of Use:</label>
+                            <span th:text="${carDto.termOfUse}" th:id="terms" class="hidden opacity-0"></span>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="No Smoking"
+                                       th:field="*{termOfUse}">
+                                <label class="form-check-label">No Smoking</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="No Pet"
+                                       th:field="*{termOfUse}">
+                                <label class="form-check-label">No Pet</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="No Food in Car"
+                                       th:field="*{termOfUse}">
+                                <label class="form-check-label" >No Food in Car</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="Other"
+                                       th:field="*{termOfUse}">
+                                <label class="form-check-label" >Other</label>
+                            </div>
+                            <input type="text" class="form-control mt-2"
+                                   th:field="*{termOfUse}" placeholder="Specify other terms">
+
+                        <button type="submit" class="btn btn-primary mt-3">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+
+    </form>
+</div>
+
+
+
+</body>
+</html>

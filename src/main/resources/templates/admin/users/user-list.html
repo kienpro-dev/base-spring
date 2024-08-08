@@ -99,13 +99,17 @@
                                 <td th:text="${item.email}"></td>
                                 <td th:text="${item.phoneNumber}==null? 'Chưa cập nhật..' : ${item.phoneNumber}"></td>
                                 <td th:text="${item.name}"></td>
-                                <td th:text="${item.dateOfBirth}==null? 'Chưa cập nhật..' : ${item.dateOfBirth}"></td>
+                                <td th:text="${item.dateOfBirth} != null ? ${item.dateOfBirth}:'Chưa cập nhật...'"></td>
                                 <td th:text="${item.nationalId}==null? 'Chưa cập nhật..' : ${item.nationalId}"></td>
                                 <td th:text="${item.drivingLicense}==null? 'Chưa cập nhật..' : ${item.drivingLicense}"></td>
                                 <td th:text="${item.address}==null? 'Chưa cập nhật..' : ${item.address}"></td>
                                 <td><span
-                                        th:text="${item.role.name} == 'ROLE_ADMIN' ? 'Admin' : 'Người dùng'"
-                                        th:class="${item.role.name} == 'ROLE_ADMIN' ? 'badge bg-success' : 'badge bg-danger'"></span>
+                                    <span th:if="${item.role.name} == 'ROLE_ADMIN'"
+                                          class="badge bg-success">Admin</span>
+                                    <span th:if="${item.role.name} == 'ROLE_USER'"
+                                          class="badge bg-danger">Người dùng</span>
+                                    <span th:if="${item.role.name} == 'ROLE_CAR_OWNER'"
+                                          class="badge bg-info">Chủ xe</span>
                                 </td>
                                 <td>
                                     <div class="btn-group" role="group">

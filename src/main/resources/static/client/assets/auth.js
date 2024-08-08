@@ -5,6 +5,7 @@ var registerEmail = document.getElementById('register_email');
 var registerPhone = document.getElementById('register_phone');
 var registerPassword = document.getElementById('register_password');
 var registerRetypePassword = document.getElementById('register_retype_password');
+var roles = document.getElementsByName('role');
 var formRegister = document.getElementById('register');
 
 var loginEmail = document.getElementById('login_email');
@@ -28,13 +29,20 @@ function registerSubmit() {
 		})
 		return;
 	}
+	let roleCheck = 'ROLE_USER';
+	for(const role of roles) {
+		if(role.checked) {
+			roleCheck = role.value;
+			break;
+		}
+	}
 	axios.post(baseUrl + '/car/auth/register', {
 		name: registerName.value,
 		email: registerEmail.value,
 		phoneNumber: registerPhone.value,
 		password: registerPassword.value,
 		repeatPassword: registerRetypePassword.value,
-		role: 'ROLE_USER',
+		role: roleCheck,
 	})
 		.then(function(response) {
 			Swal.fire({
@@ -150,8 +158,8 @@ function changeSubmit() {
 	}
 	axios.post(baseUrl + '/car/auth/change-password', {
 		password: changePassword.value,
-		retype_password: changeRetypePassword.value,
-		retype_password2: changeRetypePassword2.value,
+		newPassword: changeRetypePassword.value,
+		repeatNewPassword: changeRetypePassword2.value,
 	})
 		.then(function(response) {
 			Swal.fire({
