@@ -99,7 +99,7 @@ public class AdminController {
             return "auth/admin/login";
         }
         authService.autoLogin(loginRequestDto.getEmail(), loginRequestDto.getPassword());
-        return "redirect:/admin/home";
+        return "redirect:/admin-page/home";
     }
 
     @GetMapping(value = UrlConstant.Admin.USERS_MANAGEMENT)
