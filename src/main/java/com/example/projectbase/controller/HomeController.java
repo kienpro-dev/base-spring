@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class HomeController {
 
     private final UserService userService;
+
     private final AuthService authService;
 
     @GetMapping(UrlConstant.HOME)
@@ -29,6 +30,7 @@ public class HomeController {
             model.addAttribute("user", currentUser);
             model.addAttribute("role", currentUser.getRole().getName());
         }
+
         return "client/home/index";
     }
 

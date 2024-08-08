@@ -122,7 +122,7 @@ function viewAdmin(id) {
     axios({
         method: 'GET',
         contentType: "application/json",
-        url: baseUrl + "/admin/view/" + id
+        url: baseUrl + "/admin/view-admin/" + id
     })
         .then(function (response) {
             var phoneNumber = response.data.phoneNumber || '';
