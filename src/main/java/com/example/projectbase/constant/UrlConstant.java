@@ -8,7 +8,7 @@ public class UrlConstant {
     public static final String CONTACT = "/contact";
 
     public static class Admin {
-        private static final String PRE_FIX = "/admin-page";
+        private static final String PRE_FIX = "/admin";
 
         public static final String ADMIN_HOME = PRE_FIX + "/home";
         public static final String USERS_MANAGEMENT = PRE_FIX + "/users";
