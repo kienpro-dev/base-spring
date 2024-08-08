@@ -13,7 +13,7 @@ function deleteUser(id, name) {
         if (result.isConfirmed) {
             axios({
                 method: 'PUT',
-                url: baseUrl + "/admin/delete/" + id,
+                url: baseUrl + "/admin-page/delete/" + id,
                 responseType: 'stream'
             })
                 .then(function (response) {
@@ -34,7 +34,7 @@ function viewUser(id) {
     axios({
         method: 'GET',
         contentType: "application/json",
-        url: baseUrl + "/admin/view/" + id
+        url: baseUrl + "/admin-page/view/" + id
     })
         .then(function (response) {
             var phoneNumber = response.data.phoneNumber || 'Chưa cập nhật ...';
@@ -122,7 +122,8 @@ function viewAdmin(id) {
     axios({
         method: 'GET',
         contentType: "application/json",
-        url: baseUrl + "/admin/view/" + id
+
+        url: baseUrl + "/admin/view-admin/" + id
     })
         .then(function (response) {
             var phoneNumber = response.data.phoneNumber || '';
@@ -196,7 +197,7 @@ document.getElementById('updateButton').addEventListener('click', function() {
 
     axios({
         method: 'PUT',
-        url: baseUrl + "/admin/update",
+        url: baseUrl + "/admin-page/update",
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
         },

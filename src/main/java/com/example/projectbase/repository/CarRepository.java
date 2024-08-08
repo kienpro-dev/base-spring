@@ -12,5 +12,8 @@ import java.util.List;
 @Repository
 public interface CarRepository extends JpaRepository<Car,String> {
     Page<Car> findByUserOwn(Pageable pageable, User userOwn);
+
+    Page<Car> findAllByNameLike(Pageable pageable,String keyword);
+
     List<Car> findByFuelType(String fuelType);
 }

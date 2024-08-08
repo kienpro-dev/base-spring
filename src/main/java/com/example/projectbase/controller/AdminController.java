@@ -4,7 +4,9 @@ import com.example.projectbase.constant.RoleConstant;
 import com.example.projectbase.constant.UrlConstant;
 import com.example.projectbase.domain.dto.request.LoginRequestDto;
 import com.example.projectbase.domain.dto.request.UserRequestDto;
+import com.example.projectbase.domain.entity.Car;
 import com.example.projectbase.domain.entity.User;
+import com.example.projectbase.repository.CarRepository;
 import com.example.projectbase.repository.UserRepository;
 import com.example.projectbase.security.UserPrincipal;
 import com.example.projectbase.service.AuthService;
@@ -48,6 +50,8 @@ public class AdminController {
 
     private final UserRepository userRepository;
 
+    private final CarRepository carRepository;
+
     @GetMapping(UrlConstant.Auth.ADMIN_LOGIN)
     public String getLoginForm(Model model) {
         model.addAttribute("loginRequestDto", new LoginRequestDto());
@@ -72,7 +76,7 @@ public class AdminController {
     @PostMapping(UrlConstant.Auth.ADMIN_LOGIN)
     public String loginSubmit(Model model, @Valid @ModelAttribute LoginRequestDto loginRequestDto, BindingResult result,
                               HttpServletRequest request, HttpServletResponse response) {
-       // authService.logoutMvc(request, response);
+        // authService.logoutMvc(request, response);
         if (loginRequestDto.getEmail().trim().isEmpty() || loginRequestDto.getPassword().trim().isEmpty()) {
             model.addAttribute("error", "Vui lòng điền đầy đủ thông tin");
             return "auth/admin/login";
@@ -95,7 +99,7 @@ public class AdminController {
             return "auth/admin/login";
         }
         authService.autoLogin(loginRequestDto.getEmail(), loginRequestDto.getPassword());
-        return "redirect:/admin/home";
+        return "redirect:/admin-page/home";
     }
 
     @GetMapping(value = UrlConstant.Admin.USERS_MANAGEMENT)
@@ -134,10 +138,13 @@ public class AdminController {
     @GetMapping(value = UrlConstant.Admin.VIEW_USER)
     public ResponseEntity<?> viewApi(@PathVariable(name = "id") String id, Model model) {
         User user = userService.findById(id);
-        if (user.getRole().getName().equals(RoleConstant.ADMIN)) {
-            return new ResponseEntity<UserRequestDto>(new UserRequestDto(user), HttpStatus.OK);
-        }
-        else return new ResponseEntity<User>(user,HttpStatus.OK);
+        return new ResponseEntity<User>(user, HttpStatus.OK);
+    }
+
+    @GetMapping(value = UrlConstant.Admin.VIEW_ADMIN)
+    public ResponseEntity<?> viewAdminApi(@PathVariable(name = "id") String id, Model model) {
+        User user = userService.findById(id);
+        return new ResponseEntity<UserRequestDto>(new UserRequestDto(user), HttpStatus.OK);
     }
 
     @GetMapping(value = UrlConstant.Admin.LOGOUT_ADMIN)
@@ -152,6 +159,33 @@ public class AdminController {
             model.addAttribute("error", "Cập nhật không thành công!");
         }
         return new ResponseEntity<Void>(HttpStatus.OK);
+    }
+
+    @GetMapping(value = UrlConstant.Admin.CARS_MANAGEMENT)
+    public String listCars(Model model, @RequestParam(name = "field") Optional<String> field,
+                           @RequestParam(name = "page") Optional<Integer> page, @RequestParam(name = "size") Optional<Integer> size,
+                           @RequestParam(name = "keywords", defaultValue = "") Optional<String> keywords) {
+        String keyword = keywords.orElse(session.get("keywords"));
+        session.set("keywords", keyword);
+        Sort sort = Sort.by(Sort.Direction.DESC, field.orElse("id"));
+        Pageable pageable = PageRequest.of(page.orElse(1) - 1, size.orElse(5), sort);
+        Page<Car> resultPage = carRepository.findAllByNameLike(pageable, keyword);
+        int totalPages = resultPage.getTotalPages();
+        int startPage = Math.max(1, page.orElse(1) - 2);
+        int endPage = Math.min(page.orElse(1) + 2, totalPages);
+        if (totalPages > 5) {
+            if (endPage == totalPages)
+                startPage = endPage - 5;
+            else if (startPage == 1)
+                endPage = startPage + 5;
+        }
+        List<Integer> pageNumbers = IntStream.rangeClosed(startPage, endPage).boxed().collect(Collectors.toList());
+        model.addAttribute("pageNumbers", pageNumbers);
+        model.addAttribute("field", field.orElse("id"));
+        model.addAttribute("size", size.orElse(5));
+        model.addAttribute("keywords", keyword);
+        model.addAttribute("resultPage", resultPage);
+        return "admin/products/product-list";
     }
 
 }

@@ -104,7 +104,7 @@ public class CarController {
                           @RequestParam(name = "page", required = false, defaultValue = "1") int page,
                           @RequestParam(name = "size", required = false, defaultValue = "4") int size,
                           @RequestParam(name = "sortBy", required = false, defaultValue = "createdDate") String sortBy,
-                          @RequestParam(name = "isAscending", required = false, defaultValue = "true") boolean isAscending,
+                          @RequestParam(name = "isAscending", required = false, defaultValue = "false") boolean isAscending,
                           @CurrentUser UserPrincipal userPrincipal) {
         PaginationFullRequestDto requestDto = new PaginationFullRequestDto();
         requestDto.setKeyword(keyword);
@@ -119,6 +119,7 @@ public class CarController {
         List<CarDto> cars = carPage.getItems();
         model.addAttribute("cars", cars);
         model.addAttribute("currentPage", page);
+        model.addAttribute("size", size);
         model.addAttribute("totalPages", carPage.getMeta().getTotalPages());
         return "client/carOwner/mycar";
     }
@@ -151,7 +152,6 @@ public class CarController {
             return "client/carOwner/mycar";
         }
         CarDto carX = this.carService.getCarById(carDto.getId());
-        model.addAttribute("carDto", carX);
 
         if(carImages != null && carImages.length > 0){
             List<MultipartFile> nonEmptyFiles = new ArrayList<>();

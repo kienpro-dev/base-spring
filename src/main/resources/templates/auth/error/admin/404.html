@@ -45,13 +45,17 @@
 
 	<main>
 		<div class="container">
-
 			<section
 				class="section error-404 min-vh-100 d-flex flex-column align-items-center justify-content-center">
 				<h1>404</h1>
-				<h2 th:text="${message}"></h2>
-				<a class="btn" th:href="@{/car/home}">Về trang chủ</a> <img
-					th:src="@{/admin/assets/img/not-found.svg}" class="img-fluid py-5"
+				<h2 >Không tìm thấy trang</h2>
+				<div th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+					<a class="btn" th:href="@{/admin/home}">Về trang chủ</a>
+				</div>
+				<div th:if="${!#authorization.expression('hasRole(''ADMIN'')')}">
+					<a class="btn" th:href="@{/car/home}">Về trang chủ</a>
+				</div>
+				<img th:src="@{/admin/assets/img/not-found.svg}" class="img-fluid py-5"
 					alt="Page Not Found">
 				<div class="credits">
 					Được tạo bởi <a href="#">VVDCODE</a>
