@@ -69,11 +69,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 .authorizeRequests()
                 .antMatchers(
                         "/home/**",
-<<<<<<< HEAD
                         "/admin-page/**",
-=======
-                        "/admin/**",
->>>>>>> 2a49a16343ce14853cb6f70442c5ff640fcd185a
                         "/users/**",
                         "/categories/**",
                         "/brands/**",
