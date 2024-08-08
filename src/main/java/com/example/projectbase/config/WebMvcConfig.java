@@ -19,7 +19,6 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -65,6 +64,28 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable()
+
+                //Chỉ có admin mới có thể truy cập
+                .authorizeRequests()
+                .antMatchers(
+                        "/home/**",
+                        "/admin/**",
+                        "/users/**",
+                        "/categories/**",
+                        "/brands/**",
+                        "/products/**",
+                        "/orders/**",
+                        "/statistics/**")
+                .access("hasRole('ROLE_ADMIN')").and()
+                //Chỉ có user mới có thể truy cập
+                .authorizeRequests()
+                .antMatchers()
+                .access("hasRole('ROLE_USER')").and()
+                .authorizeRequests()
+                .antMatchers(
+                        "/car-owner/**"
+                )
+                .access("hasRole('ROLE_CAR_OWNER')").and()
                 //Tất cả có thể truy cập
                 .authorizeRequests()
                 .antMatchers(
@@ -87,36 +108,11 @@ public class WebMvcConfig implements WebMvcConfigurer {
                         "/car/check-out/**",
                         "/car/like/**",
                         "/car/order/**")
-                .permitAll().and()
-
-                //Chỉ có admin mới có thể truy cập
-                .authorizeRequests()
-                .antMatchers(
-                        "/home/**",
-                        "/admin/**",
-                        "/users/**",
-                        "/categories/**",
-                        "/brands/**",
-                        "/products/**",
-                        "/orders/**",
-                        "/statistics/**")
-                .access("hasRole('ROLE_ADMIN')").and()
-                //Chỉ có user mới có thể truy cập
-                .authorizeRequests()
-                .antMatchers()
-                .access("hasRole('ROLE_USER')").and()
-                .authorizeRequests()
-                .antMatchers(
-                        "/car-owner/**"
-                )
-                .access("hasRole('ROLE_CAR_OWNER')")
+                .permitAll()
                 .anyRequest().authenticated().and()
                 .exceptionHandling()
-                    .accessDeniedHandler(accessDeniedHandler())
-                    .authenticationEntryPoint(customAuthenticationEntryPoint())
-                    .and()
-
-        ;
+                .accessDeniedHandler(accessDeniedHandler())
+                .authenticationEntryPoint(customAuthenticationEntryPoint());
         http.authenticationProvider(authenticationProvider());
         return http.build();
     }
