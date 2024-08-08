@@ -10,7 +10,7 @@ public class UrlConstant {
     public static final String QUICK_VIEW_IMAGES = "/quick-view" + "/images" + "/{id}";
 
     public static class Admin {
-        private static final String PRE_FIX = "/admin";
+        private static final String PRE_FIX = "/admin-page";
 
         public static final String ADMIN_HOME = PRE_FIX + "/home";
         public static final String USERS_MANAGEMENT = PRE_FIX + "/users";
