@@ -67,7 +67,7 @@ public class AuthController {
         user.setPhoneNumber(register.getPhoneNumber());
         user.setEmail(register.getEmail());
         user.setPassword(register.getPassword());
-        user.setRole(roleRepository.findByRoleName(RoleConstant.USER));
+        user.setRole(roleRepository.findByRoleName(register.getRole()));
         user.setIsActive(true);
         userService.saveOrUpdate(user);
         return VsResponseUtil.success("Chúc mừng bạn đã đăng ký thành công.");
