@@ -21,9 +21,10 @@
                             alt="Banner img desc">
                     </a>
                     <div class="banner-content text-right">
-                        <div class="price text-center" style="color: #fcb941">
-                            <sup class="text-white">Chỉ từ</sup>
-                            <strong>9</strong><sup class="text-white">.000.000 VND</sup>
+                        <div class="price text-center">
+                            <sup class="text-white">Chỉ từ</sup> <span class="text-white">
+									<strong>9</strong><sup class="text-white">.000.000 VND</sup>
+								</span>
                         </div>
                         <a th:href="@{/car/client}" class="banner-link" style="color: white">Cửa hàng <i
                                 class="icon-long-arrow-right"></i></a>
@@ -147,7 +148,7 @@
                             alt="Banner img desc">
                     </a>
                     <div class="banner-content text-right">
-                        <div class="price text-center" style="color: #fcb941">
+                        <div class="price text-center">
                             <sup class="text-white">Chỉ từ</sup> <span class="text-white">
 									<strong>9</strong><sup class="text-white">.000.000 VND</sup>
 								</span>
@@ -379,11 +380,10 @@
                                  th:each="item, i : ${listElectric}">
                                 <figure class="product-media">
 										<span>
-											<span class="product-label label-sale">Đặt cọc 20%</span> <span
-                                                class="product-label"></span>
+											<span class="product-label label-sale">Đặt cọc 20%</span>
 										</span>
                                     <a th:href="@{/car-owner/my-car/${item.id}}"> <img
-                                            th:src="${item.id} == null ? '/client/assets/images/no-image.jpg' : '/uploads/' + ${item.id} + '.jpg'"
+                                            th:src="${item.getBanner()} == null ? '/client/assets/images/no-image.jpg' : ${item.getBanner()}"
                                             alt="Product image" class="product-image">
                                     </a>
 
@@ -513,11 +513,10 @@
                             <div class="product text-center" th:each="item, i : ${listPetrol}">
                                 <figure class="product-media">
 										<span>
-											<span class="product-label label-sale">Đặt cọc 20%</span> <span
-                                                class="product-label"></span>
+											<span class="product-label label-sale">Đặt cọc 20%</span>
 										</span>
                                     <a th:href="@{/car-owner/my-car/${item.id}}"> <img
-                                            th:src="${item.id} == null ? '/client/assets/images/no-image.jpg' : '/uploads/' + ${item.id} + '.jpg'"
+                                            th:src="${item.getBanner()} == null ? '/client/assets/images/no-image.jpg' : ${item.getBanner()}"
                                             alt="Product image" class="product-image">
                                     </a>
 
