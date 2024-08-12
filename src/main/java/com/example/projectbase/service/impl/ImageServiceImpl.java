@@ -45,6 +45,6 @@ public class ImageServiceImpl implements ImageService {
 
     @Override
     public List<Image> findAllByCarId(String carId) {
-        return this.imageRepository.findAllByCarId(carId);
+        return this.imageRepository.findByCarId(carId);
     }
 }

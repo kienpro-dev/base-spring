@@ -16,6 +16,7 @@ public interface ImageRepository extends JpaRepository<Image, String> {
     @Query("DELETE FROM Image i WHERE i.car.id = ?1")
     void deleteAllByCarId2(String carId);
 
-    List<Image> findAllByCarId(String carId);
+    @Query("SELECT i FROM Image i WHERE i.car.id = ?1")
+    List<Image> findByCarId(String carId);
 
 }
