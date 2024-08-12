@@ -91,5 +91,13 @@ public class Car extends UserDateAuditing {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "document_id", referencedColumnName = "id")
+    @JsonIgnore
     private Document document;
+
+    public String getBanner() {
+        if (images != null && !images.isEmpty()) {
+            return images.get(0).getUrl();
+        }
+        return null;
+    }
 }

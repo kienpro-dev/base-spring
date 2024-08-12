@@ -48,7 +48,7 @@ public class CarServiceImpl implements CarService {
         Pageable pageable = PaginationUtil.buildPageable(request, SortByDataConstant.CAR);
         Page<Car> carPage = this.carRepository.findByUserOwn(pageable, userOwn);
         List<CarDto> carDtos = carMapper.toCarDtos(carPage.getContent());
-        PagingMeta pagingMeta = new PagingMeta(carPage.getTotalElements(), carPage.getTotalPages(), carPage.getNumber(), carPage.getSize() , request.getSortBy(), request.getIsAscending().toString());
+        PagingMeta pagingMeta = new PagingMeta(carPage.getTotalElements(), carPage.getSize(), carPage.getNumber(), carPage.getTotalPages(), request.getSortBy(), request.getIsAscending().toString());
         return new PaginationResponseDto<>(pagingMeta,carDtos);
     }
 
@@ -134,15 +134,15 @@ public class CarServiceImpl implements CarService {
             Car currentCar = carOptional.get();
 
             List<Image> imageList = carDto.getImages();
-            if(imageList != null && !imageList.isEmpty()){
+            if(imageList != null){
                 this.imageService.deleteImagesByCarId(currentCar.getId());
                 currentCar.getImages().clear();
                 for(Image image: imageList){
                     image.setCar(currentCar);
                 }
-                currentCar.setImages(imageList);
-                this.carRepository.save(currentCar);
             }
+
+
 
             currentCar.setName(carDto.getName());
             currentCar.setLicensePlate(carDto.getLicensePlate());
@@ -177,6 +177,11 @@ public class CarServiceImpl implements CarService {
     public Optional<Car> findById(String id) {
         Optional<Car> car = this.carRepository.findById(id);
         return car;
+    }
+
+    @Override
+    public List<Car> findAllByFuelType(String fuelType) {
+        return carRepository.findByFuelType(fuelType);
     }
 
 }

@@ -1,266 +1,266 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{client/layout.html}">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{client/layout.html}">
 
 <head>
-<title>Trang chủ</title>
+    <title>Trang chủ</title>
 </head>
 
 <body>
-	<div layout:fragment="content">
+<div layout:fragment="content">
 
-		<div class="mb-lg-2"></div>
+    <div class="mb-lg-2"></div>
 
-		<div class="container-fluid">
-			<div class="row">
-				<div class="col-xl-2 col-xxl-2 d-none d-xxl-block">
-					<div class="banner banner-overlay  banner-content-stretch ">
-						<a> <img
-							th:src="@{/client/assets/images/demos/demo-14/banners/banner-1.png}"
-							alt="Banner img desc">
-						</a>
-						<div class="banner-content text-right">
-							<div class="price text-center" style="color: #fcb941">
-								<sup class="text-white">Chỉ từ</sup> <span class="text-yellow">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-2 col-xxl-2 d-none d-xxl-block">
+                <div class="banner banner-overlay  banner-content-stretch ">
+                    <a> <img
+                            th:src="@{/client/assets/images/demos/demo-14/banners/banner-1.png}"
+                            alt="Banner img desc">
+                    </a>
+                    <div class="banner-content text-right">
+                        <div class="price text-center">
+                            <sup class="text-white">Chỉ từ</sup> <span class="text-white">
 									<strong>9</strong><sup class="text-white">.000.000 VND</sup>
 								</span>
-							</div>
-							<a th:href="@{/car/client}" class="banner-link" style="color: white">Cửa hàng <i
-								class="icon-long-arrow-right"></i></a>
-						</div>
-						<!-- End .banner-content -->
-					</div>
-					<!-- End .banner banner-overlay -->
-				</div>
-				<!-- End .col-xl-3 col-xxl-2 -->
+                        </div>
+                        <a th:href="@{/car/client}" class="banner-link" style="color: white">Cửa hàng <i
+                                class="icon-long-arrow-right"></i></a>
+                    </div>
+                    <!-- End .banner-content -->
+                </div>
+                <!-- End .banner banner-overlay -->
+            </div>
+            <!-- End .col-xl-3 col-xxl-2 -->
 
-				<div class="col-xl-8 col-xxl-8">
-					<div class="intro-slider-container slider-container-ratio mb-2">
-						<div class="intro-slider owl-carousel owl-simple owl-nav-inside"
-							data-toggle="owl"
-							data-owl-options='{
+            <div class="col-xl-8 col-xxl-8">
+                <div class="intro-slider-container slider-container-ratio mb-2">
+                    <div class="intro-slider owl-carousel owl-simple owl-nav-inside"
+                         data-toggle="owl"
+                         data-owl-options='{
                                     "nav": false, 
                                     "dots": true
                                 }'>
-							<div class="intro-slide">
-								<figure class="slide-image">
-									<picture>
-									<img
-										th:src="@{/client/assets/images/demos/demo-14/slider/slide-1.jpg}"
-										alt="Image Desc"> </picture>
-								</figure>
-								<!-- End .slide-image -->
+                        <div class="intro-slide">
+                            <figure class="slide-image">
+                                <picture>
+                                    <img
+                                            th:src="@{/client/assets/images/demos/demo-14/slider/slide-1.jpg}"
+                                            alt="Image Desc"></picture>
+                            </figure>
+                            <!-- End .slide-image -->
 
-								<div class="intro-content">
-									<h3 class="intro-subtitle text-white">Sản phẩm mới</h3>
-									<!-- End .h3 intro-subtitle -->
-									<h1 class="intro-title text-white">
-										Bộ sưu tập <br>Posché
-									</h1>
-									<!-- End .intro-title -->
+                            <div class="intro-content">
+                                <h3 class="intro-subtitle text-white">Sản phẩm mới</h3>
+                                <!-- End .h3 intro-subtitle -->
+                                <h1 class="intro-title text-white">
+                                    Bộ sưu tập <br>Posché
+                                </h1>
+                                <!-- End .intro-title -->
 
-									<div class="intro-text text-white">2024</div>
-									<!-- End .intro-text -->
+                                <div class="intro-text text-white">2024</div>
+                                <!-- End .intro-text -->
 
-									<a th:href="@{/car/client}" class="btn btn-primary"> <span>Cửa
+                                <a th:href="@{/car/client}" class="btn btn-primary"> <span>Cửa
 											hàng</span> <i class="icon-long-arrow-right"></i>
-									</a>
-								</div>
-								<!-- End .intro-content -->
-							</div>
-							<!-- End .intro-slide -->
+                                </a>
+                            </div>
+                            <!-- End .intro-content -->
+                        </div>
+                        <!-- End .intro-slide -->
 
-							<div class="intro-slide">
-								<figure class="slide-image">
-									<picture>
-									<source media="(max-width: 480px)"
-										th:srcset="@{/client/assets/images/demos/demo-14/slider/slide-2-480w.jpg}">
-									<img
-										th:src="@{/client/assets/images/demos/demo-14/slider/slide-2.jpg}"
-										alt="Image Desc"> </picture>
-								</figure>
-								<!-- End .slide-image -->
+                        <div class="intro-slide">
+                            <figure class="slide-image">
+                                <picture>
+                                    <source media="(max-width: 480px)"
+                                            th:srcset="@{/client/assets/images/demos/demo-14/slider/slide-2-480w.jpg}">
+                                    <img
+                                            th:src="@{/client/assets/images/demos/demo-14/slider/slide-2.jpg}"
+                                            alt="Image Desc"></picture>
+                            </figure>
+                            <!-- End .slide-image -->
 
-								<div class="intro-content">
-									<h3 class="intro-subtitle text-white">Siêu giảm giá</h3>
-									<!-- End .h3 intro-subtitle -->
-									<h1 class="intro-title">Lamborgini</h1>
-									<!-- End .intro-title -->
+                            <div class="intro-content">
+                                <h3 class="intro-subtitle text-white">Siêu giảm giá</h3>
+                                <!-- End .h3 intro-subtitle -->
+                                <h1 class="intro-title">Lamborgini</h1>
+                                <!-- End .intro-title -->
 
-									<div class="intro-price">
-										<sup>Chỉ từ</sup> <span> 9<sup>.000.000 VND</sup>
+                                <div class="intro-price">
+                                    <sup>Chỉ từ</sup> <span> 9<sup>.000.000 VND</sup>
 										</span>
-									</div>
-									<!-- End .intro-price -->
+                                </div>
+                                <!-- End .intro-price -->
 
-									<a th:href="@{/car/client}" class="btn btn-primary"> <span>Cửa
+                                <a th:href="@{/car/client}" class="btn btn-primary"> <span>Cửa
 											hàng</span> <i class="icon-long-arrow-right"></i>
-									</a>
-								</div>
-								<!-- End .intro-content -->
-							</div>
-							<!-- End .intro-slide -->
+                                </a>
+                            </div>
+                            <!-- End .intro-content -->
+                        </div>
+                        <!-- End .intro-slide -->
 
-							<div class="intro-slide">
-								<figure class="slide-image">
-									<picture>
-									<source media="(max-width: 480px)"
-										th:srcset="@{/client/assets/images/demos/demo-14/slider/slide-3-480w.jpg}">
-									<img
-										th:src="@{/client/assets/images/demos/demo-14/slider/slide-3.jpg}"
-										alt="Image Desc"> </picture>
-								</figure>
-								<!-- End .slide-image -->
+                        <div class="intro-slide">
+                            <figure class="slide-image">
+                                <picture>
+                                    <source media="(max-width: 480px)"
+                                            th:srcset="@{/client/assets/images/demos/demo-14/slider/slide-3-480w.jpg}">
+                                    <img
+                                            th:src="@{/client/assets/images/demos/demo-14/slider/slide-3.jpg}"
+                                            alt="Image Desc"></picture>
+                            </figure>
+                            <!-- End .slide-image -->
 
-								<div class="intro-content">
-									<h3 class="intro-subtitle text-white">Số lượng giới hạn</h3>
-									<!-- End .h3 intro-subtitle -->
-									<h1 class="intro-title text-white">
-										Chỉ dành cho bạn <br>LP700
-									</h1>
-									<!-- End .intro-title -->
+                            <div class="intro-content">
+                                <h3 class="intro-subtitle text-white">Số lượng giới hạn</h3>
+                                <!-- End .h3 intro-subtitle -->
+                                <h1 class="intro-title text-white">
+                                    Chỉ dành cho bạn <br>LP700
+                                </h1>
+                                <!-- End .intro-title -->
 
-									<div class="intro-text">2024</div>
-									<!-- End .intro-text -->
+                                <div class="intro-text">2024</div>
+                                <!-- End .intro-text -->
 
-									<a th:href="@{/car/client}" class="btn btn-primary"> <span>Cửa
+                                <a th:href="@{/car/client}" class="btn btn-primary"> <span>Cửa
 											hàng</span> <i class="icon-long-arrow-right"></i>
-									</a>
-								</div>
-								<!-- End .intro-content -->
-							</div>
-							<!-- End .intro-slide -->
-						</div>
-						<!-- End .intro-slider owl-carousel owl-simple -->
+                                </a>
+                            </div>
+                            <!-- End .intro-content -->
+                        </div>
+                        <!-- End .intro-slide -->
+                    </div>
+                    <!-- End .intro-slider owl-carousel owl-simple -->
 
-						<span class="slider-loader"></span>
-						<!-- End .slider-loader -->
-					</div>
-					<!-- End .intro-slider-container -->
-				</div>
-				<!-- End .col-xl-9 col-xxl-10 -->
+                    <span class="slider-loader"></span>
+                    <!-- End .slider-loader -->
+                </div>
+                <!-- End .intro-slider-container -->
+            </div>
+            <!-- End .col-xl-9 col-xxl-10 -->
 
-				<div class="col-xl-2 col-xxl-2 d-none d-xxl-block">
-					<div class="banner banner-overlay  banner-content-stretch ">
-						<a> <img
-							th:src="@{/client/assets/images/demos/demo-14/banners/banner-1.png}"
-							alt="Banner img desc">
-						</a>
-						<div class="banner-content text-right">
-							<div class="price text-center" style="color: #fcb941">
-								<sup class="text-white">Chỉ từ</sup> <span class="text-white">
+            <div class="col-xl-2 col-xxl-2 d-none d-xxl-block">
+                <div class="banner banner-overlay  banner-content-stretch ">
+                    <a> <img
+                            th:src="@{/client/assets/images/demos/demo-14/banners/banner-1.png}"
+                            alt="Banner img desc">
+                    </a>
+                    <div class="banner-content text-right">
+                        <div class="price text-center">
+                            <sup class="text-white">Chỉ từ</sup> <span class="text-white">
 									<strong>9</strong><sup class="text-white">.000.000 VND</sup>
 								</span>
-							</div>
-							<a th:href="@{/car/client}" style="color: white" class="banner-link">Cửa hàng <i
-								class="icon-long-arrow-right"></i></a>
-						</div>
-						<!-- End .banner-content -->
-					</div>
-					<!-- End .banner banner-overlay -->
-				</div>
-				<!-- End .col-xl-3 col-xxl-2 -->
-			</div>
-			<!-- End .row -->
-		</div>
-		<!-- End .container-fluid -->
-		<div class="container-fluid">
-			<div class="row">
-				<div class="col-xl-9 col-xxl-10">
-					<div class="row">
-						<div class="col-lg-12 col-xxl-4-5col">
-							<div class="row">
-								<div class="col-md-6">
-									<div class="banner banner-overlay">
-										<a href="#"> <img
-											th:src="@{/client/assets/images/demos/demo-14/banners/banner-2.jpg}"
-											alt="Banner img desc">
-										</a>
+                        </div>
+                        <a th:href="@{/car/client}" style="color: white" class="banner-link">Cửa hàng <i
+                                class="icon-long-arrow-right"></i></a>
+                    </div>
+                    <!-- End .banner-content -->
+                </div>
+                <!-- End .banner banner-overlay -->
+            </div>
+            <!-- End .col-xl-3 col-xxl-2 -->
+        </div>
+        <!-- End .row -->
+    </div>
+    <!-- End .container-fluid -->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-9 col-xxl-10">
+                <div class="row">
+                    <div class="col-lg-12 col-xxl-4-5col">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="banner banner-overlay">
+                                    <a href="#"> <img
+                                            th:src="@{/client/assets/images/demos/demo-14/banners/banner-2.jpg}"
+                                            alt="Banner img desc">
+                                    </a>
 
-										<div class="banner-content">
-											<h4 class="banner-subtitle text-white d-none d-sm-block">
-												<a href="#">Siêu giảm giá</a>
-											</h4>
-											<!-- End .banner-subtitle -->
-											<h3 class="banner-title text-white">
-												<a href="#">Sản phẩm làm đẹp <br>Mùa hè <br> <span>Giảm
+                                    <div class="banner-content">
+                                        <h4 class="banner-subtitle text-white d-none d-sm-block">
+                                            <a href="#">Siêu giảm giá</a>
+                                        </h4>
+                                        <!-- End .banner-subtitle -->
+                                        <h3 class="banner-title text-white">
+                                            <a href="#">Xe thể thao <br>Mùa hè <br> <span>Giảm
 														20%</span></a>
-											</h3>
-											<!-- End .banner-title -->
-											<a th:href="@{/car/client}" class="banner-link">Cửa hàng
-												<i class="icon-long-arrow-right"></i>
-											</a>
-										</div>
-										<!-- End .banner-content -->
-									</div>
-									<!-- End .banner -->
-								</div>
-								<!-- End .col-md-6 -->
+                                        </h3>
+                                        <!-- End .banner-title -->
+                                        <a th:href="@{/car/client}" class="banner-link">Cửa hàng
+                                            <i class="icon-long-arrow-right"></i>
+                                        </a>
+                                    </div>
+                                    <!-- End .banner-content -->
+                                </div>
+                                <!-- End .banner -->
+                            </div>
+                            <!-- End .col-md-6 -->
 
-								<div class="col-md-6">
-									<div class="banner banner-overlay">
-										<a href="#"> <img
-											th:src="@{/client/assets/images/demos/demo-14/banners/banner-3.jpg}"
-											alt="Banner img desc">
-										</a>
+                            <div class="col-md-6">
+                                <div class="banner banner-overlay">
+                                    <a href="#"> <img
+                                            th:src="@{/client/assets/images/demos/demo-14/banners/banner-3.jpg}"
+                                            alt="Banner img desc">
+                                    </a>
 
-										<div class="banner-content">
-											<h4 class="banner-subtitle text-white d-none d-sm-block">
-												<a href="#">Giảm giá trong ngày</a>
-											</h4>
-											<!-- End .banner-subtitle -->
-											<h3 class="banner-title text-white">
-												<a href="#">Tai nghe <br> <span>Giảm 30%</span></a>
-											</h3>
-											<!-- End .banner-title -->
-											<a th:href="@{/car/client}" class="banner-link">Cửa hàng
-												<i class="icon-long-arrow-right"></i>
-											</a>
-										</div>
-										<!-- End .banner-content -->
-									</div>
-									<!-- End .banner banner-overlay -->
-								</div>
-								<!-- End .col-md-6 -->
-							</div>
-							<!-- End .row -->
-						</div>
-						<!-- End .col-lg-3 col-xxl-4-5col -->
+                                    <div class="banner-content">
+                                        <h4 class="banner-subtitle text-white d-none d-sm-block">
+                                            <a href="#">Giảm giá trong ngày</a>
+                                        </h4>
+                                        <!-- End .banner-subtitle -->
+                                        <h3 class="banner-title text-white">
+                                            <a href="#">Thuê xe thể thao <br> <span>Giảm 30%</span></a>
+                                        </h3>
+                                        <!-- End .banner-title -->
+                                        <a th:href="@{/car/client}" class="banner-link">Cửa hàng
+                                            <i class="icon-long-arrow-right"></i>
+                                        </a>
+                                    </div>
+                                    <!-- End .banner-content -->
+                                </div>
+                                <!-- End .banner banner-overlay -->
+                            </div>
+                            <!-- End .col-md-6 -->
+                        </div>
+                        <!-- End .row -->
+                    </div>
+                    <!-- End .col-lg-3 col-xxl-4-5col -->
 
-						<div class="col-12 col-xxl-5col d-none d-xxl-block">
-							<div class="banner banner-overlay">
-								<a href="#"> <img
-									th:src="@{/client/assets/images/demos/demo-14/banners/banner-4.jpg}"
-									alt="Banner img desc">
-								</a>
+                    <div class="col-12 col-xxl-5col d-none d-xxl-block">
+                        <div class="banner banner-overlay">
+                            <a href="#"> <img
+                                    th:src="@{/client/assets/images/demos/demo-14/banners/banner-4.jpg}"
+                                    alt="Banner img desc">
+                            </a>
 
-								<div class="banner-content">
-									<h4 class="banner-subtitle text-white">
-										<a href="#">Nội thất</a>
-									</h4>
-									<!-- End .banner-subtitle -->
-									<h3 class="banner-title text-white">
-										<a href="#">Ghế và bàn</a>
-									</h3>
-									<!-- End .banner-title -->
-									<a th:href="@{/car/client}" class="banner-link">Cửa hàng <i
-										class="icon-long-arrow-right"></i></a>
-								</div>
-								<!-- End .banner-content -->
-							</div>
-							<!-- End .banner banner-overlay -->
-						</div>
-						<!-- End .col-lg-3 col-xxl-2 -->
-					</div>
-					<!-- End .row -->
+                            <div class="banner-content">
+                                <h4 class="banner-subtitle text-white">
+                                    <a href="#">Posché</a>
+                                </h4>
+                                <!-- End .banner-subtitle -->
+                                <h3 class="banner-title text-white">
+                                    <a href="#">Lamborghini</a>
+                                </h3>
+                                <!-- End .banner-title -->
+                                <a th:href="@{/car/client}" class="banner-link">Cửa hàng <i
+                                        class="icon-long-arrow-right"></i></a>
+                            </div>
+                            <!-- End .banner-content -->
+                        </div>
+                        <!-- End .banner banner-overlay -->
+                    </div>
+                    <!-- End .col-lg-3 col-xxl-2 -->
+                </div>
+                <!-- End .row -->
 
-					<div class="mb-3"></div>
-					<!-- End .mb-3 -->
+                <div class="mb-3"></div>
+                <!-- End .mb-3 -->
 
-					<div class="owl-carousel owl-simple brands-carousel"
-						data-toggle="owl"
-						data-owl-options='{
+                <div class="owl-carousel owl-simple brands-carousel"
+                     data-toggle="owl"
+                     data-owl-options='{
                                 "nav": false, 
                                 "dots": false,
                                 "margin": 20,
@@ -284,73 +284,73 @@
                                     }
                                 }
                             }'>
-						<a href="#" class="brand"> <img
-							th:src="@{/client/assets/images/brands/1.png}" alt="Brand Name">
-						</a> <a href="#" class="brand"> <img
-							th:src="@{/client/assets/images/brands/2.png}" alt="Brand Name">
-						</a> <a href="#" class="brand"> <img
-							th:src="@{/client/assets/images/brands/3.png}" alt="Brand Name">
-						</a> <a href="#" class="brand"> <img
-							th:src="@{/client/assets/images/brands/4.png}" alt="Brand Name">
-						</a> <a href="#" class="brand"> <img
-							th:src="@{/client/assets/images/brands/5.png}" alt="Brand Name">
-						</a> <a href="#" class="brand"> <img
-							th:src="@{/client/assets/images/brands/6.png}" alt="Brand Name">
-						</a> <a href="#" class="brand"> <img
-							th:src="@{/client/assets/images/brands/7.png}" alt="Brand Name">
-						</a>
-					</div>
-					<!-- End .owl-carousel -->
+                    <a href="#" class="brand"> <img
+                            th:src="@{/client/assets/images/brands/1.png}" alt="Brand Name">
+                    </a> <a href="#" class="brand"> <img
+                        th:src="@{/client/assets/images/brands/2.png}" alt="Brand Name">
+                </a> <a href="#" class="brand"> <img
+                        th:src="@{/client/assets/images/brands/3.png}" alt="Brand Name">
+                </a> <a href="#" class="brand"> <img
+                        th:src="@{/client/assets/images/brands/4.png}" alt="Brand Name">
+                </a> <a href="#" class="brand"> <img
+                        th:src="@{/client/assets/images/brands/5.png}" alt="Brand Name">
+                </a> <a href="#" class="brand"> <img
+                        th:src="@{/client/assets/images/brands/6.png}" alt="Brand Name">
+                </a> <a href="#" class="brand"> <img
+                        th:src="@{/client/assets/images/brands/7.png}" alt="Brand Name">
+                </a>
+                </div>
+                <!-- End .owl-carousel -->
 
-					<div class="mb-5"></div>
-					<!-- End .mb-5 -->
+                <div class="mb-5"></div>
+                <!-- End .mb-5 -->
 
-					<div class="row cat-banner-row electronics">
-						<div class="col-xl-3 col-xxl-4">
-							<div class="cat-banner row no-gutters">
-								<div class="cat-banner-list col-sm-6 d-xl-none d-xxl-flex"
-									style="background-image: url(assets/images/demos/demo-14/banners/banner-bg-1.jpg);">
-									<div class="banner-list-content">
-										<h2>
-											<a th:href="@{/car/client?category_id=12}">Đồ điện tử</a>
-										</h2>
-									</div>
-									<!-- End .banner-list-content -->
-								</div>
-								<!-- End .col-sm-6 -->
+                <div class="row cat-banner-row electronics">
+                    <div class="col-xl-3 col-xxl-4">
+                        <div class="cat-banner row no-gutters">
+                            <div class="cat-banner-list col-sm-6 d-xl-none d-xxl-flex"
+                                 style="background-image: url(assets/images/demos/demo-14/banners/banner-bg-1.jpg);">
+                                <div class="banner-list-content">
+                                    <h2>
+                                        <a th:href="@{/car/client?category_id=12}">Electric</a>
+                                    </h2>
+                                </div>
+                                <!-- End .banner-list-content -->
+                            </div>
+                            <!-- End .col-sm-6 -->
 
-								<div class="col-sm-6 col-xl-12 col-xxl-6">
-									<div class="banner banner-overlay">
-										<a th:href="@{/car/client?category_id=12}"> <img
-											th:src="@{/client/assets/images/demos/demo-14/banners/banner-5.jpg}"
-											alt="Banner img desc">
-										</a>
+                            <div class="col-sm-6 col-xl-12 col-xxl-6">
+                                <div class="banner banner-overlay">
+                                    <a th:href="@{/car/client?category_id=12}"> <img
+                                            th:src="@{/client/assets/images/demos/demo-14/banners/banner-5.jpg}"
+                                            alt="Banner img desc">
+                                    </a>
 
-										<div class="banner-content">
-											<h4 class="banner-subtitle text-white">
-												<a href="#">Siêu giảm giá</a>
-											</h4>
-											<!-- End .banner-subtitle -->
-											<!-- End .banner-title -->
-											<a th:href="@{/car/client}" class="banner-link">Cửa hàng
-												<i class="icon-long-arrow-right"></i>
-											</a>
-										</div>
-										<!-- End .banner-content -->
-									</div>
-									<!-- End .banner -->
-								</div>
-								<!-- End .col-sm-6 -->
-							</div>
-							<!-- End .cat-banner -->
-						</div>
-						<!-- End .col-xl-3 -->
+                                    <div class="banner-content">
+                                        <h4 class="banner-subtitle text-white">
+                                            <a href="#">Siêu giảm giá</a>
+                                        </h4>
+                                        <!-- End .banner-subtitle -->
+                                        <!-- End .banner-title -->
+                                        <a th:href="@{/car/client}" class="banner-link">Cửa hàng
+                                            <i class="icon-long-arrow-right"></i>
+                                        </a>
+                                    </div>
+                                    <!-- End .banner-content -->
+                                </div>
+                                <!-- End .banner -->
+                            </div>
+                            <!-- End .col-sm-6 -->
+                        </div>
+                        <!-- End .cat-banner -->
+                    </div>
+                    <!-- End .col-xl-3 -->
 
-						<div class="col-xl-9 col-xxl-8">
-							<div
-								class="owl-carousel owl-full carousel-equal-height carousel-with-shadow"
-								data-toggle="owl"
-								data-owl-options='{
+                    <div class="col-xl-9 col-xxl-8">
+                        <div
+                                class="owl-carousel owl-full carousel-equal-height carousel-with-shadow"
+                                data-toggle="owl"
+                                data-owl-options='{
                                         "nav": true, 
                                         "dots": false,
                                         "margin": 20,
@@ -376,131 +376,115 @@
                                             }
                                         }
                                     }'>
-								<div class="product text-center"
-									th:each="item, i : ${listLapTop}">
-									<figure class="product-media">
-										<span
-											th:if="${item.startDayDiscount != null and item.endDayDiscount != null and item.discount > 0}">
-											<span class="product-label label-sale"
-											th:if="${item.startDayDiscount.before(#dates.createNow()) and item.endDayDiscount.after(#dates.createNow())}"
-											th:text="${item.discount + ' % giảm'}"></span> <span
-											class="product-label"
-											th:if="${item.startDayDiscount.after(#dates.createNow())}">Sắp
-												giảm giá</span>
+                            <div class="product text-center"
+                                 th:each="item, i : ${listElectric}">
+                                <figure class="product-media">
+										<span>
+											<span class="product-label label-sale">Đặt cọc 20%</span>
 										</span>
-										<a th:href="@{/car/product-detail(id=${item.id})}"> <img
-											th:src="${item.banner} == null ? '/client/assets/images/no-image.jpg' : '/uploads/' + ${item.banner}"
-											alt="Product image" class="product-image">
-										</a>
+                                    <a th:href="@{/car-owner/my-car/${item.id}}"> <img
+                                            th:src="${item.getBanner()} == null ? '/client/assets/images/no-image.jpg' : ${item.getBanner()}"
+                                            alt="Product image" class="product-image">
+                                    </a>
 
-										<div class="product-action-vertical">
-											<a th:data-id="${item.id}"
-												th:onclick="addLikeShop(this.getAttribute('data-id'))"
-												class="btn-product-icon btn-wishlist btn-expandable"><span>Yêu
+                                    <div class="product-action-vertical">
+                                        <a th:data-id="${item.id}"
+                                           th:onclick="addLikeShop(this.getAttribute('data-id'))"
+                                           class="btn-product-icon btn-wishlist btn-expandable"><span>Yêu
 													thích</span></a> <a href="#quickView-modal" data-toggle="modal"
-												th:data-id="${item.id}"
-												th:onclick="quickView(this.getAttribute('data-id'))"
-												class="btn-product-icon btn-quickview"><span>Xem</span></a>
-										</div>
-										<!-- End .product-action-vertical -->
+                                                                        th:data-id="${item.id}"
+                                                                        th:onclick="quickView(this.getAttribute('data-id'))"
+                                                                        class="btn-product-icon btn-quickview"><span>Xem</span></a>
+                                    </div>
+                                    <!-- End .product-action-vertical -->
 
-										<div class="product-action">
-											<a href="#quickView-modal" data-toggle="modal"
-												th:data-id="${item.id}"
-												th:onclick="quickView(this.getAttribute('data-id'))"
-												class="btn-product btn-cart"><span>Xem</span></a>
-										</div>
-										<!-- End .product-action -->
-									</figure>
-									<!-- End .product-media -->
+                                    <div class="product-action">
+                                        <a href="#quickView-modal" data-toggle="modal"
+                                           th:data-id="${item.id}"
+                                           th:onclick="quickView(this.getAttribute('data-id'))"
+                                           class="btn-product btn-cart"><span>Xem</span></a>
+                                    </div>
+                                    <!-- End .product-action -->
+                                </figure>
+                                <!-- End .product-media -->
 
-									<div class="product-body">
-										<div class="product-cat">
-											<a href="#" th:text="${item.category.name}">Women</a>
-										</div>
-										<!-- End .product-cat -->
-										<h3 class="product-title">
-											<a th:href="@{/car/product-detail(id=${item.id})}"
-												th:text="${item.name}">Tên sản phẩm</a>
-										</h3>
-										<!-- End .product-title -->
-										<div class="product-price"
-											th:if="${item.startDayDiscount == null or item.endDayDiscount == null or item.discount <= 0}"
-											th:text="${#numbers.formatDecimal(item.price, 0, 'COMMA', 0, 'POINT')} + ' VND'">150.000
-											VND</div>
+                                <div class="product-body">
+                                    <div class="product-cat">
+                                        <a href="#" th:text="${item.brand}"></a>
+                                    </div>
+                                    <!-- End .product-cat -->
+                                    <h3 class="product-title">
+                                        <a th:href="@{/car/product-detail(id=${item.id})}"
+                                           th:text="${item.name}">Tên xe</a>
+                                    </h3>
+                                    <!-- End .product-title -->
 
-										<div class="product-price"
-											th:if="${item.startDayDiscount != null and item.endDayDiscount != null and item.discount > 0}">
-											<span
-												th:if="${item.startDayDiscount.after(#dates.createNow())}"
-												th:text="${#numbers.formatDecimal(item.price, 0, 'COMMA', 0, 'POINT')} + ' VND'">150.000
-												VND</span> <span
-												th:if="${item.startDayDiscount.before(#dates.createNow()) and item.endDayDiscount.after(#dates.createNow())}">
+                                    <div class="product-price">
+                                        <span>
 												<span class="new-price"
-												th:text="${#numbers.formatDecimal(item.price - (item.price * item.discount * 0.01), 0, 'COMMA', 0, 'POINT')} + ' VND'">150.000
-													VND</span> <span class="old-price"> <del
-														th:text="${#numbers.formatDecimal(item.price, 0, 'COMMA', 0, 'POINT')} + ' VND'">
-														150.000 VND</del></span>
+                                                      th:text="${#numbers.formatDecimal(item.deposit, 0, 'COMMA', 0, 'POINT')} + ' VND'"></span> <span class="old-price"> <del
+                                            th:text="${#numbers.formatDecimal(item.basePrice, 0, 'COMMA', 0, 'POINT')} + ' VND'">
+														</del></span>
 
 											</span>
-										</div>
-										<!-- End .product-price -->
-									</div>
-									<!-- End .product-body -->
-								</div>
-								<!-- End .product -->
-							</div>
-							<!-- End .owl-carousel -->
-						</div>
-						<!-- End .col-xl-9 -->
-					</div>
-					<!-- End .row cat-banner-row -->
+                                    </div>
+                                    <!-- End .product-price -->
+                                </div>
+                                <!-- End .product-body -->
+                            </div>
+                            <!-- End .product -->
+                        </div>
+                        <!-- End .owl-carousel -->
+                    </div>
+                    <!-- End .col-xl-9 -->
+                </div>
+                <!-- End .row cat-banner-row -->
 
-					<div class="mb-3"></div>
-					<!-- End .mb-3 -->
+                <div class="mb-3"></div>
+                <!-- End .mb-3 -->
 
-					<div class="row cat-banner-row furniture">
-						<div class="col-xl-3 col-xxl-4">
-							<div class="cat-banner row no-gutters">
-								<div class="cat-banner-list col-sm-6 d-xl-none d-xxl-flex"
-									style="background-image: url(assets/images/demos/demo-14/banners/banner-bg-2.jpg);">
-									<div class="banner-list-content">
-										<h2>
-											<a th:href="@{/car/client?category_id=8}">Nhà bếp </a>
-										</h2>
-									</div>
-									<!-- End .banner-list-content -->
-								</div>
-								<!-- End .col-sm-6 -->
+                <div class="row cat-banner-row furniture">
+                    <div class="col-xl-3 col-xxl-4">
+                        <div class="cat-banner row no-gutters">
+                            <div class="cat-banner-list col-sm-6 d-xl-none d-xxl-flex"
+                                 style="background-image: url(assets/images/demos/demo-14/banners/banner-bg-2.jpg);">
+                                <div class="banner-list-content">
+                                    <h2>
+                                        <a th:href="@{/car/client?category_id=8}">Petrol </a>
+                                    </h2>
+                                </div>
+                                <!-- End .banner-list-content -->
+                            </div>
+                            <!-- End .col-sm-6 -->
 
-								<div class="col-sm-6 col-xl-12 col-xxl-6">
-									<div class="banner banner-overlay">
-										<a th:href="@{/car/client?category_id=8}"> <img
-											th:src="@{/client/assets/images/demos/demo-14/banners/banner-6.jpg}"
-											alt="Banner img desc">
-										</a>
+                            <div class="col-sm-6 col-xl-12 col-xxl-6">
+                                <div class="banner banner-overlay">
+                                    <a th:href="@{/car/client?category_id=8}"> <img
+                                            th:src="@{/client/assets/images/demos/demo-14/banners/banner-6.jpg}"
+                                            alt="Banner img desc">
+                                    </a>
 
-										<div class="banner-content">
-											<!-- End .banner-title -->
-											<a th:href="@{/car/client}" class="banner-link">Cửa hàng
-												<i class="icon-long-arrow-right"></i>
-											</a>
-										</div>
-										<!-- End .banner-content -->
-									</div>
-									<!-- End .banner -->
-								</div>
-								<!-- End .col-sm-6 -->
-							</div>
-							<!-- End .cat-banner -->
-						</div>
-						<!-- End .col-xl-3 -->
+                                    <div class="banner-content">
+                                        <!-- End .banner-title -->
+                                        <a th:href="@{/car/client}" class="banner-link">Cửa hàng
+                                            <i class="icon-long-arrow-right"></i>
+                                        </a>
+                                    </div>
+                                    <!-- End .banner-content -->
+                                </div>
+                                <!-- End .banner -->
+                            </div>
+                            <!-- End .col-sm-6 -->
+                        </div>
+                        <!-- End .cat-banner -->
+                    </div>
+                    <!-- End .col-xl-3 -->
 
-						<div class="col-xl-9 col-xxl-8">
-							<div
-								class="owl-carousel owl-full carousel-equal-height carousel-with-shadow"
-								data-toggle="owl"
-								data-owl-options='{
+                    <div class="col-xl-9 col-xxl-8">
+                        <div
+                                class="owl-carousel owl-full carousel-equal-height carousel-with-shadow"
+                                data-toggle="owl"
+                                data-owl-options='{
                                         "nav": true, 
                                         "dots": false,
                                         "margin": 20,
@@ -526,293 +510,277 @@
                                             }
                                         }
                                     }'>
-								<div class="product text-center" th:each="item, i : ${listCook}">
-									<figure class="product-media">
-										<span
-											th:if="${item.startDayDiscount != null and item.endDayDiscount != null and item.discount > 0}">
-											<span class="product-label label-sale"
-											th:if="${item.startDayDiscount.before(#dates.createNow()) and item.endDayDiscount.after(#dates.createNow())}"
-											th:text="${item.discount + ' % giảm'}"></span> <span
-											class="product-label"
-											th:if="${item.startDayDiscount.after(#dates.createNow())}">Sắp
-												giảm giá</span>
+                            <div class="product text-center" th:each="item, i : ${listPetrol}">
+                                <figure class="product-media">
+										<span>
+											<span class="product-label label-sale">Đặt cọc 20%</span>
 										</span>
-										<a th:href="@{/car/product-detail(id=${item.id})}"> <img
-											th:src="${item.banner} == null ? '/client/assets/images/no-image.jpg' : '/uploads/' + ${item.banner}"
-											alt="Product image" class="product-image">
-										</a>
+                                    <a th:href="@{/car-owner/my-car/${item.id}}"> <img
+                                            th:src="${item.getBanner()} == null ? '/client/assets/images/no-image.jpg' : ${item.getBanner()}"
+                                            alt="Product image" class="product-image">
+                                    </a>
 
-										<div class="product-action-vertical">
-											<a th:data-id="${item.id}"
-												th:onclick="addLikeShop(this.getAttribute('data-id'))"
-												class="btn-product-icon btn-wishlist btn-expandable"><span>Yêu
+                                    <div class="product-action-vertical">
+                                        <a th:data-id="${item.id}"
+                                           th:onclick="addLikeShop(this.getAttribute('data-id'))"
+                                           class="btn-product-icon btn-wishlist btn-expandable"><span>Yêu
 													thích</span></a> <a href="#quickView-modal" data-toggle="modal"
-												th:data-id="${item.id}"
-												th:onclick="quickView(this.getAttribute('data-id'))"
-												class="btn-product-icon btn-quickview"><span>Xem</span></a>
-										</div>
-										<!-- End .product-action-vertical -->
+                                                                        th:data-id="${item.id}"
+                                                                        th:onclick="quickView(this.getAttribute('data-id'))"
+                                                                        class="btn-product-icon btn-quickview"><span>Xem</span></a>
+                                    </div>
+                                    <!-- End .product-action-vertical -->
 
-										<div class="product-action">
-											<a href="#quickView-modal" data-toggle="modal"
-												th:data-id="${item.id}"
-												th:onclick="quickView(this.getAttribute('data-id'))"
-												class="btn-product btn-cart"><span>Xem</span></a>
-										</div>
-										<!-- End .product-action -->
-									</figure>
-									<!-- End .product-media -->
+                                    <div class="product-action">
+                                        <a href="#quickView-modal" data-toggle="modal"
+                                           th:data-id="${item.id}"
+                                           th:onclick="quickView(this.getAttribute('data-id'))"
+                                           class="btn-product btn-cart"><span>Xem</span></a>
+                                    </div>
+                                    <!-- End .product-action -->
+                                </figure>
+                                <!-- End .product-media -->
 
-									<div class="product-body">
-										<div class="product-cat">
-											<a href="#" th:text="${item.category.name}">Women</a>
-										</div>
-										<!-- End .product-cat -->
-										<h3 class="product-title">
-											<a th:href="@{/car/product-detail(id=${item.id})}"
-												th:text="${item.name}">Tên sản phẩm</a>
-										</h3>
-										<!-- End .product-title -->
-										<div class="product-price"
-											th:if="${item.startDayDiscount == null or item.endDayDiscount == null or item.discount <= 0}"
-											th:text="${#numbers.formatDecimal(item.price, 0, 'COMMA', 0, 'POINT')} + ' VND'">150.000
-											VND</div>
+                                <div class="product-body">
+                                    <div class="product-cat">
+                                        <a href="#" th:text="${item.brand}"></a>
+                                    </div>
+                                    <!-- End .product-cat -->
+                                    <h3 class="product-title">
+                                        <a th:href="@{/car/product-detail(id=${item.id})}"
+                                           th:text="${item.name}">Tên xe</a>
+                                    </h3>
+                                    <!-- End .product-title -->
 
-										<div class="product-price"
-											th:if="${item.startDayDiscount != null and item.endDayDiscount != null and item.discount > 0}">
-											<span
-												th:if="${item.startDayDiscount.after(#dates.createNow())}"
-												th:text="${#numbers.formatDecimal(item.price, 0, 'COMMA', 0, 'POINT')} + ' VND'">150.000
-												VND</span> <span
-												th:if="${item.startDayDiscount.before(#dates.createNow()) and item.endDayDiscount.after(#dates.createNow())}">
+                                    <div class="product-price">
+                                        <span>
 												<span class="new-price"
-												th:text="${#numbers.formatDecimal(item.price - (item.price * item.discount * 0.01), 0, 'COMMA', 0, 'POINT')} + ' VND'">150.000
-													VND</span> <span class="old-price"> <del
-														th:text="${#numbers.formatDecimal(item.price, 0, 'COMMA', 0, 'POINT')} + ' VND'">
-														150.000 VND</del></span>
+                                                      th:text="${#numbers.formatDecimal(item.deposit, 0, 'COMMA', 0, 'POINT')} + ' VND'"></span> <span class="old-price"> <del
+                                            th:text="${#numbers.formatDecimal(item.basePrice, 0, 'COMMA', 0, 'POINT')} + ' VND'">
+														</del></span>
 
 											</span>
-										</div>
-										<!-- End .product-price -->
-									</div>
-									<!-- End .product-body -->
-								</div>
-								<!-- End .product -->
-							</div>
-							<!-- End .owl-carousel -->
-						</div>
-						<!-- End .col-xl-9 -->
-					</div>
-					<!-- End .row cat-banner-row -->
+                                    </div>
+                                    <!-- End .product-price -->
+                                </div>
+                                <!-- End .product-body -->
+                            </div>
+                            <!-- End .product -->
+                        </div>
+                        <!-- End .owl-carousel -->
+                    </div>
+                    <!-- End .col-xl-9 -->
+                </div>
+                <!-- End .row cat-banner-row -->
 
-					<div class="mb-3"></div>
-					<!-- End .mb-3 -->
+                <div class="mb-3"></div>
+                <!-- End .mb-3 -->
 
-					<div class="row">
-						<div class="col-md-6">
-							<div class="banner banner-overlay">
-								<a href="#"> <img
-									th:src="@{/client/assets/images/demos/demo-14/banners/banner-7.jpg}"
-									alt="Banner img desc">
-								</a>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="banner banner-overlay">
+                            <a href="#"> <img
+                                    th:src="@{/client/assets/images/demos/demo-14/banners/banner-7.jpg}"
+                                    alt="Banner img desc">
+                            </a>
 
-								<div class="banner-content">
-									<h4 class="banner-subtitle text-white d-none d-sm-block">
-										<a href="#">Giảm giá mùa hè</a>
-									</h4>
-									<!-- End .banner-subtitle -->
-									<h3 class="banner-title text-white">
-										<a href="#">Áo phông và áo vest <br> <span>Giảm
+                            <div class="banner-content">
+                                <h4 class="banner-subtitle text-white d-none d-sm-block">
+                                    <a href="#">Giảm giá mùa hè</a>
+                                </h4>
+                                <!-- End .banner-subtitle -->
+                                <h3 class="banner-title text-white">
+                                    <a href="#">Áo phông và áo vest <br> <span>Giảm
 												giá</span></a>
-									</h3>
-									<!-- End .banner-title -->
-									<a th:href="@{/car/client}" class="banner-link">Cửa hàng <i
-										class="icon-long-arrow-right"></i></a>
-								</div>
-								<!-- End .banner-content -->
-							</div>
-							<!-- End .banner -->
-						</div>
-						<!-- End .col-md-6 -->
+                                </h3>
+                                <!-- End .banner-title -->
+                                <a th:href="@{/car/client}" class="banner-link">Cửa hàng <i
+                                        class="icon-long-arrow-right"></i></a>
+                            </div>
+                            <!-- End .banner-content -->
+                        </div>
+                        <!-- End .banner -->
+                    </div>
+                    <!-- End .col-md-6 -->
 
-						<div class="col-md-6">
-							<div class="banner banner-overlay">
-								<a href="#"> <img
-									th:src="@{/client/assets/images/demos/demo-14/banners/banner-8.jpg}"
-									alt="Banner img desc">
-								</a>
+                    <div class="col-md-6">
+                        <div class="banner banner-overlay">
+                            <a href="#"> <img
+                                    th:src="@{/client/assets/images/demos/demo-14/banners/banner-8.jpg}"
+                                    alt="Banner img desc">
+                            </a>
 
-								<div class="banner-content">
-									<h4 class="banner-subtitle text-white d-none d-sm-block">
-										<a href="#">Giảm giá</a>
-									</h4>
-									<!-- End .banner-subtitle -->
-									<h3 class="banner-title text-white">
-										<a href="#">Cập nhật <br> <span>Các sản phẩm
+                            <div class="banner-content">
+                                <h4 class="banner-subtitle text-white d-none d-sm-block">
+                                    <a href="#">Giảm giá</a>
+                                </h4>
+                                <!-- End .banner-subtitle -->
+                                <h3 class="banner-title text-white">
+                                    <a href="#">Cập nhật <br> <span>Các sản phẩm
 												mới nhất</span></a>
-									</h3>
-									<!-- End .banner-title -->
-									<a th:href="@{/car/client}" class="banner-link">Cửa hàng <i
-										class="icon-long-arrow-right"></i></a>
-								</div>
-								<!-- End .banner-content -->
-							</div>
-							<!-- End .banner banner-overlay -->
-						</div>
-						<!-- End .col-md-6 -->
-					</div>
-					<!-- End .row -->
+                                </h3>
+                                <!-- End .banner-title -->
+                                <a th:href="@{/car/client}" class="banner-link">Cửa hàng <i
+                                        class="icon-long-arrow-right"></i></a>
+                            </div>
+                            <!-- End .banner-content -->
+                        </div>
+                        <!-- End .banner banner-overlay -->
+                    </div>
+                    <!-- End .col-md-6 -->
+                </div>
+                <!-- End .row -->
 
-					<div class="mb-3"></div>
-					<!-- End .mb-3 -->
+                <div class="mb-3"></div>
+                <!-- End .mb-3 -->
 
-					<div class="icon-boxes-container">
-						<div class="container-fluid">
-							<div class="row">
-								<div class="col-sm-6 col-lg-3">
-									<div class="icon-box icon-box-side">
+                <div class="icon-boxes-container">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-sm-6 col-lg-3">
+                                <div class="icon-box icon-box-side">
 										<span class="icon-box-icon text-dark"> <i
-											class="icon-rocket"></i>
+                                                class="icon-rocket"></i>
 										</span>
-										<div class="icon-box-content">
-											<h3 class="icon-box-title">Miễn phí giao hàng</h3>
-											<!-- End .icon-box-title -->
-											<p>Cho hoá đơn trên 100.000 VND</p>
-										</div>
-										<!-- End .icon-box-content -->
-									</div>
-									<!-- End .icon-box -->
-								</div>
-								<!-- End .col-sm-6 col-lg-3 -->
+                                    <div class="icon-box-content">
+                                        <h3 class="icon-box-title">Miễn phí giao hàng</h3>
+                                        <!-- End .icon-box-title -->
+                                        <p>Cho hoá đơn trên 100.000 VND</p>
+                                    </div>
+                                    <!-- End .icon-box-content -->
+                                </div>
+                                <!-- End .icon-box -->
+                            </div>
+                            <!-- End .col-sm-6 col-lg-3 -->
 
-								<div class="col-sm-6 col-lg-3">
-									<div class="icon-box icon-box-side">
+                            <div class="col-sm-6 col-lg-3">
+                                <div class="icon-box icon-box-side">
 										<span class="icon-box-icon text-dark"> <i
-											class="icon-rotate-left"></i>
-										</span>
-
-										<div class="icon-box-content">
-											<h3 class="icon-box-title">Miễn phí đổi trả</h3>
-											<!-- End .icon-box-title -->
-											<p>Trong vòng 30 ngày</p>
-										</div>
-										<!-- End .icon-box-content -->
-									</div>
-									<!-- End .icon-box -->
-								</div>
-								<!-- End .col-sm-6 col-lg-3 -->
-
-								<div class="col-sm-6 col-lg-3">
-									<div class="icon-box icon-box-side">
-										<span class="icon-box-icon text-dark"> <i
-											class="icon-info-circle"></i>
+                                                class="icon-rotate-left"></i>
 										</span>
 
-										<div class="icon-box-content">
-											<h3 class="icon-box-title">Giảm 20% cho sản phẩm</h3>
-											<!-- End .icon-box-title -->
-											<p>Khi bạn đăng nhập</p>
-										</div>
-										<!-- End .icon-box-content -->
-									</div>
-									<!-- End .icon-box -->
-								</div>
-								<!-- End .col-sm-6 col-lg-3 -->
+                                    <div class="icon-box-content">
+                                        <h3 class="icon-box-title">Miễn phí đổi trả</h3>
+                                        <!-- End .icon-box-title -->
+                                        <p>Trong vòng 30 ngày</p>
+                                    </div>
+                                    <!-- End .icon-box-content -->
+                                </div>
+                                <!-- End .icon-box -->
+                            </div>
+                            <!-- End .col-sm-6 col-lg-3 -->
 
-								<div class="col-sm-6 col-lg-3">
-									<div class="icon-box icon-box-side">
+                            <div class="col-sm-6 col-lg-3">
+                                <div class="icon-box icon-box-side">
 										<span class="icon-box-icon text-dark"> <i
-											class="icon-life-ring"></i>
+                                                class="icon-info-circle"></i>
 										</span>
 
-										<div class="icon-box-content">
-											<h3 class="icon-box-title">Hỗ trợ</h3>
-											<!-- End .icon-box-title -->
-											<p>Dịch vụ 24/7</p>
-										</div>
-										<!-- End .icon-box-content -->
-									</div>
-									<!-- End .icon-box -->
-								</div>
-								<!-- End .col-sm-6 col-lg-3 -->
-							</div>
-							<!-- End .row -->
-						</div>
-						<!-- End .container-fluid -->
-					</div>
-					<!-- End .icon-boxes-container -->
+                                    <div class="icon-box-content">
+                                        <h3 class="icon-box-title">Giảm 20% cho sản phẩm</h3>
+                                        <!-- End .icon-box-title -->
+                                        <p>Khi bạn đăng nhập</p>
+                                    </div>
+                                    <!-- End .icon-box-content -->
+                                </div>
+                                <!-- End .icon-box -->
+                            </div>
+                            <!-- End .col-sm-6 col-lg-3 -->
 
-					<div class="mb-5"></div>
-					<!-- End .mb-5 -->
-				</div>
-				<!-- End .col-lg-9 col-xxl-10 -->
+                            <div class="col-sm-6 col-lg-3">
+                                <div class="icon-box icon-box-side">
+										<span class="icon-box-icon text-dark"> <i
+                                                class="icon-life-ring"></i>
+										</span>
 
-				<aside class="col-xl-3 col-xxl-2 order-xl-first">
-					<div class="sidebar sidebar-home">
-						<div class="row">
-							<div class="col-sm-6 col-xl-12">
-								<div class="widget widget-banner">
-									<div class="banner banner-overlay">
-										<a href="#"> <img
-											th:src="@{/client/assets/images/demos/demo-14/banners/banner-11.jpg}"
-											alt="Banner img desc">
-										</a>
+                                    <div class="icon-box-content">
+                                        <h3 class="icon-box-title">Hỗ trợ</h3>
+                                        <!-- End .icon-box-title -->
+                                        <p>Dịch vụ 24/7</p>
+                                    </div>
+                                    <!-- End .icon-box-content -->
+                                </div>
+                                <!-- End .icon-box -->
+                            </div>
+                            <!-- End .col-sm-6 col-lg-3 -->
+                        </div>
+                        <!-- End .row -->
+                    </div>
+                    <!-- End .container-fluid -->
+                </div>
+                <!-- End .icon-boxes-container -->
 
-										<div
-											class="banner-content banner-content-top banner-content-right text-right">
-											<h3 class="banner-title text-white">
-												<a href="#">Thoải mái tối đa <span>Sofas -20%
+                <div class="mb-5"></div>
+                <!-- End .mb-5 -->
+            </div>
+            <!-- End .col-lg-9 col-xxl-10 -->
+
+            <aside class="col-xl-3 col-xxl-2 order-xl-first">
+                <div class="sidebar sidebar-home">
+                    <div class="row">
+                        <div class="col-sm-6 col-xl-12">
+                            <div class="widget widget-banner">
+                                <div class="banner banner-overlay">
+                                    <a href="#"> <img
+                                            th:src="@{/client/assets/images/demos/demo-14/banners/banner-11.jpg}"
+                                            alt="Banner img desc">
+                                    </a>
+
+                                    <div
+                                            class="banner-content banner-content-top banner-content-right text-right">
+                                        <h3 class="banner-title text-white">
+                                            <a href="#">Thoải mái tối đa <span>Sofas -20%
 														Giảm</span></a>
-											</h3>
-											<!-- End .banner-title -->
-											<a th:href="@{/car/client}" class="banner-link">Cửa hàng
-												<i class="icon-long-arrow-right"></i>
-											</a>
-										</div>
-										<!-- End .banner-content -->
-									</div>
-									<!-- End .banner banner-overlay -->
-								</div>
-								<!-- End .widget widget-banner -->
-							</div>
-							<!-- End .col-sm-6 col-xl-12 -->
+                                        </h3>
+                                        <!-- End .banner-title -->
+                                        <a th:href="@{/car/client}" class="banner-link">Cửa hàng
+                                            <i class="icon-long-arrow-right"></i>
+                                        </a>
+                                    </div>
+                                    <!-- End .banner-content -->
+                                </div>
+                                <!-- End .banner banner-overlay -->
+                            </div>
+                            <!-- End .widget widget-banner -->
+                        </div>
+                        <!-- End .col-sm-6 col-xl-12 -->
 
-							<div class="col-sm-6 col-xl-12">
-								<div class="widget widget-banner">
-									<div class="banner banner-overlay">
-										<a href="#"> <img
-											th:src="@{/client/assets/images/demos/demo-14/banners/banner-12.jpg}"
-											alt="Banner img desc">
-										</a>
+                        <div class="col-sm-6 col-xl-12">
+                            <div class="widget widget-banner">
+                                <div class="banner banner-overlay">
+                                    <a href="#"> <img
+                                            th:src="@{/client/assets/images/demos/demo-14/banners/banner-12.jpg}"
+                                            alt="Banner img desc">
+                                    </a>
 
-										<div class="banner-content banner-content-top">
-											<h3 class="banner-title text-white">
-												<a href="#">Chụp ảnh đẹp hơn <br> <span>Sử
+                                    <div class="banner-content banner-content-top">
+                                        <h3 class="banner-title text-white">
+                                            <a href="#">Chụp ảnh đẹp hơn <br> <span>Sử
 														dụng</span> Canon EOS <br> <span>Giảm 20%</span></a>
-											</h3>
-											<!-- End .banner-title -->
-											<a th:href="@{/car/client}" class="banner-link">Cửa hàng
-												<i class="icon-long-arrow-right"></i>
-											</a>
-										</div>
-										<!-- End .banner-content -->
-									</div>
-									<!-- End .banner banner-overlay -->
-								</div>
-								<!-- End .widget widget-banner -->
-							</div>
-							<!-- End .col-sm-6 col-lg-12 -->
-						</div>
-						<!-- End .row -->
-					</div>
-					<!-- End .sidebar sidebar-home -->
-				</aside>
-				<!-- End .col-lg-3 col-xxl-2 -->
-			</div>
-			<!-- End .row -->
-		</div>
-		<!-- End .container-fluid -->
-	</div>
+                                        </h3>
+                                        <!-- End .banner-title -->
+                                        <a th:href="@{/car/client}" class="banner-link">Cửa hàng
+                                            <i class="icon-long-arrow-right"></i>
+                                        </a>
+                                    </div>
+                                    <!-- End .banner-content -->
+                                </div>
+                                <!-- End .banner banner-overlay -->
+                            </div>
+                            <!-- End .widget widget-banner -->
+                        </div>
+                        <!-- End .col-sm-6 col-lg-12 -->
+                    </div>
+                    <!-- End .row -->
+                </div>
+                <!-- End .sidebar sidebar-home -->
+            </aside>
+            <!-- End .col-lg-3 col-xxl-2 -->
+        </div>
+        <!-- End .row -->
+    </div>
+    <!-- End .container-fluid -->
+</div>
 </body>
 
 </html>
