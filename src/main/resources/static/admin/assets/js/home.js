@@ -14,8 +14,8 @@ async function showCountOrderDate() {
 	showFilter.innerText = ``;
 	showFilter.innerText = `| Theo ngày`;
 	let countOrder = document.getElementById('countHomeOrder');
-	let countOrderDateNow = await axios.get(baseUrl + "/home/count-order-date-now");
-	let countOrderDateYe = await axios.get(baseUrl + "/home/count-order-date-ye");
+	let countOrderDateNow = await axios.get(baseUrl + "/admin/count-order-date-now");
+	let countOrderDateYe = await axios.get(baseUrl + "/admin/count-order-date-ye");
 	countOrder.innerHTML = ``;
 	let percent = 0;
 	if (countOrderDateNow.data > countOrderDateYe.data) {
@@ -49,8 +49,8 @@ async function showCountOrderMonth() {
 	showFilter.innerText = ``;
 	showFilter.innerText = `| Theo tháng`;
 	let countOrder = document.getElementById('countHomeOrder');
-	let countOrderMonthNow = await axios.get(baseUrl + "/home/count-order-month-now");
-	let countOrderMonthYe = await axios.get(baseUrl + "/home/count-order-month-ye");
+	let countOrderMonthNow = await axios.get(baseUrl + "/admin/count-order-month-now");
+	let countOrderMonthYe = await axios.get(baseUrl + "/admin/count-order-month-ye");
 	countOrder.innerHTML = ``;
 	let percent = 0;
 	if (countOrderMonthNow.data > countOrderMonthYe.data) {
@@ -84,8 +84,8 @@ async function showCountOrderYear() {
 	showFilter.innerText = ``;
 	showFilter.innerText = `| Theo năm`;
 	let countOrder = document.getElementById('countHomeOrder');
-	let countOrderYearNow = await axios.get(baseUrl + "/home/count-order-year-now");
-	let countOrderYearYe = await axios.get(baseUrl + "/home/count-order-year-ye");
+	let countOrderYearNow = await axios.get(baseUrl + "/admin/count-order-year-now");
+	let countOrderYearYe = await axios.get(baseUrl + "/admin/count-order-year-ye");
 	countOrder.innerHTML = ``;
 	let percent = 0;
 	if (countOrderYearNow.data > countOrderYearYe.data) {
@@ -224,8 +224,8 @@ async function showCustomersDate() {
 	showFilter.innerText = ``;
 	showFilter.innerText = `| Theo ngày`;
 	let customers = document.getElementById('homeCustomers');
-	let customersDateNow = await axios.get(baseUrl + "/home/customers-date-now");
-	let customersDateYe = await axios.get(baseUrl + "/home/customers-date-ye");
+	let customersDateNow = await axios.get(baseUrl + "/admin/users-date-now");
+	let customersDateYe = await axios.get(baseUrl + "/admin/users-date-ye");
 	customers.innerHTML = ``;
 	let percent = 0;
 	if (customersDateNow.data > customersDateYe.data) {
@@ -259,8 +259,8 @@ async function showCustomersMonth() {
 	showFilter.innerText = ``;
 	showFilter.innerText = `| Theo tháng`;
 	let customers = document.getElementById('homeCustomers');
-	let customersMonthNow = await axios.get(baseUrl + "/home/customers-month-now");
-	let customersMonthYe = await axios.get(baseUrl + "/home/customers-month-ye");
+	let customersMonthNow = await axios.get(baseUrl + "/admin/users-month-now");
+	let customersMonthYe = await axios.get(baseUrl + "/admin/users-month-ye");
 	customers.innerHTML = ``;
 	let percent = 0;
 	if (customersMonthNow.data > customersMonthYe.data) {
@@ -294,8 +294,8 @@ async function showCustomersYear() {
 	showFilter.innerText = ``;
 	showFilter.innerText = `| Theo năm`;
 	let customers = document.getElementById('homeCustomers');
-	let customersYearNow = await axios.get(baseUrl + "/home/customers-year-now");
-	let customersYearYe = await axios.get(baseUrl + "/home/customers-year-ye");
+	let customersYearNow = await axios.get(baseUrl + "/admin/users-year-now");
+	let customersYearYe = await axios.get(baseUrl + "/admin/users-year-ye");
 	customers.innerHTML = ``;
 	let percent = 0;
 	if (customersYearNow.data > customersYearYe.data) {
