@@ -25,7 +25,8 @@ public class Booking extends DateAuditing {
     private String id;
 
     @Column(nullable = false)
-    private String bookingNo;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer bookingNo;
 
     @Column(nullable = false)
     private LocalDateTime startDate;
