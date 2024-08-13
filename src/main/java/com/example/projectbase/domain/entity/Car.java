@@ -100,4 +100,8 @@ public class Car extends UserDateAuditing {
         }
         return null;
     }
+
+    public boolean isAvailable() {
+        return true;
+    }
 }

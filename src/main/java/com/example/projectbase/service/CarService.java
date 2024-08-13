@@ -6,6 +6,8 @@ import com.example.projectbase.domain.dto.request.CarCreateDTO;
 import com.example.projectbase.domain.dto.response.CarDto;
 import com.example.projectbase.domain.entity.Car;
 import com.example.projectbase.domain.entity.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,4 +21,5 @@ public interface CarService {
     CarDto handleUpdateCar(CarDto carDto);
     Optional<Car> findById(String id);
     List<Car> findAllByFuelType(String fuelType);
+    Page<Car> findAllByNameLike(String keyword, Pageable pageable);
 }

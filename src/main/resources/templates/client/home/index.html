@@ -381,8 +381,12 @@
                                 <figure class="product-media">
 										<span>
 											<span class="product-label label-sale">Đặt cọc 20%</span>
+                                            <span
+												class="product-label"
+												th:text="${item.isAvailable() ? 'Available' : 'Stopped'}"
+                                                th:style="${item.isAvailable()} ? 'background-color: #00FF00;' : 'background-color: red;'"></span>
 										</span>
-                                    <a th:href="@{/car-owner/my-car/${item.id}}"> <img
+                                    <a th:href="@{/car/product-detail(id=${item.id})}"> <img
                                             th:src="${item.getBanner()} == null ? '/client/assets/images/no-image.jpg' : ${item.getBanner()}"
                                             alt="Product image" class="product-image">
                                     </a>
@@ -514,8 +518,12 @@
                                 <figure class="product-media">
 										<span>
 											<span class="product-label label-sale">Đặt cọc 20%</span>
+                                            <span
+												class="product-label"
+												th:text="${item.isAvailable() ? 'Available' : 'Stopped'}"
+                                                th:style="${item.isAvailable()} ? 'background-color: #00FF00;' : 'background-color: red;'"></span>
 										</span>
-                                    <a th:href="@{/car-owner/my-car/${item.id}}"> <img
+                                    <a th:href="@{/car/product-detail(id=${item.id})}"> <img
                                             th:src="${item.getBanner()} == null ? '/client/assets/images/no-image.jpg' : ${item.getBanner()}"
                                             alt="Product image" class="product-image">
                                     </a>

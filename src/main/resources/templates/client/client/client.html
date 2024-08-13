@@ -1,324 +1,314 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{client/layout.html}">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{client/layout.html}">
 
 <head>
-<title>Cửa hàng</title>
+    <title>Cửa hàng</title>
 </head>
 
 <body>
-	<div layout:fragment="content">
-		<div class="page-header text-center"
-			style="background-image: url('/assets/images/page-header-bg.jpg')">
-			<div class="container">
-				<h1 class="page-title">
-					Danh sách sản phẩm<span>Cửa hàng</span>
-				</h1>
-			</div>
-			<!-- End .container -->
-		</div>
-		<!-- End .page-header -->
-		<nav aria-label="breadcrumb" class="breadcrumb-nav mb-2">
-			<div class="container">
-				<ol class="breadcrumb">
-					<li class="breadcrumb-item"><a th:href="@{/molla/home}">Trang
-							chủ</a></li>
-					<li class="breadcrumb-item"><a th:href="@{/molla/shop}">Shop</a></li>
-					<li class="breadcrumb-item active" aria-current="page">Danh
-						sách sản phẩm</li>
-				</ol>
-			</div>
-			<!-- End .container -->
-		</nav>
-		<!-- End .breadcrumb-nav -->
+<div layout:fragment="content">
+    <div class="page-header text-center"
+         style="background-image: url('/assets/images/page-header-bg.jpg')">
+        <div class="container">
+            <h1 class="page-title">
+                Danh sách xe<span>Cửa hàng</span>
+            </h1>
+        </div>
+        <!-- End .container -->
+    </div>
+    <!-- End .page-header -->
+    <nav aria-label="breadcrumb" class="breadcrumb-nav mb-2">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a th:href="@{/car/home}">Trang
+                    chủ</a></li>
+                <li class="breadcrumb-item"><a th:href="@{/car/client}">Cửa hàng</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Danh
+                    sách xe
+                </li>
+            </ol>
+        </div>
+        <!-- End .container -->
+    </nav>
+    <!-- End .breadcrumb-nav -->
 
-		<div class="page-content">
-			<div class="container">
-				<div class="row">
-					<div class="col-lg-9">
-						<div class="toolbox">
-							<div class="toolbox-left">
-								<div class="toolbox-sort">
-									<label for="sortby">Hiễn thị:</label>
-									<div class="select-custom">
-										<form
-											th:action="@{/molla/shop(field=${field}, keywords=${keywords}, category_id=${categoryId}, color=${color}, brand_id=${brandId})}">
-											<select class="form-control" name="size" id="size"
-												onchange="this.form.submit()">
-												<option value="12" th:selected="${resultPage.size == 12}">12</option>
-												<option value="16" th:selected="${resultPage.size == 16}">16</option>
-												<option value="24" th:selected="${resultPage.size == 24}">24</option>
-												<option value="32" th:selected="${resultPage.size == 32}">32</option>
-												<option value="48" th:selected="${resultPage.size == 48}">48</option>
-											</select>
-										</form>
-									</div>
-								</div>
-							</div>
-							<!-- End .toolbox-left -->
+    <div class="page-content">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-9">
+                    <div class="toolbox">
+                        <div class="toolbox-left">
+                            <div class="toolbox-sort">
+                                <label for="sortby">Hiễn thị:</label>
+                                <div class="select-custom">
+                                    <form
+                                            th:action="@{/car/client(field=${field}, keywords=${keywords})}">
+                                        <select class="form-control" name="size" id="size"
+                                                onchange="this.form.submit()">
+                                            <option value="12" th:selected="${resultPage.size == 12}">12</option>
+                                            <option value="16" th:selected="${resultPage.size == 16}">16</option>
+                                            <option value="24" th:selected="${resultPage.size == 24}">24</option>
+                                            <option value="32" th:selected="${resultPage.size == 32}">32</option>
+                                            <option value="48" th:selected="${resultPage.size == 48}">48</option>
+                                        </select>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End .toolbox-left -->
 
-							<div class="toolbox-right">
-								<div class="toolbox-sort">
-									<label for="field">Sắp xếp theo:</label>
-									<div class="select-custom">
-										<form
-											th:action="@{/molla/shop(size=${size}, keywords=${keywords}, category_id=${categoryId}, color=${color}, brand_id=${brandId})}">
-											<select name="field" id="field" class="form-control" onchange="this.form.submit()">
-												<option value="name" th:selected="${field == 'name'}">Tên sản phẩm</option>
-												<option value="price" th:selected="${field == 'price'}">Giá</option>
-												<option value="discount" th:selected="${field == 'discount'}">Giảm giá</option>
-											</select>
-										</form>
+                        <div class="toolbox-right">
+                            <div class="toolbox-sort">
+                                <label for="field">Sắp xếp theo:</label>
+                                <div class="select-custom">
+                                    <form
+                                            th:action="@{/car/client(size=${size}, keywords=${keywords})}">
+                                        <select name="field" id="field" class="form-control"
+                                                onchange="this.form.submit()">
+                                            <option value="name" th:selected="${field == 'name'}">Tên xe</option>
+                                            <option value="price" th:selected="${field == 'basePrice'}">Giá</option>
+                                            <option value="discount" th:selected="${field == 'deposit'}">Giá cọc
+                                            </option>
+                                        </select>
+                                    </form>
 
-									</div>
-								</div>
-								<!-- End .toolbox-sort -->
-							</div>
-							<!-- End .toolbox-right -->
-						</div>
-						<!-- End .toolbox -->
+                                </div>
+                            </div>
+                            <!-- End .toolbox-sort -->
+                        </div>
+                        <!-- End .toolbox-right -->
+                    </div>
+                    <!-- End .toolbox -->
 
-						<div class="products mb-3">
-							<div class="row">
-								<!-- Danh sách sản phẩm -->
-								<div class="col-6 col-md-4 col-lg-4 col-xl-3"
-									th:each="item, i : ${resultPage.content}">
-									<div class="product product-7 text-center">
-										<figure class="product-media">
+                    <div class="products mb-3">
+                        <div class="row">
+                            <!-- Danh sách xe -->
+                            <div class="col-6 col-md-4 col-lg-4 col-xl-3"
+                                 th:each="item, i : ${resultPage.content}">
+                                <div class="product product-7 text-center">
+                                    <figure class="product-media">
 
-											<span
-												th:if="${item.startDayDiscount != null and item.endDayDiscount != null and item.discount > 0}">
-												<span class="product-label label-sale"
-												th:if="${item.startDayDiscount.before(#dates.createNow()) and item.endDayDiscount.after(#dates.createNow())}"
-												th:text="${item.discount + ' % giảm'}"></span> <span
-												class="product-label"
-												th:if="${item.startDayDiscount.after(#dates.createNow())}">Sắp
-													giảm giá</span>
+											<span>
+											<span class="product-label label-sale">Đặt cọc 20%</span>
+                                            <span
+                                                    class="product-label"
+                                                    th:text="${item.isAvailable() ? 'Sẵn có' : 'Chưa thể đặt'}"
+                                                    th:style="${item.isAvailable()} ? 'background-color: #00FF00;' : 'background-color: red;'"></span>
+										</span>
+                                        <a th:href="@{/car/product-detail(id=${item.id})}"> <img
+                                                th:src="${item.getBanner()} == null ? '/client/assets/images/no-image.jpg' : ${item.getBanner()}"
+                                                alt="Product image" class="product-image">
+                                        </a>
+
+                                        <div class="product-action-vertical">
+                                            <a th:data-id="${item.id}"
+                                               th:onclick="addLikeShop(this.getAttribute('data-id'))"
+                                               class="btn-product-icon btn-wishlist btn-expandable"><span>Yêu
+													thích</span></a> <a href="#quickView-modal" data-toggle="modal"
+                                                                        th:data-id="${item.id}"
+                                                                        th:onclick="quickView(this.getAttribute('data-id'))"
+                                                                        class="btn-product-icon btn-quickview"><span>Xem</span></a>
+                                        </div>
+                                        <!-- End .product-action-vertical -->
+
+                                        <div class="product-action">
+                                            <a href="#quickView-modal" data-toggle="modal"
+                                               th:data-id="${item.id}"
+                                               th:onclick="quickView(this.getAttribute('data-id'))"
+                                               class="btn-product btn-cart"><span>Xem</span></a>
+                                        </div>
+                                        <!-- End .product-action -->
+                                    </figure>
+                                    <!-- End .product-media -->
+
+                                    <div class="product-body">
+                                        <div class="product-cat">
+                                            <a href="#" th:text="${item.brand}"></a>
+                                        </div>
+                                        <!-- End .product-cat -->
+                                        <h3 class="product-title">
+                                            <a th:href="@{/car/product-detail(id=${item.id})}"
+                                               th:text="${item.name}">Tên xe</a>
+                                        </h3>
+                                        <!-- End .product-title -->
+
+                                        <div class="product-price">
+                                        <span>
+												<span class="new-price"
+                                                      th:text="${#numbers.formatDecimal(item.deposit, 0, 'COMMA', 0, 'POINT')} + ' VND'"></span> <span
+                                                class="old-price"> <del
+                                                th:text="${#numbers.formatDecimal(item.basePrice, 0, 'COMMA', 0, 'POINT')} + ' VND'">
+														</del></span>
+
 											</span>
+                                        </div>
+                                        <!-- End .product-price -->
+                                    </div>
+                                    <!-- End .product-body -->
+                                </div>
+                                <!-- End .product -->
+                            </div>
+                            <!-- End .col-sm-6 col-lg-4 col-xl-3 -->
+                        </div>
+                        <!-- End .row -->
+                    </div>
+                    <!-- End .products -->
 
-											<a th:href="@{/molla/product-detail(id=${item.id})}"> <img
-												th:src="${item.banner} == null ? '/shop/assets/images/no-image.jpg' : '/uploads/' + ${item.banner}"
-												alt="Product image" class="product-image">
-											</a>
+                    <nav aria-label="Page navigation"
+                         th:if="${resultPage.totalPages > 0}">
+                        <ul class="pagination justify-content-center">
 
-											<div class="product-action-vertical">
-												<a th:data-id="${item.id}"
-													th:onclick="addLikeShop(this.getAttribute('data-id'))"
-													class="btn-product-icon btn-wishlist btn-expandable"><span>Yêu
-														thích</span></a> 
-												
-												<a href="#quickView-modal" data-toggle="modal"
-													th:data-id="${item.id}"
-													th:onclick="quickView(this.getAttribute('data-id'))"
-													class="btn-product-icon btn-quickview"><span>Xem</span></a>
-											</div>
-											<!-- End .product-action-vertical -->
+                            <li
+                                    th:class="${resultPage.number + 1 == 1} ? 'page-item active' : 'page-item'"><a
+                                    class="page-link page-link-prev"
+                                    th:href="@{/car/client(field=${field}, page=${1}, size=${resultPage.size}, keywords=${keywords})}"
+                                    aria-label="Previous"> <span aria-hidden="true"><i
+                                    class="icon-long-arrow-left"></i></span>Prev
+                            </a></li>
 
-											<div class="product-action">
-												<a href="#quickView-modal" data-toggle="modal"
-													th:data-id="${item.id}"
-													th:onclick="quickView(this.getAttribute('data-id'))"
-													class="btn-product btn-cart"><span>Xem</span></a>
-											</div>
-											<!-- End .product-action -->
-										</figure>
-										<!-- End .product-media -->
+                            <li th:each=" pageNumber : ${pageNumbers}"
+                                th:if="${resultPage.totalPages > 1}"
+                                th:class="${pageNumber == resultPage.number + 1} ? 'page-item active' : 'page-item'">
+                                <a class="page-link"
+                                   th:href="@{/car/client(field=${field}, page=${pageNumber}, size=${resultPage.size}, keywords=${keywords})}"
+                                   th:text="${pageNumber}">1</a>
+                            </li>
 
-										<div class="product-body">
-											<div class="product-cat">
-												<a href="#" th:text="${item.category.name}">Women</a>
-											</div>
-											<!-- End .product-cat -->
-											<h3 class="product-title">
-												<a th:href="@{/molla/product-detail(id=${item.id})}"
-													th:text="${item.name}">Tên sản phẩm</a>
-											</h3>
-											<!-- End .product-title -->
-											<div class="product-price"
-												th:if="${item.startDayDiscount == null or item.endDayDiscount == null or item.discount <= 0}"
-												th:text="${#numbers.formatDecimal(item.price, 0, 'COMMA', 0, 'POINT')} + ' VND'">150.000
-												VND</div>
+                            <li
+                                    th:class="${resultPage.number + 1 == resultPage.totalPages} ? 'page-item active' : 'page-item'">
+                                <a
+                                        class="page-link page-link-next"
+                                        th:href="@{/car/client(field=${field}, page=${resultPage.totalPages}, size=${resultPage.size}, keywords=${keywords})}"
+                                        aria-label="Next"> Next <span aria-hidden="true"><i
+                                        class="icon-long-arrow-right"></i></span>
+                                </a></li>
 
-											<div class="product-price"
-												th:if="${item.startDayDiscount != null and item.endDayDiscount != null and item.discount > 0}">
-												<span
-													th:if="${item.startDayDiscount.after(#dates.createNow())}"
-													th:text="${#numbers.formatDecimal(item.price, 0, 'COMMA', 0, 'POINT')} + ' VND'">150.000
-													VND</span> <span
-													th:if="${item.startDayDiscount.before(#dates.createNow()) and item.endDayDiscount.after(#dates.createNow())}">
-													<span class="new-price"
-													th:text="${#numbers.formatDecimal(item.price - (item.price * item.discount * 0.01), 0, 'COMMA', 0, 'POINT')} + ' VND'">150.000
-														VND</span> <span class="old-price"> <del
-															th:text="${#numbers.formatDecimal(item.price, 0, 'COMMA', 0, 'POINT')} + ' VND'">
-															150.000 VND</del></span>
+                        </ul>
+                    </nav>
+                </div>
+                <!-- End .col-lg-9 -->
+                <aside class="col-lg-3 order-lg-first">
+                    <div class="sidebar sidebar-shop">
+                        <div class="widget widget-clean">
+                            <label>Lọc theo:</label>
+                            <a th:href="@{/car/client}"
+                               class="sidebar-filter-clear">Xoá bộ lọc</a>
+                        </div>
+                        <!-- End .widget widget-clean -->
 
-												</span>
-											</div>
-											<!-- End .product-price -->
-										</div>
-										<!-- End .product-body -->
-									</div>
-									<!-- End .product -->
-								</div>
-								<!-- End .col-sm-6 col-lg-4 col-xl-3 -->
-							</div>
-							<!-- End .row -->
-						</div>
-						<!-- End .products -->
+                        <div class="widget widget-collapsible">
+                            <h3 class="widget-title">
+                                <a data-toggle="collapse" href="#widget-1" role="button"
+                                   aria-expanded="true" aria-controls="widget-1"> Danh mục </a>
+                            </h3>
+                            <!-- End .widget-title -->
 
-						<nav aria-label="Page navigation"
-							th:if="${resultPage.totalPages > 0}">
-							<ul class="pagination justify-content-center">
+                            <div class="collapse show" id="widget-1">
+                                <div class="widget-body">
+                                    <div class="filter-items filter-items-count">
+<!--                                        <div class="filter-item" th:each="item, i : ${categories}">-->
+<!--                                            <label> <a-->
+<!--                                                    th:href="@{/car/client(field=${field}, size=${resultPage.size})}"-->
+<!--                                                    th:text="${item.name}"></a>-->
+<!--                                            </label>-->
+<!--                                            &lt;!&ndash; End .custom-checkbox &ndash;&gt;-->
+<!--                                        </div>-->
+                                        <!-- End .filter-item -->
+                                    </div>
+                                    <!-- End .filter-items -->
+                                </div>
+                                <!-- End .widget-body -->
+                            </div>
+                            <!-- End .collapse -->
+                        </div>
+                        <!-- End .widget -->
 
-								<li
-									th:class="${resultPage.number + 1 == 1} ? 'page-item active' : 'page-item'"><a
-									class="page-link page-link-prev"
-									th:href="@{/molla/shop(field=${field}, page=${1}, size=${resultPage.size}, keywords=${keywords}, category_id=${categoryId}, color=${color}, brand_id=${brandId})}"
-									aria-label="Previous"> <span aria-hidden="true"><i
-											class="icon-long-arrow-left"></i></span>Prev
-								</a></li>
+                        <div class="widget widget-collapsible">
+                            <h3 class="widget-title">
+                                <a data-toggle="collapse" href="#widget-3" role="button"
+                                   aria-expanded="true" aria-controls="widget-3"> Màu sắc </a>
+                            </h3>
+                            <!-- End .widget-title -->
 
-								<li th:each=" pageNumber : ${pageNumbers}"
-									th:if="${resultPage.totalPages > 1}"
-									th:class="${pageNumber == resultPage.number + 1} ? 'page-item active' : 'page-item'">
-									<a class="page-link"
-									th:href="@{/molla/shop(field=${field}, page=${pageNumber}, size=${resultPage.size}, keywords=${keywords}, category_id=${categoryId}, color=${color}, brand_id=${brandId})}"
-									th:text="${pageNumber}">1</a>
-								</li>
+                            <div class="collapse show" id="widget-3">
+                                <div class="widget-body">
+                                    <div class="filter-colors">
+                                        <!--											<a-->
+                                        <!--													th:href="@{/car/client(field=${field}, size=${resultPage.size}, keywords=${keywords}, color='#000000')}"-->
+                                        <!--													style="background: #000000;"><span class="sr-only">Đen</span></a>-->
 
-								<li
-									th:class="${resultPage.number + 1 == resultPage.totalPages} ? 'page-item active' : 'page-item'"><a
-									class="page-link page-link-next"
-									th:href="@{/molla/shop(field=${field}, page=${resultPage.totalPages}, size=${resultPage.size}, keywords=${keywords}, category_id=${categoryId}, color=${color}, brand_id=${brandId})}"
-									aria-label="Next"> Next <span aria-hidden="true"><i
-											class="icon-long-arrow-right"></i></span>
-								</a></li>
+                                        <!--											<a-->
+                                        <!--													th:href="@{/car/client(field=${field}, size=${resultPage.size}, keywords=${keywords}, color='#ffffff')}"-->
+                                        <!--													style="background: #ffffff;"><span class="sr-only">Trắng</span></a>-->
 
-							</ul>
-						</nav>
-					</div>
-					<!-- End .col-lg-9 -->
-					<aside class="col-lg-3 order-lg-first">
-						<div class="sidebar sidebar-shop">
-							<div class="widget widget-clean">
-								<label>Lọc theo:</label>
-								<a th:href="@{/molla/shop}"
-									class="sidebar-filter-clear">Xoá bộ lọc</a>
-							</div>
-							<!-- End .widget widget-clean -->
+                                        <!--											<a-->
+                                        <!--													th:href="@{/car/client(field=${field}, size=${resultPage.size}, keywords=${keywords}, color='#0419f7')}"-->
+                                        <!--													style="background: #0419f7;"><span class="sr-only">Xanh-->
+                                        <!--													dương</span></a> <a-->
+                                        <!--												th:href="@{/car/client(field=${field}, size=${resultPage.size}, keywords=${keywords}, color='#ff0000')}"-->
+                                        <!--												style="background: #ff0000;"><span class="sr-only">Đỏ</span></a>-->
 
-							<div class="widget widget-collapsible">
-								<h3 class="widget-title">
-									<a data-toggle="collapse" href="#widget-1" role="button"
-										aria-expanded="true" aria-controls="widget-1"> Danh mục </a>
-								</h3>
-								<!-- End .widget-title -->
+                                        <!--											<a-->
+                                        <!--													th:href="@{/car/client(field=${field}, size=${resultPage.size}, keywords=${keywords}, color='#fff200')}"-->
+                                        <!--													style="background: #fff200;"><span class="sr-only">Vàng</span></a>-->
 
-								<div class="collapse show" id="widget-1">
-									<div class="widget-body">
-										<div class="filter-items filter-items-count">
-											<div class="filter-item" th:each="item, i : ${categories}">
-												<label> <a
-													th:href="@{/molla/shop(field=${field}, size=${resultPage.size}, keywords=${keywords}, category_id=${item.id})}"
-													th:text="${item.name}"></a>
-												</label>
-												<!-- End .custom-checkbox -->
-											</div>
-											<!-- End .filter-item -->
-										</div>
-										<!-- End .filter-items -->
-									</div>
-									<!-- End .widget-body -->
-								</div>
-								<!-- End .collapse -->
-							</div>
-							<!-- End .widget -->
+                                        <!--											<a-->
+                                        <!--													th:href="@{/car/client(field=${field}, size=${resultPage.size}, keywords=${keywords}, color='#00ff11')}"-->
+                                        <!--													style="background: #00ff11;"><span class="sr-only">Xanh-->
+                                        <!--													lá</span></a> <a-->
+                                        <!--												th:href="@{/car/client(field=${field}, size=${resultPage.size}, keywords=${keywords}, color='#f200ff')}"-->
+                                        <!--												style="background: #f200ff;"><span class="sr-only">Tím</span></a>-->
 
-							<div class="widget widget-collapsible">
-								<h3 class="widget-title">
-									<a data-toggle="collapse" href="#widget-3" role="button"
-									   aria-expanded="true" aria-controls="widget-3"> Màu sắc </a>
-								</h3>
-								<!-- End .widget-title -->
+                                        <!--											<a-->
+                                        <!--													th:href="@{/car/client(field=${field}, size=${resultPage.size}, keywords=${keywords}, color='#fc05b2')}"-->
+                                        <!--													style="background: #fc05b2;"><span class="sr-only">Hồng</span></a>-->
+                                    </div>
+                                    <!-- End .filter-colors -->
+                                </div>
+                                <!-- End .widget-body -->
+                            </div>
+                            <!-- End .collapse -->
+                        </div>
 
-								<div class="collapse show" id="widget-3">
-									<div class="widget-body">
-										<div class="filter-colors">
-											<a
-													th:href="@{/molla/shop(field=${field}, size=${resultPage.size}, keywords=${keywords}, color='#000000')}"
-													style="background: #000000;"><span class="sr-only">Đen</span></a>
+                        <div class="widget widget-collapsible">
+                            <h3 class="widget-title">
+                                <a data-toggle="collapse" href="#widget-4" role="button"
+                                   aria-expanded="true" aria-controls="widget-4"> Thương hiệu
+                                </a>
+                            </h3>
+                            <!-- End .widget-title -->
 
-											<a
-													th:href="@{/molla/shop(field=${field}, size=${resultPage.size}, keywords=${keywords}, color='#ffffff')}"
-													style="background: #ffffff;"><span class="sr-only">Trắng</span></a>
-
-											<a
-													th:href="@{/molla/shop(field=${field}, size=${resultPage.size}, keywords=${keywords}, color='#0419f7')}"
-													style="background: #0419f7;"><span class="sr-only">Xanh
-													dương</span></a> <a
-												th:href="@{/molla/shop(field=${field}, size=${resultPage.size}, keywords=${keywords}, color='#ff0000')}"
-												style="background: #ff0000;"><span class="sr-only">Đỏ</span></a>
-
-											<a
-													th:href="@{/molla/shop(field=${field}, size=${resultPage.size}, keywords=${keywords}, color='#fff200')}"
-													style="background: #fff200;"><span class="sr-only">Vàng</span></a>
-
-											<a
-													th:href="@{/molla/shop(field=${field}, size=${resultPage.size}, keywords=${keywords}, color='#00ff11')}"
-													style="background: #00ff11;"><span class="sr-only">Xanh
-													lá</span></a> <a
-												th:href="@{/molla/shop(field=${field}, size=${resultPage.size}, keywords=${keywords}, color='#f200ff')}"
-												style="background: #f200ff;"><span class="sr-only">Tím</span></a>
-
-											<a
-													th:href="@{/molla/shop(field=${field}, size=${resultPage.size}, keywords=${keywords}, color='#fc05b2')}"
-													style="background: #fc05b2;"><span class="sr-only">Hồng</span></a>
-										</div>
-										<!-- End .filter-colors -->
-									</div>
-									<!-- End .widget-body -->
-								</div>
-								<!-- End .collapse -->
-							</div>
-
-							<div class="widget widget-collapsible">
-								<h3 class="widget-title">
-									<a data-toggle="collapse" href="#widget-4" role="button"
-										aria-expanded="true" aria-controls="widget-4"> Thương hiệu
-									</a>
-								</h3>
-								<!-- End .widget-title -->
-
-								<div class="collapse show" id="widget-4">
-									<div class="widget-body">
-										<div class="filter-items">
-											<div class="filter-item" th:each="item, i : ${brands}">
-												<label> <a
-													th:href="@{/molla/shop(field=${field}, size=${resultPage.size}, keywords=${keywords}, brand_id=${item.id})}"
-													th:text="${item.name}"></a>
-												</label>
-											</div>
-											<!-- End .filter-item -->
-										</div>
-										<!-- End .filter-items -->
-									</div>
-									<!-- End .widget-body -->
-								</div>
-								<!-- End .collapse -->
-							</div>
-							<!-- End .widget -->
-						</div>
-						<!-- End .sidebar sidebar-shop -->
-					</aside>
-					<!-- End .col-lg-3 -->
-				</div>
-				<!-- End .row -->
-			</div>
-			<!-- End .container -->
-		</div>
-		<!-- End .page-content -->
-	</div>
+                            <div class="collapse show" id="widget-4">
+                                <div class="widget-body">
+                                    <div class="filter-items">
+<!--                                        <div class="filter-item" th:each="item, i : ${brands}">-->
+<!--                                            <label> <a-->
+<!--                                                    th:href="@{/car/client(field=${field}, size=${resultPage.size}, keywords=${keywords}, brand_id=${item.id})}"-->
+<!--                                                    th:text="${item.name}"></a>-->
+<!--                                            </label>-->
+<!--                                        </div>-->
+                                        <!-- End .filter-item -->
+                                    </div>
+                                    <!-- End .filter-items -->
+                                </div>
+                                <!-- End .widget-body -->
+                            </div>
+                            <!-- End .collapse -->
+                        </div>
+                        <!-- End .widget -->
+                    </div>
+                    <!-- End .sidebar sidebar-shop -->
+                </aside>
+                <!-- End .col-lg-3 -->
+            </div>
+            <!-- End .row -->
+        </div>
+        <!-- End .container -->
+    </div>
+    <!-- End .page-content -->
+</div>
 </body>
 
 </html>
