@@ -4,9 +4,11 @@ import com.example.projectbase.constant.RoleConstant;
 import com.example.projectbase.constant.UrlConstant;
 import com.example.projectbase.domain.dto.request.LoginRequestDto;
 import com.example.projectbase.domain.dto.request.UserRequestDto;
+import com.example.projectbase.domain.dto.response.CarResponseDto;
 import com.example.projectbase.domain.entity.Car;
 import com.example.projectbase.domain.entity.User;
 import com.example.projectbase.repository.CarRepository;
+import com.example.projectbase.repository.ImageRepository;
 import com.example.projectbase.repository.UserRepository;
 import com.example.projectbase.security.UserPrincipal;
 import com.example.projectbase.service.AuthService;
@@ -51,6 +53,8 @@ public class AdminController {
     private final UserRepository userRepository;
 
     private final CarRepository carRepository;
+
+    private final ImageRepository imageRepository;
 
     @GetMapping(UrlConstant.Auth.ADMIN_LOGIN)
     public String getLoginForm(Model model) {
@@ -169,7 +173,11 @@ public class AdminController {
         session.set("keywords", keyword);
         Sort sort = Sort.by(Sort.Direction.DESC, field.orElse("id"));
         Pageable pageable = PageRequest.of(page.orElse(1) - 1, size.orElse(5), sort);
-        Page<Car> resultPage = carRepository.findAllByNameLike(pageable, keyword);
+        Page<CarResponseDto> result = carRepository.findAllCars (pageable,  keyword );
+        Page<CarResponseDto> resultPage = result.map(carResponseDto -> {
+            carResponseDto.setImages(imageRepository.findAllByCarId(carResponseDto.getId()));
+            return carResponseDto;
+        });
         int totalPages = resultPage.getTotalPages();
         int startPage = Math.max(1, page.orElse(1) - 2);
         int endPage = Math.min(page.orElse(1) + 2, totalPages);

@@ -67,16 +67,16 @@ public class AuthController {
         user.setPhoneNumber(register.getPhoneNumber());
         user.setEmail(register.getEmail());
         user.setPassword(register.getPassword());
-        user.setRole(roleRepository.findByRoleName(RoleConstant.USER));
+        user.setRole(roleRepository.findByRoleName(register.getRole()));
         user.setIsActive(true);
         userService.saveOrUpdate(user);
         return VsResponseUtil.success("Chúc mừng bạn đã đăng ký thành công.");
     }
 
     @GetMapping(value = UrlConstant.Auth.LOGOUT)
-    public ResponseEntity<?> logout(HttpServletRequest request, HttpServletResponse response) {
+    public String logout(HttpServletRequest request, HttpServletResponse response) {
         authService.logoutMvc(request, response);
-        return VsResponseUtil.success("Đăng xuất thành công.");
+        return "redirect:/car/home";
     }
 
     @PostMapping(UrlConstant.Auth.CHANGE_PASSWORD)
