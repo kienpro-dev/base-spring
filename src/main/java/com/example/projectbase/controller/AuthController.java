@@ -74,9 +74,9 @@ public class AuthController {
     }
 
     @GetMapping(value = UrlConstant.Auth.LOGOUT)
-    public ResponseEntity<?> logout(HttpServletRequest request, HttpServletResponse response) {
+    public String logout(HttpServletRequest request, HttpServletResponse response) {
         authService.logoutMvc(request, response);
-        return VsResponseUtil.success("Đăng xuất thành công.");
+        return "redirect:/car/home";
     }
 
     @PostMapping(UrlConstant.Auth.CHANGE_PASSWORD)

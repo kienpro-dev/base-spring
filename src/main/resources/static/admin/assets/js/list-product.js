@@ -111,23 +111,3 @@ function viewProduct(id) {
 	viewImages(id);
 }
 
-const bodyViewProductImages = document.getElementById('bodyViewProductImages');
-function viewImages(id) {
-	bodyViewProductImages.innerHTML = ``;
-	axios({
-		method: 'GET',
-		contentType: "application/json",
-		url: baseUrl + "/products/view-image/" + id
-	})
-		.then(response => {
-			response.data.forEach(image => {
-				var wrapperImage = document.createElement('div');
-				wrapperImage.classList.add("col-sm-6", "col-lg-6");
-				wrapperImage.innerHTML = `<div class="card">
-												<img src="/uploads/`+ image.name + `" class="card-img-top"
-											alt="...">
-											</div>`;
-				bodyViewProductImages.appendChild(wrapperImage);
-			});
-		});
-}

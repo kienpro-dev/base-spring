@@ -13,7 +13,8 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrderAddressDto {
-	
+	private String id;
+
 	private String name;
 	
 	private String address;

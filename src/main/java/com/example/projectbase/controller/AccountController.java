@@ -41,8 +41,15 @@ public class AccountController {
 			userDto.setPhoneNumber(user.getPhoneNumber());
 			userDto.setActive(user.getIsActive());
 			model.addAttribute("userDto", userDto);
+
+			orderAddressDto.setId(userDto.getId());
+			orderAddressDto.setPhoneNumber(user.getPhoneNumber());
+			orderAddressDto.setAddress(userDto.getAddress());
+			orderAddressDto.setName(userDto.getName());
+			orderAddressDto.setEmail(userDto.getEmail());
+			model.addAttribute("orderAddressDto", orderAddressDto);
         }
-        model.addAttribute("orderAddressDto", orderAddressDto);
+
         return "client/account/info-account";
     }
 
@@ -62,6 +69,25 @@ public class AccountController {
 		user.setDrivingLicense(userDto.getDrivingLicense());
 		userService.saveOrUpdate(user);
 		model.addAttribute("message", "Đã cập nhật thông tin tài khoản thành công.");
-		return "redirect:/client/account/info-account";
+		return "redirect:/car/account/info-account";
+	}
+
+	@PostMapping(value = "/account/info-account/order-address")
+	public String changeOrderAddressSubmit(Model model,
+								   @Valid @ModelAttribute("orderAddressDto") OrderAddressDto orderAddressDto, BindingResult result) {
+		if (result.hasErrors()) {
+			model.addAttribute("error", "Lỗi định dạng");
+			return "client/account/info-account";
+		}
+
+		User user=userService.findById(orderAddressDto.getId());
+		user.setAddress(orderAddressDto.getAddress());
+		user.setName(orderAddressDto.getName());
+		user.setPhoneNumber(orderAddressDto.getPhoneNumber());
+		user.setEmail(orderAddressDto.getEmail());
+		userService.saveOrUpdate(user);
+
+		model.addAttribute("message", "Đã cập nhật thông tin  thành công.");
+		return "redirect:/car/account/info-account";
 	}
 }
