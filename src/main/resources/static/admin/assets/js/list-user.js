@@ -122,6 +122,7 @@ function viewAdmin(id) {
     axios({
         method: 'GET',
         contentType: "application/json",
+
         url: baseUrl + "/admin/view-admin/" + id
     })
         .then(function (response) {
