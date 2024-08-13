@@ -184,4 +184,9 @@ public class CarServiceImpl implements CarService {
         return carRepository.findByFuelType(fuelType);
     }
 
+    @Override
+    public Page<Car> findAllByNameLike(String keyword, Pageable pageable) {
+        return carRepository.findAllByNameLike(keyword, pageable);
+    }
+
 }

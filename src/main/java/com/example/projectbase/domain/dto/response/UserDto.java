@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -26,11 +27,13 @@ public class UserDto extends DateAuditingDto {
 
     private String address;
 
-    private LocalDateTime dateOfBirth;
+    private Date dateOfBirth;
 
     private String phoneNumber;
 
     private String drivingLicense;
+
+    private Double balance;
 
     private boolean isActive;
 

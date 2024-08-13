@@ -39,4 +39,5 @@ public class CarDto extends DateAuditingDto {
     private List<Image> images;
     private User userOwn;
     private List<Booking> bookings;
+    private boolean available;
 }
