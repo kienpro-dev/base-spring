@@ -7,6 +7,7 @@ import com.example.projectbase.domain.dto.response.CarDto;
 import com.example.projectbase.domain.entity.Car;
 import com.example.projectbase.domain.entity.User;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface CarService {
@@ -17,4 +18,5 @@ public interface CarService {
     CarDto handleSaveCar(CarCreateDTO carCreateDTO);
     CarDto handleUpdateCar(CarDto carDto);
     Optional<Car> findById(String id);
+    List<Car> findAllByFuelType(String fuelType);
 }

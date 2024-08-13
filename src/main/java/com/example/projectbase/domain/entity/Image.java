@@ -17,7 +17,7 @@ public class Image extends DateAuditing {
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
-    @Column(insertable = false, updatable = false, nullable = false, columnDefinition = "CHAR(36)")
+    @Column(insertable = false, nullable = false, columnDefinition = "CHAR(36)")
     private String id;
 
     @Column(nullable = false)

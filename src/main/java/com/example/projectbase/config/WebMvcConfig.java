@@ -85,7 +85,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
                         "/car/account/**",
                         "/car/check-out/**",
                         "/car/like/**",
-                        "/car/order/**")
+                        "/car/order/**",
+                        "/car/quick-view/**")
                 .permitAll().and()
                 //Chỉ có admin mới có thể truy cập
                 .authorizeRequests()
@@ -141,4 +142,3 @@ public class WebMvcConfig implements WebMvcConfigurer {
     }
 
 }
-
