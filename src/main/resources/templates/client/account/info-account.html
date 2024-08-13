@@ -1,249 +1,248 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{client/layout.html}">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{client/layout.html}">
 
 <head>
-<title>Thông tin tài khoản</title>
+    <title>Thông tin tài khoản</title>
 </head>
 
 <body>
-	<div layout:fragment="content">
-		<div class="page-header text-center"
-			style="background-image: url('../client/assets/images/page-header-bg.jpg')">
-			<div class="container">
-				<h1 class="page-title">
-					Tài khoản<span>Cửa hàng</span>
-				</h1>
-			</div>
-			<!-- End .container -->
-		</div>
-		<!-- End .page-header -->
-		<nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
-			<div class="container">
-				<ol class="breadcrumb">
-					<li class="breadcrumb-item"><a th:href="@{/car/home}">Trang
-							chủ</a></li>
-					<li class="breadcrumb-item"><a th:href="@{/car/client}">Cửa
-							hàng</a></li>
-					<li class="breadcrumb-item active" aria-current="page">Tài
-						khoản của bạn</li>
-				</ol>
-			</div>
-			<!-- End .container -->
-		</nav>
-		<!-- End .breadcrumb-nav -->
+<div layout:fragment="content">
+    <div class="page-header text-center"
+         style="background-image: url('../client/assets/images/page-header-bg.jpg')">
+        <div class="container">
+            <h1 class="page-title">
+                Tài khoản<span>Cửa hàng</span>
+            </h1>
+        </div>
+        <!-- End .container -->
+    </div>
+    <!-- End .page-header -->
+    <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a th:href="@{/car/home}">Trang
+                    chủ</a></li>
+                <li class="breadcrumb-item"><a th:href="@{/car/client}">Cửa
+                    hàng</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Tài
+                    khoản của bạn
+                </li>
+            </ol>
+        </div>
+        <!-- End .container -->
+    </nav>
+    <!-- End .breadcrumb-nav -->
 
-		<div class="page-content">
-			<div class="dashboard">
-				<div class="container">
-					<div class="row">
-						<aside class="col-md-4 col-lg-3">
-							<ul class="nav nav-dashboard flex-column mb-3 mb-md-0"
-								role="tablist">
-								<li class="nav-item"><a class="nav-link active"
-									id="tab-dashboard-link" data-toggle="tab" href="#tab-dashboard"
-									role="tab" aria-controls="tab-dashboard" aria-selected="true">Trang
-										chính</a></li>
-								<li class="nav-item"><a class="nav-link"
-									id="tab-orders-link" data-toggle="tab" href="#tab-orders"
-									role="tab" aria-controls="tab-orders" aria-selected="false">Đặt
-										xe</a></li>
-								<li class="nav-item" sec:authorize="isAuthenticated()"><a
-									class="nav-link" id="tab-address-link" data-toggle="tab"
-									href="#tab-address" role="tab" aria-controls="tab-address"
-									aria-selected="false">Địa chỉ đặt xe</a></li>
-								<li class="nav-item" sec:authorize="isAuthenticated()">
-									<a
-									class="nav-link" id="tab-account-link" data-toggle="tab"
-									href="#tab-account" role="tab" aria-controls="tab-account"
-									aria-selected="false">
-										Chi tiết tài khoản
-									</a>
-								</li>
-								<li class="nav-item" sec:authorize="isAuthenticated()">
-									<a class="nav-link" th:onclick="logout()"
-									style="cursor: pointer;"
-									onmouseenter="this.style.color = '#fcb941'"
-									onmouseleave="this.style.color = '#333'"
-									>Đăng xuất</a>
-								</li>
-							</ul>
-						</aside>
-						<!-- End .col-lg-3 -->
+    <div class="page-content">
+        <div class="dashboard">
+            <div class="container">
+                <div class="row">
+                    <aside class="col-md-4 col-lg-3">
+                        <ul class="nav nav-dashboard flex-column mb-3 mb-md-0"
+                            role="tablist">
+                            <li class="nav-item"><a class="nav-link active"
+                                                    id="tab-dashboard-link" data-toggle="tab" href="#tab-dashboard"
+                                                    role="tab" aria-controls="tab-dashboard" aria-selected="true">Trang
+                                chính</a></li>
+                            <li class="nav-item"><a class="nav-link"
+                                                    id="tab-orders-link" data-toggle="tab" href="#tab-orders"
+                                                    role="tab" aria-controls="tab-orders" aria-selected="false">Đặt
+                                xe</a></li>
+                            <li class="nav-item" sec:authorize="isAuthenticated()"><a
+                                    class="nav-link" id="tab-address-link" data-toggle="tab"
+                                    href="#tab-address" role="tab" aria-controls="tab-address"
+                                    aria-selected="false">Địa chỉ đặt xe</a></li>
+                            <li class="nav-item" sec:authorize="isAuthenticated()">
+                                <a
+                                        class="nav-link" id="tab-account-link" data-toggle="tab"
+                                        href="#tab-account" role="tab" aria-controls="tab-account"
+                                        aria-selected="false">
+                                    Chi tiết tài khoản
+                                </a>
+                            </li>
+                            <li class="nav-item" sec:authorize="isAuthenticated()">
+                                <a class="nav-link" th:onclick="logout()"
+                                   style="cursor: pointer;"
+                                   onmouseenter="this.style.color = '#fcb941'"
+                                   onmouseleave="this.style.color = '#333'"
+                                >Đăng xuất</a>
+                            </li>
+                        </ul>
+                    </aside>
+                    <!-- End .col-lg-3 -->
 
-						<div class="col-md-8 col-lg-9">
-							<div class="tab-content">
-								<div class="tab-pane fade show active" id="tab-dashboard"
-									role="tabpanel" aria-labelledby="tab-dashboard-link">
-									<p>
-										Chào <span class="font-weight-normal text-dark">bạn</span> <br>
-										Đây là trang chính của bảng điều khiển, ở đây bạn có thể tuỳ
-										chỉnh thông tin tài khoản nếu bạn đã đăng nhập, nếu bạn chưa
-										có tài khoản hãy tạo ngay để trải nghiệm trang web tốt hơn.
-									</p>
-								</div>
-								<!-- .End .tab-pane -->
+                    <div class="col-md-8 col-lg-9">
+                        <div class="tab-content">
+                            <div class="tab-pane fade show active" id="tab-dashboard"
+                                 role="tabpanel" aria-labelledby="tab-dashboard-link">
+                                <p>
+                                    Chào <span class="font-weight-normal text-dark">bạn</span> <br>
+                                    Đây là trang chính của bảng điều khiển, ở đây bạn có thể tuỳ
+                                    chỉnh thông tin tài khoản nếu bạn đã đăng nhập, nếu bạn chưa
+                                    có tài khoản hãy tạo ngay để trải nghiệm trang web tốt hơn.
+                                </p>
+                            </div>
+                            <!-- .End .tab-pane -->
 
-								<div class="tab-pane fade" id="tab-orders" role="tabpanel"
-									aria-labelledby="tab-orders-link">
-									<p>Bạn chưa có đơn đặt nào.</p>
-									<a th:href="@{/car/client}" class="btn btn-outline-primary-2"><span>Cửa
+                            <div class="tab-pane fade" id="tab-orders" role="tabpanel"
+                                 aria-labelledby="tab-orders-link">
+                                <p>Bạn chưa có đơn đặt nào.</p>
+                                <a th:href="@{/car/client}" class="btn btn-outline-primary-2"><span>Cửa
 											hàng</span><i class="icon-long-arrow-right"></i></a>
-								</div>
-								<!-- .End .tab-pane -->
+                            </div>
+                            <!-- .End .tab-pane -->
 
-								<div sec:authorize="isAuthenticated()" class="tab-pane fade"
-									id="tab-address" role="tabpanel"
-									aria-labelledby="tab-address-link">
-									<p>Theo mặc định, các địa chỉ sau sẽ được sử dụng trên
-										trang thanh toán.</p>
+                            <div sec:authorize="isAuthenticated()" class="tab-pane fade"
+                                 id="tab-address" role="tabpanel"
+                                 aria-labelledby="tab-address-link">
+                                <p>Theo mặc định, các địa chỉ sau sẽ được sử dụng trên
+                                    trang thanh toán.</p>
 
-									<div class="row">
-										<div class="col-lg-6">
-											<div class="card card-dashboard">
-												<div class="card-body">
-													<h3 class="card-title">Địa chỉ đặt xe</h3>
-													<!-- End .card-title -->
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="card card-dashboard">
+                                            <div class="card-body">
+                                                <h3 class="card-title">Thanh toán</h3>
+                                                <!-- End .card-title -->
 
-													<!-- Hiễn thị -->
-													<p th:if="${orderAddress == null}">Bạn chưa có địa chỉ
-														đặt xe</p>
+                                                <!-- Hiễn thị -->
 
-													<div th:if="${orderAddress != null}">
-														<p th:text="${orderAddress.name}"></p>
-														<p th:text="${orderAddress.address}"></p>
-														<p th:text="${orderAddress.phoneNumber}"></p>
-														<p th:text="${orderAddress.email}"></p>
-													</div>
-												</div>
+                                                <div th:if="${userDto.address != null}">
+                                                    <p th:text="${userDto.name}"></p>
+                                                    <p th:text="${userDto.address}"></p>
+                                                    <p th:text="${userDto.phoneNumber}"></p>
+                                                    <p th:text="${userDto.email}"></p>
+                                                </div>
+                                            </div>
 
-												<!-- End .card-body -->
-											</div>
-											<!-- End .card-dashboard -->
-										</div>
-										<!-- End .col-lg-6 -->
+                                            <!-- End .card-body -->
+                                        </div>
+                                        <!-- End .card-dashboard -->
+                                    </div>
+                                    <!-- End .col-lg-6 -->
 
-										<div class="col-lg-6">
-											<div class="card card-dashboard">
-												<div class="card-body">
-													<h3 class="card-title">Giao hàng</h3>
-													<!-- End .card-title -->
-													<form
-														th:action="@{/car/account/info-account/order-address}"
-														method="POST" th:object="${orderAddressDto}">
+                                    <div class="col-lg-6">
+                                        <div class="card card-dashboard">
+                                            <div class="card-body">
+                                                <h3 class="card-title">Số dư ví tài khoản</h3>
+                                                <!-- End .card-title -->
+                                                <p th:text="${#numbers.formatDecimal(userDto.balance, 0, 'COMMA', 0, 'POINT')} + ' VND'"></p>
+                                                <form
+                                                        th:action="@{'/car/account/info-account/' + ${userDto.id} + '/balance'}"
+                                                        method="POST">
 
-														<label>Họ tên
-															*</label> <input type="text" class="form-control" required
-															th:field="*{name}"> <label>Địa chỉ *</label>
-														<input type="text" class="form-control" required
-															th:field="*{address}"> <label>Số điện
-															thoại *</label> <input type="text" class="form-control" required
-															th:field="*{phoneNumber}"> <label>Email *</label> <input
-															type="email" class="form-control" required
-															th:field="*{email}" readonly>
+                                                    <label>Nhập số tiền nạp *</label>
+                                                    <input type="text" class="form-control" name="balance" required>
+                                                    <button type="submit" class="btn btn-primary btn-round">
+                                                        <span>Nạp tiền</span> <i class="icon-long-arrow-right"></i>
+                                                    </button>
+                                                </form>
+                                            </div>
+                                            <!-- End .card-body -->
+                                        </div>
+                                        <!-- End .card-dashboard -->
+                                    </div>
+                                    <!-- End .col-lg-6 -->
+                                </div>
+                                <!-- End .row -->
+                            </div>
+                            <!-- .End .tab-pane -->
 
-														<button type="submit" class="btn btn-primary btn-round">
-															<span>Cập nhật</span> <i class="icon-long-arrow-right"></i>
-														</button>
-													</form>
-												</div>
-												<!-- End .card-body -->
-											</div>
-											<!-- End .card-dashboard -->
-										</div>
-										<!-- End .col-lg-6 -->
-									</div>
-									<!-- End .row -->
-								</div>
-								<!-- .End .tab-pane -->
+                            <div sec:authorize="isAuthenticated()" class="tab-pane fade"
+                                 id="tab-account" role="tabpanel"
+                                 aria-labelledby="tab-account-link">
+                                <form th:action="@{/car/account/info-account/change-info}"
+                                      method="POST" th:object="${userDto}"
+                                      enctype="multipart/form-data">
+                                    <div class="card card-dashboard">
+                                        <div class="card-body">
+                                            <p>Tên người dùng: <span th:text="${userDto.name}"></span></p>
+                                            <p>Email: <span th:text="${userDto.email}"></span></p>
+                                            <p>Trạng thái tài khoản: <span
+                                                    th:text="${userDto.isActive == true ? 'Cho phép' : 'Hạn chế'}"></span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" th:field="*{id}"> <input
+                                        type="hidden" th:field="*{email}"> <input
+                                        type="hidden" th:field="*{roleName}">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <label>Họ tên*</label> <input type="text" class="form-control"
+                                                                          required th:field="*{name}"> <small
+                                                class="form-text text-danger"
+                                                th:if="${#fields.hasErrors('name')}"
+                                                th:errors="*{name}">Italic
+                                            text.</small>
+                                        </div>
+                                        <!-- End .col-sm-6 -->
 
-								<div sec:authorize="isAuthenticated()" class="tab-pane fade"
-									id="tab-account" role="tabpanel"
-									aria-labelledby="tab-account-link">
-									<form th:action="@{/car/account/info-account/change-info}"
-										method="POST" th:object="${userDto}"
-										enctype="multipart/form-data">
-										<div class="card card-dashboard">
-											<div class="card-body">
-												<p >Tên người dùng: <span th:text="${userDto.name}"></span></p>
-												<p >Email: <span th:text="${userDto.email}"></span></p>
-												<p >Trạng thái tài khoản: <span th:text="${userDto.isActive == true ? 'Cho phép' : 'Hạn chế'}"></span></p>
-											</div>
-										</div>
-										<input type="hidden" th:field="*{id}">  <input
-											type="hidden" th:field="*{email}">  <input
-											type="hidden" th:field="*{roleName}">
-										<div class="row">
-											<div class="col-sm-6">
-												<label>Họ tên*</label> <input type="text" class="form-control"
-													required th:field="*{name}"> <small
-													class="form-text text-danger"
-													th:if="${#fields.hasErrors('name')}"
-													th:errors="*{name}">Italic
-													text.</small>
-											</div>
-											<!-- End .col-sm-6 -->
+                                        <div class="col-sm-6">
+                                            <label>Mã số định danh *</label> <input type="text" class="form-control"
+                                                                                    required th:field="*{nationalId}">
+                                            <small
+                                                    class="form-text text-danger"
+                                                    th:if="${#fields.hasErrors('nationalId')}"
+                                                    th:errors="*{nationalId}">Italic text.</small>
+                                        </div>
+                                        <!-- End .col-sm-6 -->
+                                    </div>
+                                    <!-- End .row -->
 
-											<div class="col-sm-6">
-												<label>Mã số định danh *</label> <input type="text" class="form-control"
-													required th:field="*{nationalId}"> <small
-													class="form-text text-danger"
-													th:if="${#fields.hasErrors('nationalId')}"
-													th:errors="*{nationalId}">Italic text.</small>
-											</div>
-											<!-- End .col-sm-6 -->
-										</div>
-										<!-- End .row -->
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <label>Địa chỉ *</label> <input type="text"
+                                                                            class="form-control" required
+                                                                            th:field="*{address}">
+                                            <small class="form-text text-danger"
+                                                   th:if="${#fields.hasErrors('address')}"
+                                                   th:errors="*{address}">Italic text.</small>
+                                        </div>
+                                    </div>
 
-										<div class="row">
-											<div class="col-sm-12">
-												<label>Địa chỉ *</label> <input type="text"
-													class="form-control" required th:field="*{address}">
-												<small class="form-text text-danger"
-													th:if="${#fields.hasErrors('address')}"
-													th:errors="*{address}">Italic text.</small>
-											</div>
-										</div>
+                                    <label>Ngày sinh</label> <input type="date"
+                                                                    class="form-control" required
+                                                                    th:field="*{dateOfBirth}">
 
-										<label>Ngày sinh</label> <input type="date"
-											class="form-control" required th:field="*{dateOfBirth}">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <label>Số điện thoại *</label> <input type="text" class="form-control"
+                                                                                  required th:field="*{phoneNumber}">
+                                            <small
+                                                    class="form-text text-danger"
+                                                    th:if="${#fields.hasErrors('phoneNumber')}"
+                                                    th:errors="*{phoneNumber}">Italic text.</small>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <label>Bằng lái *</label> <input type="text" class="form-control"
+                                                                             required th:field="*{drivingLicense}">
+                                            <small
+                                                    class="form-text text-danger"
+                                                    th:if="${#fields.hasErrors('drivingLicense')}"
+                                                    th:errors="*{drivingLicense}">Italic text.</small>
+                                        </div>
 
-										<div class="row">
-											<div class="col-sm-6">
-												<label>Số điện thoại *</label> <input type="text" class="form-control"
-													required th:field="*{phoneNumber}"> <small
-													class="form-text text-danger"
-													th:if="${#fields.hasErrors('phoneNumber')}"
-													th:errors="*{phoneNumber}">Italic text.</small>
-											</div>
-											<div class="col-sm-6">
-												<label>Bằng lái *</label> <input type="text" class="form-control"
-													required th:field="*{drivingLicense}"> <small
-													class="form-text text-danger"
-													th:if="${#fields.hasErrors('drivingLicense')}"
-													th:errors="*{drivingLicense}">Italic text.</small>
-											</div>
-
-										</div>
-										<button type="submit" class="btn btn-outline-primary-2">
-											<span>CẬP NHẬT</span> <i class="icon-long-arrow-right"></i>
-										</button>
-									</form>
-								</div>
-								<!-- .End .tab-pane -->
-							</div>
-						</div>
-						<!-- End .col-lg-9 -->
-					</div>
-					<!-- End .row -->
-				</div>
-				<!-- End .container -->
-			</div>
-			<!-- End .dashboard -->
-		</div>
-		<!-- End .page-content -->
-	</div>
+                                    </div>
+                                    <button type="submit" class="btn btn-outline-primary-2">
+                                        <span>CẬP NHẬT</span> <i class="icon-long-arrow-right"></i>
+                                    </button>
+                                </form>
+                            </div>
+                            <!-- .End .tab-pane -->
+                        </div>
+                    </div>
+                    <!-- End .col-lg-9 -->
+                </div>
+                <!-- End .row -->
+            </div>
+            <!-- End .container -->
+        </div>
+        <!-- End .dashboard -->
+    </div>
+    <!-- End .page-content -->
+</div>
 </body>
 
 </html>

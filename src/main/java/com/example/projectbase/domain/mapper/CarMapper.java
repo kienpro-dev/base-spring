@@ -35,7 +35,8 @@ public interface CarMapper {
             @Mapping(target = "images", source = "car.images"),
             @Mapping(target = "document", source = "car.document"),
             @Mapping(target = "bookings", source = "car.bookings"),
-            @Mapping(target= "userOwn", source = "car.userOwn")
+            @Mapping(target= "userOwn", source = "car.userOwn"),
+            @Mapping(target = "available", source = "car.available")
     })
     CarDto toCarDto(Car car);
 

@@ -47,6 +47,8 @@ public class User extends DateAuditing {
 
   private String drivingLicense;
 
+  private Double balance;
+
   private Boolean isActive;
 
   //Link to table Role

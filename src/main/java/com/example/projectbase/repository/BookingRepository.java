@@ -2,14 +2,17 @@ package com.example.projectbase.repository;
 
 import com.example.projectbase.domain.entity.Booking;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository
 public interface BookingRepository extends JpaRepository<Booking, String> {
+
 
     @Query(value = "SELECT "
             + "COUNT(b.id) AS bookings "
@@ -28,5 +31,11 @@ public interface BookingRepository extends JpaRepository<Booking, String> {
             + "FROM bookings b "
             + "WHERE YEAR(b.created_date) = :year", nativeQuery = true)
     Integer getBookingsByYear(@Param("year")int year);
+
+
+//    @Transactional
+//    @Modifying
+//    @Query(value = "insert into booking_car values(?1, ?2)", nativeQuery = true)
+//    void saveDetail(String bookingId, String carId);
 
 }

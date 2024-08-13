@@ -178,7 +178,7 @@ public class AdminController {
         session.set("keywords", keyword);
         Sort sort = Sort.by(Sort.Direction.DESC, field.orElse("id"));
         Pageable pageable = PageRequest.of(page.orElse(1) - 1, size.orElse(5), sort);
-        Page<Car> resultPage = carRepository.findAllByNameLike(pageable, keyword);
+        Page<Car> resultPage = carRepository.findAllByNameLike(keyword, pageable);
         int totalPages = resultPage.getTotalPages();
         int startPage = Math.max(1, page.orElse(1) - 2);
         int endPage = Math.min(page.orElse(1) + 2, totalPages);

@@ -1,137 +1,160 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{client/layout.html}">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{client/layout.html}">
 
 <head>
-<title>Thanh toán</title>
+    <title>Thanh toán</title>
 </head>
 
 <body>
-	<div layout:fragment="content">
-		<div class="page-header text-center"
-			style="background-image: url('../client/assets/images/page-header-bg.jpg')">
-			<div class="container">
-				<h1 class="page-title">
-					Thanh toán<span>Cửa hàng</span>
-				</h1>
-			</div>
-			<!-- End .container -->
-		</div>
-		<!-- End .page-header -->
-		<nav aria-label="breadcrumb" class="breadcrumb-nav mb-2">
-			<div class="container">
-				<ol class="breadcrumb">
-					<li class="breadcrumb-item"><a th:href="@{/car/home}">Trang
-							chủ</a></li>
-					<li class="breadcrumb-item"><a th:href="@{/car/cart}">Giỏ
-							hàng</a></li>
-					<li class="breadcrumb-item active" aria-current="page">Thanh
-						toán</li>
-				</ol>
-			</div>
-			<!-- End .container -->
-		</nav>
-		<!-- End .breadcrumb-nav -->
+<div layout:fragment="content">
+    <div class="page-header text-center"
+         style="background-image: url('../client/assets/images/page-header-bg.jpg')">
+        <div class="container">
+            <h1 class="page-title">
+                Thanh toán<span>Cửa hàng</span>
+            </h1>
+        </div>
+        <!-- End .container -->
+    </div>
+    <!-- End .page-header -->
+    <nav aria-label="breadcrumb" class="breadcrumb-nav mb-2">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a th:href="@{/car/home}">Trang
+                    chủ</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Thanh
+                    toán
+                </li>
+            </ol>
+        </div>
+        <!-- End .container -->
+    </nav>
+    <!-- End .breadcrumb-nav -->
 
-		<div class="page-content">
-			<div class="checkout">
-				<div class="container">
-					<form th:action="@{/car/check-out/submit}" method="POST" th:object="${orderAddressDto}">
-						<div class="row">
-							<div class="col-lg-9">
-								<h2 class="checkout-title">Chi tiết thanh toán</h2>
-								<!-- End .checkout-title -->
-								<input type="hidden" th:field="*{id}">
-								<div class="row">
-									<div class="col-sm-6">
-										<label>Họ *</label> <input type="text" class="form-control"
-											required th:field="*{firstName}">
-									</div>
-									<!-- End .col-sm-6 -->
+    <div class="page-content">
+        <div class="checkout">
 
-									<div class="col-sm-6">
-										<label>Tên *</label> <input type="text" class="form-control"
-											required th:field="*{lastName}">
-									</div>
-									<!-- End .col-sm-6 -->
-								</div>
-								<!-- End .row -->
+            <div class="container">
+                <form th:action="@{/car/check-out/submit}" method="POST" >
+                    <div class="row">
+                        <div class="col-lg-9">
+                            <h2 class="checkout-title">Thông tin thanh toán</h2>
+                            <!-- End .checkout-title -->
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <label>Từ ngày*</label> <input type="date"
+                                                                   class="form-control" required id="start_date" name="startDate">
+                                    <label>Từ thời gian*</label> <input type="time"
+                                                                         class="form-control" required id="start_time" name="startTime">
+                                </div>
+                                <div class="col-sm-6">
+                                    <label>Đến ngày*</label> <input type="date"
+                                                                    class="form-control" required id="end_date" name="endDate">
+                                    <label>Đến thời gian*</label> <input type="time"
+                                                                         class="form-control" required id="end_time" name="endTime">
+                                </div>
 
-								<label>Địa chỉ *</label> <input type="text" class="form-control"
-									required th:field="*{address}"> <label>Số điện
-									thoại *</label> <input type="text" class="form-control" required
-									th:field="*{phone}"> <label>Email *</label> <input
-									type="email" class="form-control" required th:field="*{email}">
-								<label>Ghi chú</label>
-								<textarea class="form-control" cols="30" rows="4" name="note" id="note"
-									placeholder="Ghi chú của bạn về đơn hàng."></textarea>
-							</div>
-							<!-- End .col-lg-9 -->
-							<aside class="col-lg-3">
-								<div class="summary">
-									<h3 class="summary-title">Đơn hàng của bạn</h3>
-									<!-- End .summary-title -->
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <label>Họ tên*</label> <input type="text" class="form-control"
+                                                                  readonly th:value="*{user.name}">
+                                </div>
+                                <!-- End .col-sm-6 -->
 
-									<table class="table table-summary">
-										<thead>
-											<tr>
-												<th>Sản phẩm</th>
-												<th>Tổng</th>
-											</tr>
-										</thead>
+                                <div class="col-sm-6">
+                                    <label>National ID *</label> <input type="text" class="form-control"
+                                                                        readonly th:value="*{user.nationalId}">
+                                </div>
+                                <!-- End .col-sm-6 -->
+                            </div>
+                            <!-- End .row -->
 
-										<tbody>
-											<tr th:each="item, i : ${carts}"
-												th:with="totalPrice = ${item.discount > 0 ? (item.price - (item.price * item.discount * 0.01)) * item.quantity : item.price * item.quantity}">
-												<td><a
-													th:href="@{/car/product-detail(id=${item.id})}"
-													th:text="${item.name}"></a></td>
-												<td
-													th:text="${#numbers.formatDecimal(totalPrice, 0, 'COMMA', 0, 'POINT')} + ' VND'">$84.00</td>
-											</tr>
-											<!-- End .summary-subtotal -->
-											<tr th:if="${shipping == '0'}">
-												<td>Giao hàng:</td>
-												<td>Miễn phí 0 VND</td>
-											</tr>
-											<tr th:if="${shipping == '1'}">
-												<td>Giao hàng:</td>
-												<td>Tiêu chuẩn 10.000 VND</td>
-											</tr>
-											<tr th:if="${shipping == '2'}">
-												<td>Giao hàng:</td>
-												<td>Chính xác 20.000 VND</td>
-											</tr>
-											<tr class="summary-total">
-												<td>Tổng hoá đơn:</td>
-												<td
-													th:text="${#numbers.formatDecimal(totalCart, 0, 'COMMA', 0, 'POINT')} + ' VND'">$160.00</td>
-											</tr>
-											<!-- End .summary-total -->
-										</tbody>
-									</table>
-									<!-- End .table table-summary -->
+                            <label>Địa chỉ *</label> <input type="text" class="form-control"
+                                                            readonly th:value="*{user.address}"> <label>Số điện
+                            thoại *</label> <input type="text" class="form-control" readonly
+                                                   th:value="*{user.phoneNumber}"> <label>Email *</label> <input
+                                type="email" class="form-control" readonly th:value="*{user.email}">
+                        </div>
+                        <!-- End .col-lg-9 -->
+                        <aside class="col-lg-3">
+                            <div class="summary">
+                                <h3 class="summary-title">Đơn hàng của bạn</h3>
+                                <!-- End .summary-title -->
+                                <input type="text" hidden name="id" th:value="${item.id}">
+                                <table class="table table-summary">
+                                    <thead>
+                                    <tr>
+                                        <th>Sản phẩm</th>
+                                        <th>Cọc</th>
+                                        <th>Giá</th>
+                                    </tr>
+                                    </thead>
 
-									<button type="submit" th:if="${not #lists.isEmpty(carts)}"
-										class="btn btn-outline-primary-2 btn-order btn-block">
-										<span class="btn-text">Đặt hàng</span> <span
-											class="btn-hover-text">Tiến hành kiểm tra</span>
-									</button>
-								</div>
-								<!-- End .summary -->
-							</aside>
-							<!-- End .col-lg-3 -->
-						</div>
-						<!-- End .row -->
-					</form>
-				</div>
-				<!-- End .container -->
-			</div>
-			<!-- End .checkout -->
-		</div>
-		<!-- End .page-content -->
-	</div>
+                                    <tbody>
+                                    <tr>
+                                        <td><a
+                                                th:href="@{/car/product-detail(id=${item.id})}"
+                                                th:text="${item.name}"></a></td>
+                                        <td
+                                                th:text="${#numbers.formatDecimal(item.deposit, 0, 'COMMA', 0, 'POINT')} + ' VND'">
+                                            $84.00
+                                        </td>
+                                        <td
+                                                th:text="${#numbers.formatDecimal(item.basePrice, 0, 'COMMA', 0, 'POINT')} + ' VND'">
+                                            $84.00
+                                        </td>
+                                    </tr>
+                                    <!-- End .summary-subtotal -->
+
+                                    <tr class="summary-total">
+                                        <td>Tổng hoá đơn:</td>
+                                        <td
+                                                th:text="${#numbers.formatDecimal(totalCart, 0, 'COMMA', 0, 'POINT')} + ' VND'">
+                                            $160.00
+                                        </td>
+                                    </tr>
+                                    <!-- End .summary-total -->
+                                    </tbody>
+                                </table>
+                                <div class="payment-method">
+                                    <div class="item-payment">
+                                        <input type="radio" id="wallet" name="paymentMethod" value="wallet">
+                                        <label for="wallet">Use your wallet. Balance: <span class="summary-total" th:text="${user.balance}"></span></label> <br>
+                                    </div>
+                                    <div class="item-payment">
+                                        <input type="radio" id="cash" name="paymentMethod" value="cash">
+                                        <label for="cash">Cash on delivery</label><br>
+                                    </div>
+                                    <div class="item-payment">
+                                        <input type="radio" id="vnpay" name="paymentMethod" value="vnpay">
+                                        <label for="vnpay">Bank Transfer</label><br>
+                                    </div>
+                                </div>
+
+                                <!-- End .table table-summary -->
+
+                                <button type="submit"
+                                        class="btn btn-outline-primary-2 btn-order btn-block">
+                                    <span class="btn-text">Đặt xe</span> <span
+                                        class="btn-hover-text">Tiến hành kiểm tra</span>
+                                </button>
+                            </div>
+                            <!-- End .summary -->
+                        </aside>
+                        <!-- End .col-lg-3 -->
+                    </div>
+                    <!-- End .row -->
+                </form>
+            </div>
+            <!-- End .container -->
+        </div>
+        <!-- End .checkout -->
+    </div>
+    <!-- End .page-content -->
+</div>
 </body>
 
 </html>
