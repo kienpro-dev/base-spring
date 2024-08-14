@@ -52,10 +52,7 @@ public class AccountController {
     @PostMapping(value = "/account/info-account/change-info")
 	public String changeInfoSubmit(Model model,
                                    @Valid @ModelAttribute("userDto") UserDto userDto, BindingResult result) {
-//		if (result.hasErrors()) {
-//			model.addAttribute("error", "Lỗi định dạng");
-//			return "client/account/info-account";
-//		}
+
 		User user = userService.findById(userDto.getId());
 		user.setName(userDto.getName());
 		user.setAddress(userDto.getAddress());

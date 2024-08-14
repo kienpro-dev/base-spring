@@ -66,7 +66,12 @@
                                 <option th:if="${!carDto.available}"  value="Stopped" th:selected="true" style="color: #a52834">Stopped</option>
                             </select>
                         </div>
-                        <div class="card-footer">
+
+                        <div class="card-footer"  sec:authorize="!isAuthenticated()">
+                            <a href="#signin-modal" data-toggle="modal"
+                               class="btn btn-success"><span>Rent Car Now</span></a>
+                        </div>
+                        <div class="card-footer"  sec:authorize="isAuthenticated()">
                             <a th:href="@{/car/check-out(id=${carDto.id})}" class="btn btn-success">Rent Car Now</a>
                         </div>
                     </div>
