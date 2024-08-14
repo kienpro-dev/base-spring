@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -50,10 +51,12 @@ public class HomeController {
             model.addAttribute("role", currentUser.getRole().getName());
         }
 
-        List<Car> listCarPetrol = carService.findAllByFuelType("Petrol");
+        LocalDateTime dateNow = LocalDateTime.now();
+
+        List<Car> listCarPetrol = carService.findAvailableCarByfuelType("Petrol", dateNow);
         model.addAttribute("listPetrol", listCarPetrol);
 
-        List<Car> listCarElectric = carService.findAllByFuelType("Electric");
+        List<Car> listCarElectric = carService.findAvailableCarByfuelType("Electric", dateNow);
         model.addAttribute("listElectric", listCarElectric);
 
         return "client/home/index";
@@ -80,7 +83,6 @@ public class HomeController {
         return new ResponseEntity<List<Image>>(imageService.findAllByCarId(id), HttpStatus.OK);
 //		return VsResponseUtil.success(imageService.findAllByCarId(id));
 	}
-
 
 
 }
