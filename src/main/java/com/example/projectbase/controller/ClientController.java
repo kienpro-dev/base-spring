@@ -2,6 +2,8 @@ package com.example.projectbase.controller;
 
 import com.example.projectbase.base.CarMvc;
 import com.example.projectbase.domain.entity.Car;
+import com.example.projectbase.security.CurrentUser;
+import com.example.projectbase.security.UserPrincipal;
 import com.example.projectbase.service.CarService;
 import com.example.projectbase.service.SessionService;
 import lombok.RequiredArgsConstructor;
@@ -27,8 +29,11 @@ public class ClientController {
 
     @GetMapping(value = "/client")
 	public String getPage(Model model, @RequestParam(name = "field") Optional<String> field,
-                       @RequestParam(name = "page") Optional<Integer> page, @RequestParam(name = "size") Optional<Integer> size,
-                       @RequestParam(name = "keywords", defaultValue = "") Optional<String> keywords) {
+						  @RequestParam(name = "page") Optional<Integer> page, @RequestParam(name = "size") Optional<Integer> size,
+						  @RequestParam(name = "keywords", defaultValue = "") Optional<String> keywords,
+						  @CurrentUser UserPrincipal userPrincipal
+						  ) {
+		model.addAttribute("currentUser",userPrincipal);
 		String keyword = keywords.orElse(sessionService.get("keywords"));
 		sessionService.set("keywords", keyword);
 		Sort sort = Sort.by(Sort.Direction.ASC, field.orElse("name"));

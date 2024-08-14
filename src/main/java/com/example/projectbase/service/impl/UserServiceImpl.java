@@ -144,17 +144,17 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int getCustomersByDate(String dateNow, String dateTo) {
-        return 0;
+        return userRepository.getCustomersByDate(dateNow,dateTo);
     }
 
     @Override
     public int getCustomersByMonth(int month) {
-        return 0;
+        return userRepository.getCustomersByMonth(month);
     }
 
     @Override
     public int getCustomersByYear(int year) {
-        return 0;
+        return userRepository.getCustomersByYear(year);
     }
 
     @Override

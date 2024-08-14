@@ -43,4 +43,24 @@ public interface UserRepository extends JpaRepository<User, String> {
   @Query("UPDATE User u SET u.isActive = false WHERE u.id = ?1")
   void deactivateUser( String id);
 
+  @Query(value = "SELECT "
+          + "COUNT(u.id) AS users "
+          + "FROM users u "
+          + "WHERE u.created_date >= :dateNow AND u.created_date < :dateTo", nativeQuery = true)
+  Integer getCustomersByDate(@Param("dateNow")String dateNow, @Param("dateTo")String dateTo);
+
+  @Query(value = "SELECT "
+          + "COUNT(u.id) AS users "
+          + "FROM users u "
+          + "WHERE MONTH(u.created_date) = :month", nativeQuery = true)
+  Integer getCustomersByMonth(@Param("month")int month);
+
+  @Query(value = "SELECT "
+          + "COUNT(u.id) AS users "
+          + "FROM users u "
+          + "WHERE YEAR(u.created_date) = :year", nativeQuery = true)
+  Integer getCustomersByYear(@Param("year")int year);
+
+
+
 }

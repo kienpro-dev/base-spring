@@ -37,6 +37,9 @@
     <div class="page-content">
         <div class="container">
             <div class="row">
+                <aside class="col-lg-3 order-lg-first">
+                        <input type="text">
+                </aside>
                 <div class="col-lg-9">
                     <div class="toolbox">
                         <div class="toolbox-left">
@@ -189,119 +192,6 @@
                     </nav>
                 </div>
                 <!-- End .col-lg-9 -->
-                <aside class="col-lg-3 order-lg-first">
-                    <div class="sidebar sidebar-shop">
-                        <div class="widget widget-clean">
-                            <label>Lọc theo:</label>
-                            <a th:href="@{/car/client}"
-                               class="sidebar-filter-clear">Xoá bộ lọc</a>
-                        </div>
-                        <!-- End .widget widget-clean -->
-
-                        <div class="widget widget-collapsible">
-                            <h3 class="widget-title">
-                                <a data-toggle="collapse" href="#widget-1" role="button"
-                                   aria-expanded="true" aria-controls="widget-1"> Danh mục </a>
-                            </h3>
-                            <!-- End .widget-title -->
-
-                            <div class="collapse show" id="widget-1">
-                                <div class="widget-body">
-                                    <div class="filter-items filter-items-count">
-<!--                                        <div class="filter-item" th:each="item, i : ${categories}">-->
-<!--                                            <label> <a-->
-<!--                                                    th:href="@{/car/client(field=${field}, size=${resultPage.size})}"-->
-<!--                                                    th:text="${item.name}"></a>-->
-<!--                                            </label>-->
-<!--                                            &lt;!&ndash; End .custom-checkbox &ndash;&gt;-->
-<!--                                        </div>-->
-                                        <!-- End .filter-item -->
-                                    </div>
-                                    <!-- End .filter-items -->
-                                </div>
-                                <!-- End .widget-body -->
-                            </div>
-                            <!-- End .collapse -->
-                        </div>
-                        <!-- End .widget -->
-
-                        <div class="widget widget-collapsible">
-                            <h3 class="widget-title">
-                                <a data-toggle="collapse" href="#widget-3" role="button"
-                                   aria-expanded="true" aria-controls="widget-3"> Màu sắc </a>
-                            </h3>
-                            <!-- End .widget-title -->
-
-                            <div class="collapse show" id="widget-3">
-                                <div class="widget-body">
-                                    <div class="filter-colors">
-                                        <!--											<a-->
-                                        <!--													th:href="@{/car/client(field=${field}, size=${resultPage.size}, keywords=${keywords}, color='#000000')}"-->
-                                        <!--													style="background: #000000;"><span class="sr-only">Đen</span></a>-->
-
-                                        <!--											<a-->
-                                        <!--													th:href="@{/car/client(field=${field}, size=${resultPage.size}, keywords=${keywords}, color='#ffffff')}"-->
-                                        <!--													style="background: #ffffff;"><span class="sr-only">Trắng</span></a>-->
-
-                                        <!--											<a-->
-                                        <!--													th:href="@{/car/client(field=${field}, size=${resultPage.size}, keywords=${keywords}, color='#0419f7')}"-->
-                                        <!--													style="background: #0419f7;"><span class="sr-only">Xanh-->
-                                        <!--													dương</span></a> <a-->
-                                        <!--												th:href="@{/car/client(field=${field}, size=${resultPage.size}, keywords=${keywords}, color='#ff0000')}"-->
-                                        <!--												style="background: #ff0000;"><span class="sr-only">Đỏ</span></a>-->
-
-                                        <!--											<a-->
-                                        <!--													th:href="@{/car/client(field=${field}, size=${resultPage.size}, keywords=${keywords}, color='#fff200')}"-->
-                                        <!--													style="background: #fff200;"><span class="sr-only">Vàng</span></a>-->
-
-                                        <!--											<a-->
-                                        <!--													th:href="@{/car/client(field=${field}, size=${resultPage.size}, keywords=${keywords}, color='#00ff11')}"-->
-                                        <!--													style="background: #00ff11;"><span class="sr-only">Xanh-->
-                                        <!--													lá</span></a> <a-->
-                                        <!--												th:href="@{/car/client(field=${field}, size=${resultPage.size}, keywords=${keywords}, color='#f200ff')}"-->
-                                        <!--												style="background: #f200ff;"><span class="sr-only">Tím</span></a>-->
-
-                                        <!--											<a-->
-                                        <!--													th:href="@{/car/client(field=${field}, size=${resultPage.size}, keywords=${keywords}, color='#fc05b2')}"-->
-                                        <!--													style="background: #fc05b2;"><span class="sr-only">Hồng</span></a>-->
-                                    </div>
-                                    <!-- End .filter-colors -->
-                                </div>
-                                <!-- End .widget-body -->
-                            </div>
-                            <!-- End .collapse -->
-                        </div>
-
-                        <div class="widget widget-collapsible">
-                            <h3 class="widget-title">
-                                <a data-toggle="collapse" href="#widget-4" role="button"
-                                   aria-expanded="true" aria-controls="widget-4"> Thương hiệu
-                                </a>
-                            </h3>
-                            <!-- End .widget-title -->
-
-                            <div class="collapse show" id="widget-4">
-                                <div class="widget-body">
-                                    <div class="filter-items">
-<!--                                        <div class="filter-item" th:each="item, i : ${brands}">-->
-<!--                                            <label> <a-->
-<!--                                                    th:href="@{/car/client(field=${field}, size=${resultPage.size}, keywords=${keywords}, brand_id=${item.id})}"-->
-<!--                                                    th:text="${item.name}"></a>-->
-<!--                                            </label>-->
-<!--                                        </div>-->
-                                        <!-- End .filter-item -->
-                                    </div>
-                                    <!-- End .filter-items -->
-                                </div>
-                                <!-- End .widget-body -->
-                            </div>
-                            <!-- End .collapse -->
-                        </div>
-                        <!-- End .widget -->
-                    </div>
-                    <!-- End .sidebar sidebar-shop -->
-                </aside>
-                <!-- End .col-lg-3 -->
             </div>
             <!-- End .row -->
         </div>

@@ -126,6 +126,10 @@
     </div>
     <!-- End .modal -->
 </div>
+<script>
+    // Kiểm tra nếu có thuộc tính showLoginModal thì hiển thị modal
+    [[${showLoginModal}]] ? new bootstrap.Modal(document.getElementById('signin-modal')).show() : '';
+</script>
 </body>
 
 </html>

@@ -132,7 +132,7 @@ function logout() {
 						confirmButtonText: 'Xác nhận'
 					}).then((result) => {
 						if (result.isConfirmed) {
-							location.reload(true);
+							window.location.href = baseUrl + '/car/home';
 						}
 					})
 				})
