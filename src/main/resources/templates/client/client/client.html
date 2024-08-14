@@ -41,17 +41,17 @@
                     <form th:action="@{/car/client}" method="get">
                         <div class="mb-3">
                             <label for="location" class="form-label">PICK UP LOCATION</label>
-                            <input type="text" class="form-control" id="location" name="location">
+                            <input type="text" class="form-control" id="location" name="location" th:value="${location}">
                         </div>
                         <div class="mb-3">
                             <label for="pickupDate" class="form-label">PICK-UP DATE AND TIME</label>
-                            <input type="date" class="form-control" id="pickupDate" name="startDate">
-                            <input type="time" class="form-control mt-1" id="pickupTime" name="startTime">
+                            <input type="date" class="form-control" id="pickupDate" name="startDate" th:value="${startDate}">
+                            <input type="time" class="form-control mt-1" id="pickupTime" name="startTime" th:value="${startTime}">
                         </div>
                         <div class="mb-3">
                             <label for="dropoffDate" class="form-label">DROP-OFF DATE AND TIME</label>
-                            <input type="date" class="form-control" id="dropoffDate" name="endDate">
-                            <input type="time" class="form-control mt-1" id="dropoffTime" name="endTime">
+                            <input type="date" class="form-control" id="dropoffDate" name="endDate" th:value="${endDate}">
+                            <input type="time" class="form-control mt-1" id="dropoffTime" name="endTime" th:value="${endTime}">
                         </div>
                         <button type="submit" class="btn btn-primary w-100">Search</button>
                     </form>

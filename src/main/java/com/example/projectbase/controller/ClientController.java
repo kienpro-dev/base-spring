@@ -2,6 +2,8 @@ package com.example.projectbase.controller;
 
 import com.example.projectbase.base.CarMvc;
 import com.example.projectbase.domain.entity.Car;
+import com.example.projectbase.security.CurrentUser;
+import com.example.projectbase.security.UserPrincipal;
 import com.example.projectbase.service.CarService;
 import com.example.projectbase.service.SessionService;
 import lombok.RequiredArgsConstructor;
@@ -29,15 +31,17 @@ public class ClientController {
 
     private final SessionService sessionService;
 
-    @GetMapping(value = "/client")
+	@GetMapping(value = "/client")
 	public String getPage(Model model, @RequestParam(name = "field") Optional<String> field,
-                       @RequestParam(name = "page") Optional<Integer> page, @RequestParam(name = "size") Optional<Integer> size,
-                       @RequestParam(name = "keywords", defaultValue = "") Optional<String> keywords,
+						  @RequestParam(name = "page") Optional<Integer> page, @RequestParam(name = "size") Optional<Integer> size,
+						  @RequestParam(name = "keywords", defaultValue = "") Optional<String> keywords,
 						  @RequestParam(name = "startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
 						  @RequestParam(name = "startTime") @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime startTime,
 						  @RequestParam(name = "endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
 						  @RequestParam(name = "endTime") @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime endTime,
-						  @RequestParam(name = "location") String location){
+						  @RequestParam(name = "location") String location,
+						  @CurrentUser UserPrincipal userPrincipal) {
+		model.addAttribute("currentUser", userPrincipal);
 		String keyword = keywords.orElse(sessionService.get("keywords"));
 		sessionService.set("keywords", keyword);
 		Sort sort = Sort.by(Sort.Direction.ASC, field.orElse("name"));
@@ -45,7 +49,7 @@ public class ClientController {
 		LocalDateTime startDateTime = LocalDateTime.of(startDate, startTime);
 		LocalDateTime endDateTime = LocalDateTime.of(endDate, endTime);
 
-		Page<Car> resultPage =this.carService.findAvailableCar(location, startDateTime, endDateTime, keyword, pageable);
+		Page<Car> resultPage = this.carService.findAvailableCar(location, startDateTime, endDateTime, keyword, pageable);
 
 		int totalPages = resultPage.getTotalPages();
 		int startPage = Math.max(1, page.orElse(1) - 2);
@@ -63,6 +67,11 @@ public class ClientController {
 		model.addAttribute("size", size.orElse(10));
 		model.addAttribute("keywords", keyword);
 		model.addAttribute("resultPage", resultPage);
+		model.addAttribute("location", location);
+		model.addAttribute("startDate", startDate);
+		model.addAttribute("startTime", startTime);
+		model.addAttribute("endDate", endDate);
+		model.addAttribute("endTime", endTime);
 		return "client/client/client";
 	}
 }
