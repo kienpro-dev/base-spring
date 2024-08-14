@@ -37,6 +37,27 @@
     <div class="page-content">
         <div class="container">
             <div class="row">
+                <div class="col-md-6">
+                    <form th:action="@{/car/client}" method="get">
+                        <div class="mb-3">
+                            <label for="location" class="form-label">PICK UP LOCATION</label>
+                            <input type="text" class="form-control" id="location" name="location">
+                        </div>
+                        <div class="mb-3">
+                            <label for="pickupDate" class="form-label">PICK-UP DATE AND TIME</label>
+                            <input type="date" class="form-control" id="pickupDate" name="startDate">
+                            <input type="time" class="form-control mt-1" id="pickupTime" name="startTime">
+                        </div>
+                        <div class="mb-3">
+                            <label for="dropoffDate" class="form-label">DROP-OFF DATE AND TIME</label>
+                            <input type="date" class="form-control" id="dropoffDate" name="endDate">
+                            <input type="time" class="form-control mt-1" id="dropoffTime" name="endTime">
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Search</button>
+                    </form>
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-lg-9">
                     <div class="toolbox">
                         <div class="toolbox-left">

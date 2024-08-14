@@ -1,6 +1,5 @@
 package com.example.projectbase.service.impl;
 
-import com.example.projectbase.constant.CommonConstant;
 import com.example.projectbase.constant.SortByDataConstant;
 import com.example.projectbase.domain.dto.pagination.PaginationFullRequestDto;
 import com.example.projectbase.domain.dto.pagination.PaginationResponseDto;
@@ -22,6 +21,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -187,6 +187,16 @@ public class CarServiceImpl implements CarService {
     @Override
     public Page<Car> findAllByNameLike(String keyword, Pageable pageable) {
         return carRepository.findAllByNameLike(keyword, pageable);
+    }
+
+    @Override
+    public Page<Car> findAvailableCar(String address, LocalDateTime startDateTime, LocalDateTime endDateTime,String keyword, Pageable pageable) {
+        return this.carRepository.findAvailableCars(startDateTime, endDateTime, address, keyword,pageable);
+    }
+
+    @Override
+    public List<Car> findAvailableCarByfuelType(String fuelType, LocalDateTime dateNow) {
+        return this.carRepository.findAvailableCarsByFuelType(fuelType, dateNow);
     }
 
 }

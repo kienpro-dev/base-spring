@@ -9,10 +9,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -28,12 +32,20 @@ public class ClientController {
     @GetMapping(value = "/client")
 	public String getPage(Model model, @RequestParam(name = "field") Optional<String> field,
                        @RequestParam(name = "page") Optional<Integer> page, @RequestParam(name = "size") Optional<Integer> size,
-                       @RequestParam(name = "keywords", defaultValue = "") Optional<String> keywords) {
+                       @RequestParam(name = "keywords", defaultValue = "") Optional<String> keywords,
+						  @RequestParam(name = "startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+						  @RequestParam(name = "startTime") @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime startTime,
+						  @RequestParam(name = "endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
+						  @RequestParam(name = "endTime") @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime endTime,
+						  @RequestParam(name = "location") String location){
 		String keyword = keywords.orElse(sessionService.get("keywords"));
 		sessionService.set("keywords", keyword);
 		Sort sort = Sort.by(Sort.Direction.ASC, field.orElse("name"));
 		Pageable pageable = PageRequest.of(page.orElse(1) - 1, size.orElse(12), sort);
-		Page<Car> resultPage = carService.findAllByNameLike(keyword, pageable);
+		LocalDateTime startDateTime = LocalDateTime.of(startDate, startTime);
+		LocalDateTime endDateTime = LocalDateTime.of(endDate, endTime);
+
+		Page<Car> resultPage =this.carService.findAvailableCar(location, startDateTime, endDateTime, keyword, pageable);
 
 		int totalPages = resultPage.getTotalPages();
 		int startPage = Math.max(1, page.orElse(1) - 2);
