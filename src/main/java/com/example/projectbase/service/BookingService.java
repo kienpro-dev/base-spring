@@ -1,5 +1,6 @@
 package com.example.projectbase.service;
 
+
 import com.example.projectbase.domain.entity.Booking;
 
 public interface BookingService {
@@ -8,7 +9,9 @@ public interface BookingService {
     int getBookingsByMonth(int month);
 
     int getBookingsByYear(int year);
+
     Booking saveOrUpdate(Booking booking);
 
 //    void saveDetail(String bookingId, String carId);
+
 }
