@@ -202,7 +202,7 @@
 												<a href="#change-modal" data-toggle="modal">Đổi mật khẩu</a>
 											</li>
 
-											<li th:if="${currentUser.role.name == 'ROLE_CAR_OWNER'}">
+											<li th:if="${role != null && role == 'ROLE_CAR_OWNER'}">
 												<a th:href="@{/car-owner/my-car}">Danh sách xe</a>
 											</li>
 

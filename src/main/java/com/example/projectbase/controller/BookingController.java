@@ -38,6 +38,10 @@ public class BookingController {
 
     @GetMapping("/check-out")
     public String checkOut(Model model, @RequestParam String id, @CurrentUser UserPrincipal userPrincipal) {
+        if(authService.isAuthenticated()) {
+            User currentUser = this.userService.findById(userPrincipal.getId());
+            model.addAttribute("currentUser", currentUser);
+        }
         User user = userService.findById(userPrincipal.getId());
         model.addAttribute("user", user);
         CarDto item = carService.getCarById(id);
@@ -46,8 +50,12 @@ public class BookingController {
     }
 
     @PostMapping("/check-out/submit")
-    public String submitCheckOut(Model model, @ModelAttribute BookingDto bookingDto,
-                                @CurrentUser UserPrincipal user, @RequestParam(value = "id") String carId) {
+    public String submitCheckOut(Model model, @ModelAttribute BookingDto bookingDto, @RequestParam(value = "id") String carId,
+                                 @CurrentUser UserPrincipal user) {
+        if(authService.isAuthenticated()) {
+            User currentUser = this.userService.findById(user.getId());
+            model.addAttribute("currentUser", currentUser);
+        }
         Car item = carService.findById(carId).get();
         User userRent = userService.findById(user.getId());
         Booking booking = new Booking();
@@ -80,6 +88,8 @@ public class BookingController {
     @GetMapping("/booking-list")
     public String bookingList(Model model, @CurrentUser UserPrincipal userPrincipal) {
         if(authService.isAuthenticated()) {
+            User currentUser = this.userService.findById(userPrincipal.getId());
+            model.addAttribute("currentUser", currentUser);
             List<Booking> bookings = bookingService.getBookingByUserId(userPrincipal.getId());
             model.addAttribute("list", bookings);
         } else {
