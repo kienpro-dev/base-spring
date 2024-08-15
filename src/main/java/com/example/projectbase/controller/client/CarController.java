@@ -2,6 +2,7 @@ package com.example.projectbase.controller.client;
 
 import com.example.projectbase.constant.CommonConstant;
 import com.example.projectbase.constant.SortByDataConstant;
+import com.example.projectbase.constant.StatusEnum;
 import com.example.projectbase.domain.dto.pagination.PaginationFullRequestDto;
 import com.example.projectbase.domain.dto.pagination.PaginationResponseDto;
 import com.example.projectbase.domain.dto.request.CarCreateDTO;
@@ -37,6 +38,8 @@ public class CarController {
     private final CloudinaryService cloudinaryService;
     private final ImageService imageService;
     private final UserService userService;
+    private final AuthService authService;
+
 
     @GetMapping("/car/add")
     public String addCar(Model model, @ModelAttribute("carCreateDto") CarCreateDTO carCreateDto){
@@ -90,6 +93,7 @@ public class CarController {
 //
         User userOwn = this.userService.findById(userPrincipal.getId());
         carCreateDto.setUserOwn(userOwn);
+        carCreateDto.setStatusCar(StatusEnum.available);
 
 
         carCreateDto.setDocument(document);
@@ -106,6 +110,12 @@ public class CarController {
                           @RequestParam(name = "sortBy", required = false, defaultValue = "createdDate") String sortBy,
                           @RequestParam(name = "isAscending", required = false, defaultValue = "false") boolean isAscending,
                           @CurrentUser UserPrincipal userPrincipal) {
+        if(authService.isAuthenticated()) {
+            User currentUser = this.userService.findById(userPrincipal.getId());
+            model.addAttribute("currentUser", currentUser);
+            model.addAttribute("role", currentUser.getRole().getName());
+        }
+
         PaginationFullRequestDto requestDto = new PaginationFullRequestDto();
         requestDto.setKeyword(keyword);
         requestDto.setPageNum(page);
@@ -125,7 +135,14 @@ public class CarController {
     }
 
     @GetMapping("/my-car/{id}")
-    public String viewDetails(Model model, @PathVariable String id){
+    public String viewDetails(Model model, @PathVariable String id,
+                              @CurrentUser UserPrincipal userPrincipal){
+        if(authService.isAuthenticated()) {
+            User currentUser = this.userService.findById(userPrincipal.getId());
+            model.addAttribute("currentUser", currentUser);
+            model.addAttribute("role", currentUser.getRole().getName());
+        }
+
         CarDto carDto = this.carService.getCarById(id);
         List<Booking> bookings = carDto.getBookings();
         Booking lastBooking = null;
@@ -142,7 +159,16 @@ public class CarController {
     public String upadteCar(Model model,
                             @ModelAttribute("carDto") @Valid CarDto carDto,
                             BindingResult result,
-                            @RequestParam(name = "carImages", required = false) MultipartFile[] carImages){
+                            @RequestParam(name = "carImages", required = false) MultipartFile[] carImages,
+                            @CurrentUser UserPrincipal userPrincipal){
+
+        if(authService.isAuthenticated()) {
+            User currentUser = this.userService.findById(userPrincipal.getId());
+            carDto.setUserOwn(currentUser);
+            model.addAttribute("currentUser", currentUser);
+            model.addAttribute("role", currentUser.getRole().getName());
+        }
+
         List<FieldError> errors = result.getFieldErrors();
         for (FieldError error : errors ) {
             System.out.println (error.getField() + " - " + error.getDefaultMessage());
@@ -170,13 +196,6 @@ public class CarController {
                 }
                 carDto.setImages(imageList);
             }
-        }
-
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if(authentication != null && authentication.getPrincipal() instanceof UserDetails){
-            UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
-            User userOwn = this.userService.findById(userPrincipal.getId());
-            carDto.setUserOwn(userOwn);
         }
 
 

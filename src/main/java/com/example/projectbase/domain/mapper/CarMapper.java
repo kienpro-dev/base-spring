@@ -36,7 +36,8 @@ public interface CarMapper {
             @Mapping(target = "document", source = "car.document"),
             @Mapping(target = "bookings", source = "car.bookings"),
             @Mapping(target= "userOwn", source = "car.userOwn"),
-            @Mapping(target = "available", source = "car.available")
+            @Mapping(target = "available", source = "car.available"),
+            @Mapping(target = "statusCar", source = "car.statusCar")
     })
     CarDto toCarDto(Car car);
 
@@ -62,7 +63,8 @@ public interface CarMapper {
             @Mapping(target = "images", source = "car.images"),
             @Mapping(target = "document", source = "car.document"),
             @Mapping(target = "bookings", source = "car.bookings"),
-            @Mapping(target= "userOwn", source = "car.userOwn")
+            @Mapping(target= "userOwn", source = "car.userOwn"),
+            @Mapping(target = "statusCar", source = "car.statusCar")
     })
     List<CarDto> toCarDtos(List<Car> car);
 

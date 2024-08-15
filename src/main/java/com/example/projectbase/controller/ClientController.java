@@ -2,10 +2,12 @@ package com.example.projectbase.controller;
 
 import com.example.projectbase.base.CarMvc;
 import com.example.projectbase.domain.entity.Car;
+import com.example.projectbase.domain.entity.User;
 import com.example.projectbase.security.CurrentUser;
 import com.example.projectbase.security.UserPrincipal;
 import com.example.projectbase.service.CarService;
 import com.example.projectbase.service.SessionService;
+import com.example.projectbase.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -30,6 +32,7 @@ public class ClientController {
     private final CarService carService;
 
     private final SessionService sessionService;
+	private final UserService userService;
 
     @GetMapping(value = "/client")
 	public String getPage(Model model, @RequestParam(name = "field") Optional<String> field,
@@ -41,7 +44,8 @@ public class ClientController {
 						  @RequestParam(name = "endTime") @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime endTime,
 						  @RequestParam(name = "location") String location,
 						  @CurrentUser UserPrincipal userPrincipal) {
-		model.addAttribute("currentUser", userPrincipal);
+		User currentUser = this.userService.findById(userPrincipal.getId());
+		model.addAttribute("currentUser", currentUser);
 		String keyword = keywords.orElse(sessionService.get("keywords"));
 		sessionService.set("keywords", keyword);
 		Sort sort = Sort.by(Sort.Direction.ASC, field.orElse("name"));
