@@ -63,12 +63,20 @@ public class HomeController {
     }
 
     @GetMapping(UrlConstant.ABOUT)
-    public String about() {
+    public String about(Model model, @CurrentUser UserPrincipal userPrincipal) {
+        if(authService.isAuthenticated()) {
+            User currentUser = this.userService.findById(userPrincipal.getId());
+            model.addAttribute("currentUser", currentUser);
+        }
         return "client/about/about";
     }
 
     @GetMapping(UrlConstant.CONTACT)
-    public String contact() {
+    public String contact(Model model, @CurrentUser UserPrincipal userPrincipal) {
+        if(authService.isAuthenticated()) {
+            User currentUser = this.userService.findById(userPrincipal.getId());
+            model.addAttribute("currentUser", currentUser);
+        }
         return "client/contact/contact";
     }
 

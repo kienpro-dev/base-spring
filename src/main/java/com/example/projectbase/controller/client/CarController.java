@@ -42,7 +42,11 @@ public class CarController {
 
 
     @GetMapping("/car/add")
-    public String addCar(Model model, @ModelAttribute("carCreateDto") CarCreateDTO carCreateDto){
+    public String addCar(Model model, @ModelAttribute("carCreateDto") CarCreateDTO carCreateDto, @CurrentUser UserPrincipal userPrincipal) {
+        if(authService.isAuthenticated()) {
+            User currentUser = this.userService.findById(userPrincipal.getId());
+            model.addAttribute("currentUser", currentUser);
+        }
         return "client/carOwner/createcar";
     }
 
