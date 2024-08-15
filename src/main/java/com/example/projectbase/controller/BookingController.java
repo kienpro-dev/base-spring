@@ -58,6 +58,10 @@ public class BookingController {
         cars.add(item);
         booking.setCars(cars);
         bookingService.saveOrUpdate(booking);
+        model.addAttribute("isSuccess", true);
+        model.addAttribute("isAuth", authService.isAuthenticated());
+        model.addAttribute("user", userRent);
+        model.addAttribute("item", item);
         return "client/cart/check-out";
     }
 }

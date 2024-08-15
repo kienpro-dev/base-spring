@@ -132,7 +132,8 @@
     }
 
     var isSuccess = [[${isSuccess}]];
-    const isAuth = [[${isAuth}]];
+        var isAuth = [[${isAuth}]];
+
     if (isSuccess) {
         if (isAuth) {
             Swal.fire({
@@ -144,18 +145,7 @@
                     window.location.href = new URL(window.location.href).origin + "/car/order";
                 }
             })
-        } else {
-            Swal.fire({
-                icon: 'success',
-                title: 'Thông báo',
-                text: 'Đặt hàng thành công',
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    window.location.href = new URL(window.location.href).origin + "/car/home";
-                }
-            })
         }
-
     }
     /*]]>*/
 </script>
