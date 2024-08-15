@@ -1,5 +1,6 @@
 package com.example.projectbase.domain.dto.request;
 
+import com.example.projectbase.constant.StatusEnum;
 import com.example.projectbase.domain.entity.Booking;
 import com.example.projectbase.domain.entity.Document;
 import com.example.projectbase.domain.entity.Image;
@@ -75,4 +76,5 @@ public class CarCreateDTO {
     private List<String> images;
     private User userOwn;
     private List<Booking> bookings;
+    private StatusEnum statusCar;
 }

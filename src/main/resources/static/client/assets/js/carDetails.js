@@ -1,5 +1,4 @@
 $(document).ready(function() {
-
     const addtionalFuctions = $('#additionalF').text().split(',');
     console.log(addtionalFuctions);
     $('.form-check-input').each(function () {
@@ -15,31 +14,36 @@ $(document).ready(function() {
         }
     });
 
-    let previousValue = $('#statusSelect').val();
+    let previousValue = $('#statusSelect').val(); // Initialize with the current value
 
     $('#statusSelect').on('change', function () {
         let newValue = $(this).val();
         let confirmation = confirm("Are you sure you want to change the status?");
-
+        let carId = $('#id').val();
+        console.log('carId' + carId);
         if (confirmation) {
             $.ajax({
-                url: '/car-owner/my-car/status',
+                url: '/car-owner/my-car/status/' + carId,
                 method: 'POST',
-                data: {
-                    status: newValue
+                headers: {
+                    'Content-Type': 'application/json'
                 },
+                data: JSON.stringify({
+                    status: newValue
+                }),
                 success: function (data) {
                     alert('Status updated successfully!');
+                    previousValue = newValue; // Update the previousValue only on successful update
+                    location.href = '/car-owner/my-car/';
                 },
                 error: function (error) {
                     alert('Error updating status!');
-                    $('#statusSelect').val(previousValue);
+                    $('#statusSelect').val(previousValue); // Revert to previous value on error
                 }
-
-            })
-            previousValue = newValue;
+            });
         } else {
-            $('#statusSelect').val(previousValue);
+            $('#statusSelect').val(previousValue); // Revert to previous value if not confirmed
         }
     });
+
 });

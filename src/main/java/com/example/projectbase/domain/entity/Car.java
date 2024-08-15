@@ -1,5 +1,6 @@
 package com.example.projectbase.domain.entity;
 
+import com.example.projectbase.constant.StatusEnum;
 import com.example.projectbase.domain.entity.common.DateAuditing;
 import com.example.projectbase.domain.entity.common.UserDateAuditing;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -93,6 +94,9 @@ public class Car extends UserDateAuditing {
     @JoinColumn(name = "document_id", referencedColumnName = "id")
     @JsonIgnore
     private Document document;
+
+    @Enumerated(EnumType.STRING)
+    private StatusEnum statusCar;
 
     public String getBanner() {
         if (images != null && !images.isEmpty()) {

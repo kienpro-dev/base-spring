@@ -62,10 +62,18 @@
                     <div class="toolbox">
                         <div class="toolbox-left">
                             <div class="toolbox-sort">
-                                <label for="sortby">Hiễn thị:</label>
+                                <label for="sortby">Hiển thị:</label>
                                 <div class="select-custom">
                                     <form
-                                            th:action="@{/car/client(field=${field}, keywords=${keywords})}">
+                                            th:action="@{/car/client(location = ${location}, startDate=${startDate}, startTime = ${startTime},endDate = ${endDate}, endTime=${endTime}, keywords=${keywords}, field=${field}, size = ${resultPage.size})}">
+
+                                        <input type="hidden" name="location" th:value="${location}">
+                                        <input type="hidden" name="startDate" th:value="${startDate}">
+                                        <input type="hidden" name="startTime" th:value="${startTime}">
+                                        <input type="hidden" name="endDate" th:value="${endDate}">
+                                        <input type="hidden" name="endTime" th:value="${endTime}">
+                                        <input type="hidden" name="keywords" th:value="${keywords}">
+
                                         <select class="form-control" name="size" id="size"
                                                 onchange="this.form.submit()">
                                             <option value="12" th:selected="${resultPage.size == 12}">12</option>
@@ -85,13 +93,20 @@
                                 <label for="field">Sắp xếp theo:</label>
                                 <div class="select-custom">
                                     <form
-                                            th:action="@{/car/client(size=${size}, keywords=${keywords})}">
+                                            th:action="@{/car/client(location = ${location}, startDate=${startDate}, startTime = ${startTime},endDate = ${endDate}, endTime=${endTime},size=${size}, keywords=${keywords}, field=${field})}">
+                                        <input type="hidden" name="location" th:value="${location}">
+                                        <input type="hidden" name="startDate" th:value="${startDate}">
+                                        <input type="hidden" name="startTime" th:value="${startTime}">
+                                        <input type="hidden" name="endDate" th:value="${endDate}">
+                                        <input type="hidden" name="endTime" th:value="${endTime}">
+                                        <input type="hidden" name="size" th:value="${size}">
+                                        <input type="hidden" name="keywords" th:value="${keywords}">
+
                                         <select name="field" id="field" class="form-control"
                                                 onchange="this.form.submit()">
                                             <option value="name" th:selected="${field == 'name'}">Tên xe</option>
-                                            <option value="price" th:selected="${field == 'basePrice'}">Giá</option>
-                                            <option value="discount" th:selected="${field == 'deposit'}">Giá cọc
-                                            </option>
+                                            <option value="base_price" th:selected="${field == 'base_price'}">Giá</option>
+                                            <option value="deposit" th:selected="${field == 'deposit'}">Giá cọc</option>
                                         </select>
                                     </form>
 
@@ -184,7 +199,7 @@
                             <li
                                     th:class="${resultPage.number + 1 == 1} ? 'page-item active' : 'page-item'"><a
                                     class="page-link page-link-prev"
-                                    th:href="@{/car/client(field=${field}, page=${1}, size=${resultPage.size}, keywords=${keywords})}"
+                                    th:href="@{/car/client(field=${field}, page=${1}, location = ${location}, startDate=${startDate}, startTime = ${startTime},endDate = ${endDate}, endTime=${endTime},size=${resultPage.size}, keywords=${keywords})}"
                                     aria-label="Previous"> <span aria-hidden="true"><i
                                     class="icon-long-arrow-left"></i></span>Prev
                             </a></li>
@@ -193,7 +208,7 @@
                                 th:if="${resultPage.totalPages > 1}"
                                 th:class="${pageNumber == resultPage.number + 1} ? 'page-item active' : 'page-item'">
                                 <a class="page-link"
-                                   th:href="@{/car/client(field=${field}, page=${pageNumber}, size=${resultPage.size}, keywords=${keywords})}"
+                                   th:href="@{/car/client(field=${field}, page=${pageNumber}, location = ${location}, startDate=${startDate}, startTime = ${startTime},endDate = ${endDate}, endTime=${endTime},size=${resultPage.size}, keywords=${keywords})}"
                                    th:text="${pageNumber}">1</a>
                             </li>
 
@@ -201,7 +216,7 @@
                                     th:class="${resultPage.number + 1 == resultPage.totalPages} ? 'page-item active' : 'page-item'">
                                 <a
                                         class="page-link page-link-next"
-                                        th:href="@{/car/client(field=${field}, page=${resultPage.totalPages}, size=${resultPage.size}, keywords=${keywords})}"
+                                        th:href="@{/car/client(field=${field}, page=${resultPage.totalPages}, location = ${location}, startDate=${startDate}, startTime = ${startTime},endDate = ${endDate}, endTime=${endTime},size=${resultPage.size}, keywords=${keywords})}"
                                         aria-label="Next"> Next <span aria-hidden="true"><i
                                         class="icon-long-arrow-right"></i></span>
                                 </a></li>

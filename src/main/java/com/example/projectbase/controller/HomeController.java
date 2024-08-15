@@ -47,7 +47,7 @@ public class HomeController {
                        @CurrentUser UserPrincipal userPrincipal) {
         if(authService.isAuthenticated()) {
             User currentUser = this.userService.findById(userPrincipal.getId());
-            model.addAttribute("user", currentUser);
+            model.addAttribute("currentUser", currentUser);
             model.addAttribute("role", currentUser.getRole().getName());
         }
 

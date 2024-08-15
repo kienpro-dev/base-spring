@@ -33,7 +33,7 @@ public interface CarRepository extends JpaRepository<Car, String> {
             "WHERE c.address LIKE %:address% " +
             "AND (latest_booking.latest_end_date IS NULL OR " +
             "     (latest_booking.latest_end_date <= :startDateTime OR b.start_date >= :endDateTime)) " +
-            "AND c.name LIKE %:keyword%",
+            "AND c.name LIKE %:keyword% ",
             countQuery = "SELECT COUNT(DISTINCT c.id) " +
                     "FROM cars c " +
                     "LEFT JOIN booking_car bc ON c.id = bc.car_id " +
