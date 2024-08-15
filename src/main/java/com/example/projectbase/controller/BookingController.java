@@ -13,6 +13,8 @@ import com.example.projectbase.security.UserPrincipal;
 import com.example.projectbase.service.*;
 import com.example.projectbase.util.TimeOverlapUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -85,4 +87,16 @@ public class BookingController {
 		}
         return "client/order/orderlist";
     }
+
+    @GetMapping(value = "/view/{id}")
+	public ResponseEntity<Booking> viewByOrderId(@PathVariable(name = "id") String id) {
+		Booking booking = bookingService.getBookingById(id);
+		return new ResponseEntity<Booking>(booking, HttpStatus.OK);
+	}
+
+	@GetMapping(value = "/view-order-detail/{id}")
+	public ResponseEntity<List<Car>> viewOrderDetailByOrderId(@PathVariable(name = "id") String id) {
+		List<Car> list = carService.findCarByBookingId(id);
+		return new ResponseEntity<List<Car>>(list, HttpStatus.OK);
+	}
 }

@@ -67,4 +67,8 @@ public class Booking extends DateAuditing {
         }
         return total;
     }
+
+    public Long countDay() {
+        return ChronoUnit.DAYS.between(startDate, endDate) + 1;
+    }
 }

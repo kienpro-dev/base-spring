@@ -57,8 +57,15 @@
 							<td th:text="${item.createdDate}"></td>
 							<td
 								th:text="${#numbers.formatDecimal(item.getTotal(), 0, 'COMMA', 0, 'POINT')} + ' VND'"></td>
-							<td
-								th:text="${item.paymentMethod}"></td>
+							<td>
+								<div
+									th:switch="${item.paymentMethod}">
+									<p th:case="'wallet'" class="text-success">Thanh toán ví điện tử</p>
+									<p th:case="'cash'" class="text-warning">Nhận tiền khi giao xe</p>
+									<p th:case="'vnpay'" class="text-primary">Chuyển khoản VNPAY</p>
+								</div>
+
+							</td>
 							<td th:text="${item.startDate}"></td>
 							<td th:text="${item.endDate}"></td>
 							<td>
