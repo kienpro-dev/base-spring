@@ -21,7 +21,7 @@ function orderView(id) {
 	axios({
 		method: 'GET',
 		contentType: "application/json",
-		url: baseUrl + "/molla/order/view/" + id
+		url: baseUrl + "/car/view/" + id
 	})
 		.then(function(response) {
 			viewId.innerText = response.data.id;

@@ -84,10 +84,12 @@
                                 <h3 class="summary-title">Đơn hàng của bạn</h3>
                                 <!-- End .summary-title -->
                                 <input type="text" hidden name="id" th:value="${item.id}">
+                                <input type="text" hidden id="daily_cost" th:value="${item.basePrice}">
                                 <table class="table table-summary">
                                     <thead>
                                     <tr>
-                                        <th>Sản phẩm</th>
+                                        <th>Xe thuê</th>
+                                        <th>Số ngày</th>
                                         <th>Cọc</th>
                                         <th>Giá</th>
                                     </tr>
@@ -98,21 +100,22 @@
                                         <td><a
                                                 th:href="@{/car/product-detail(id=${item.id})}"
                                                 th:text="${item.name}"></a></td>
+                                        <td id="total_days"></td>
                                         <td
                                                 th:text="${#numbers.formatDecimal(item.deposit, 0, 'COMMA', 0, 'POINT')} + ' VND'">
                                             $84.00
                                         </td>
-                                        <td
+                                        <td id="daily_cost_td"
                                                 th:text="${#numbers.formatDecimal(item.basePrice, 0, 'COMMA', 0, 'POINT')} + ' VND'">
                                             $84.00
                                         </td>
                                     </tr>
                                     <!-- End .summary-subtotal -->
-
                                     <tr class="summary-total">
                                         <td>Tổng hoá đơn:</td>
-                                        <td
-                                                th:text="${#numbers.formatDecimal(totalCart, 0, 'COMMA', 0, 'POINT')} + ' VND'">
+                                        <td></td>
+                                        <td></td>
+                                        <td id="total_cost">
                                             $160.00
                                         </td>
                                     </tr>

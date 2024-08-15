@@ -199,4 +199,9 @@ public class CarServiceImpl implements CarService {
         return this.carRepository.findAvailableCarsByFuelType(fuelType, dateNow);
     }
 
+    @Override
+    public List<Car> findCarByBookingId(String bookingId) {
+        return carRepository.findCarByBookingId(bookingId);
+    }
+
 }

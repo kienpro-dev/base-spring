@@ -32,6 +32,12 @@ public interface BookingRepository extends JpaRepository<Booking, String> {
             + "WHERE YEAR(b.created_date) = :year", nativeQuery = true)
     Integer getBookingsByYear(@Param("year")int year);
 
+    @Query(value = "SELECT * FROM bookings b INNER JOIN booking_car bc ON b.id = bc.booking_id WHERE car_id = :carId AND b.status = 'CONFIRM'", nativeQuery = true)
+    List<Booking> findByCarId(@Param("carId")String carId);
+
+    @Query(value = "SELECT * FROM bookings b WHERE b.user_id = :userId", nativeQuery = true)
+    List<Booking> findByUserId(@Param("userId")String userId);
+
 
 //    @Transactional
 //    @Modifying

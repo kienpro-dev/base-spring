@@ -11,11 +11,15 @@ import com.example.projectbase.domain.entity.User;
 import com.example.projectbase.security.CurrentUser;
 import com.example.projectbase.security.UserPrincipal;
 import com.example.projectbase.service.*;
+import com.example.projectbase.util.TimeOverlapUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.*;
 
@@ -48,8 +52,10 @@ public class BookingController {
         User userRent = userService.findById(user.getId());
         Booking booking = new Booking();
         booking.setBookingNo(new Random().nextInt(100000 - 1000 + 1));
-        booking.setStartDate(LocalDate.parse(bookingDto.getStartDate()).atTime(LocalTime.parse(bookingDto.getStartTime())));
-        booking.setEndDate(LocalDate.parse(bookingDto.getEndDate()).atTime(LocalTime.parse(bookingDto.getEndTime())));
+        LocalDateTime start = LocalDate.parse(bookingDto.getStartDate()).atTime(LocalTime.parse(bookingDto.getStartTime()));
+        LocalDateTime end = LocalDate.parse(bookingDto.getEndDate()).atTime(LocalTime.parse(bookingDto.getEndTime()));
+        booking.setStartDate(start);
+        booking.setEndDate(end);
         booking.setDriverInfo(userRent.getName());
         booking.setPaymentMethod(bookingDto.getPaymentMethod());
         booking.setStatus(BookingConstant.PENDING_DEPOSIT);
@@ -57,7 +63,40 @@ public class BookingController {
         List<Car> cars = new ArrayList<>();
         cars.add(item);
         booking.setCars(cars);
-        bookingService.saveOrUpdate(booking);
+        if(TimeOverlapUtil.checkTimeOverlap(start, end, bookingService.getBookingByCarId(carId))) {
+            model.addAttribute("isFail", true);
+            model.addAttribute("carId", carId);
+        } else {
+            bookingService.saveOrUpdate(booking);
+            model.addAttribute("isSuccess", true);
+        }
+
+        model.addAttribute("isAuth", authService.isAuthenticated());
+        model.addAttribute("user", userRent);
+        model.addAttribute("item", item);
         return "client/cart/check-out";
     }
+
+    @GetMapping("/booking-list")
+    public String bookingList(Model model, @CurrentUser UserPrincipal userPrincipal) {
+        if(authService.isAuthenticated()) {
+            List<Booking> bookings = bookingService.getBookingByUserId(userPrincipal.getId());
+            model.addAttribute("list", bookings);
+        } else {
+			model.addAttribute("error", "Bạn chưa có đơn hàng nào.");
+		}
+        return "client/order/orderlist";
+    }
+
+    @GetMapping(value = "/view/{id}")
+	public ResponseEntity<Booking> viewByOrderId(@PathVariable(name = "id") String id) {
+		Booking booking = bookingService.getBookingById(id);
+		return new ResponseEntity<Booking>(booking, HttpStatus.OK);
+	}
+
+	@GetMapping(value = "/view-order-detail/{id}")
+	public ResponseEntity<List<Car>> viewOrderDetailByOrderId(@PathVariable(name = "id") String id) {
+		List<Car> list = carService.findCarByBookingId(id);
+		return new ResponseEntity<List<Car>>(list, HttpStatus.OK);
+	}
 }
