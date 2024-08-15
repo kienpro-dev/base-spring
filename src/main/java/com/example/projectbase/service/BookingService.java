@@ -16,6 +16,8 @@ public interface BookingService {
 
     List<Booking> getBookingByCarId(String carId);
 
+    List<Booking> getBookingByUserId(String userId);
+
 //    void saveDetail(String bookingId, String carId);
 
 }

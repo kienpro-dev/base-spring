@@ -62,7 +62,7 @@ public class BookingController {
         cars.add(item);
         booking.setCars(cars);
         if(TimeOverlapUtil.checkTimeOverlap(start, end, bookingService.getBookingByCarId(carId))) {
-            model.addAttribute("isFail", false);
+            model.addAttribute("isFail", true);
         } else {
             bookingService.saveOrUpdate(booking);
             model.addAttribute("isSuccess", true);
@@ -72,5 +72,16 @@ public class BookingController {
         model.addAttribute("user", userRent);
         model.addAttribute("item", item);
         return "client/cart/check-out";
+    }
+
+    @GetMapping("/booking-list")
+    public String bookingList(Model model, @CurrentUser UserPrincipal userPrincipal) {
+        if(authService.isAuthenticated()) {
+            List<Booking> bookings = bookingService.getBookingByUserId(userPrincipal.getId());
+            model.addAttribute("list", bookings);
+        } else {
+			model.addAttribute("error", "Bạn chưa có đơn hàng nào.");
+		}
+        return "client/order/orderlist";
     }
 }

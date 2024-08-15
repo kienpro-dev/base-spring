@@ -7,6 +7,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,4 +58,13 @@ public class Booking extends DateAuditing {
             joinColumns = @JoinColumn(name = "booking_id", foreignKey = @ForeignKey(name = "FK_BOOKING_CAR1")),
             inverseJoinColumns = @JoinColumn(name = "car_id", foreignKey = @ForeignKey(name = "FK_BOOKING_CAR2")))
     private List<Car> cars = new ArrayList<>();
+
+    public Double getTotal() {
+        double total = 0.0;
+        long daysBetween = ChronoUnit.DAYS.between(startDate, endDate) + 1;
+        for (Car car : cars) {
+            total += (car.getBasePrice() * daysBetween);
+        }
+        return total;
+    }
 }
