@@ -27,7 +27,7 @@
 					<li class="breadcrumb-item"><a th:href="@{/car/client}">Cửa
 							hàng</a></li>
 					<li class="breadcrumb-item active" aria-current="page">Danh
-						sách đặt hàng</li>
+						sách đặt xe</li>
 				</ol>
 			</div>
 			<!-- End .container -->
@@ -39,10 +39,12 @@
 				<table class="table table-wishlist table-mobile">
 					<thead>
 						<tr>
-							<th>Số sản phẩm</th>
+							<th>Mã đơn</th>
+							<th>Ngày đặt</th>
 							<th>Tổng tiền</th>
-							<th>Thanh toán</th>
-							<th>Vận chuyển</th>
+							<th>Phương thức thanh toán</th>
+							<th>Ngày thuê</th>
+							<th>Ngày trả</th>
 							<th>Trạng thái</th>
 							<th></th>
 						</tr>
@@ -51,34 +53,32 @@
 					<tbody>
 						<tr th:each="item, i : ${list}"
 							style="font-size: 1, 6rem; font-weight: 400;">
-							<td th:text="${item.quantity}"></td>
+							<td th:text="${item.bookingNo}"></td>
+							<td th:text="${item.createdDate}"></td>
 							<td
-								th:text="${#numbers.formatDecimal(item.totail, 0, 'COMMA', 0, 'POINT')} + ' VND'"></td>
-							<td
-								th:text="${item.pay.toString == 'UNPAID' ? 'Chưa thanh toán' : 'Đã thanh toán'}"></td>
+								th:text="${#numbers.formatDecimal(item.getTotal(), 0, 'COMMA', 0, 'POINT')} + ' VND'"></td>
 							<td>
-								<p th:if="${item.ship == null}">Miễn phí - 0 VND</p>
-								<div th:if="${item.ship != null}"
-									th:switch="${item.ship.toString}">
-									<p th:case="'FREE'">Miễn phí - 0 VND</p>
-									<p th:case="'STANDART'">Tiêu chuẩn - 10.000 VND</p>
-									<p th:case="'EXPRESS'">Chính xác - 20.000 VND</p>
-									<p th:case="*">Miễn phí - 0 VND</p>
+								<div
+									th:switch="${item.paymentMethod}">
+									<p th:case="'wallet'" class="text-success">Thanh toán ví điện tử</p>
+									<p th:case="'cash'" class="text-warning">Nhận tiền khi giao xe</p>
+									<p th:case="'vnpay'" class="text-primary">Chuyển khoản VNPAY</p>
 								</div>
+
 							</td>
+							<td th:text="${item.startDate}"></td>
+							<td th:text="${item.endDate}"></td>
 							<td>
-								<p th:if="${item.status == 0}" class="text-danger">Đang chờ
-									xác nhận</p>
-								<div th:if="${item.status != 0}"
-									th:switch="${item.status.toString}">
-									<p th:case="'AWAITING_CONFIRMATION'" class="text-danger">Đang
-										chờ xác nhận</p>
-									<p th:case="'CONFIRMED'" class="text-info">Đã xác nhận</p>
-									<p th:case="'BEING_TRANSPORTED'" class="text-warning">Đang
-										vận chuyển</p>
-									<p th:case="'HAS_RECEIVED_THE_GOODS'" class="text-success">Đã
-										giao hàng</p>
-									<p th:case="*" class="text-danger">Đang chờ xác nhận</p>
+								<div
+									th:switch="${item.status}">
+									<p th:case="'PENDING_DEPOSIT'" class="text-warning">Đang
+										chờ đặt cọc</p>
+									<p th:case="'PENDING_PAY'" class="text-warning">Đang
+										chờ thanh toán</p>
+									<p th:case="'CONFIRM'" class="text-info">Đã xác nhận</p>
+									<p th:case="'CANCEL'" class="text-danger">Đã hủy</p>
+									<p th:case="'BOOKED'" class="text-success">Đã đặt thành công</p>
+									<p th:case="'IN_PROGRESS'" class="text-primary">Đang xử lý</p>
 								</div>
 							</td>
 							<td class="remove-col"><a class="btn-remove"

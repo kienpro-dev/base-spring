@@ -25,4 +25,4 @@ public interface CarService {
     Page<Car> findAllByNameLike(String keyword, Pageable pageable);
     Page<Car> findAvailableCar(String address, LocalDateTime startDateTime, LocalDateTime endDateTime, String keyword, Pageable pageable);
     List<Car> findAvailableCarByfuelType(String fuelType, LocalDateTime dateNow);
-}
+    List<Car> findCarByBookingId(String bookingId);}

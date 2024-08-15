@@ -71,4 +71,7 @@ public interface CarRepository extends JpaRepository<Car, String> {
             nativeQuery = true)
     List<Car> findAvailableCarsByFuelType(@Param("fuelType") String fuelType,
                                           @Param("dateNow") LocalDateTime dateNow);
+
+    @Query(value = "SELECT * FROM cars c INNER JOIN booking_cars ON c.id = bc.car_id WHERE bc.booking_id = :id", nativeQuery = true)
+    List<Car> findCarByBookingId(@Param("id")String bookingId);
 }
