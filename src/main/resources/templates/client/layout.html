@@ -162,6 +162,74 @@
         }
     }
 
+    function getCurrentDate() {
+        const today = new Date();
+        return today.toISOString().split('T')[0];
+    }
+
+    function getCurrentTime() {
+        const now = new Date();
+        return now.toTimeString().split(' ')[0].slice(0, 5);
+    }
+
+    function setDefaultValues() {
+        const startDateInput = document.getElementById("start_date");
+        const startTimeInput = document.getElementById("start_time");
+        const endDateInput = document.getElementById("end_date");
+        const endTimeInput = document.getElementById("end_time");
+
+        const currentDate = getCurrentDate();
+        const currentTime = getCurrentTime();
+
+        startDateInput.value = currentDate;
+        startTimeInput.value = currentTime;
+
+        const tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        const tomorrowDate = tomorrow.toISOString().split('T')[0];
+
+        endDateInput.value = tomorrowDate;
+        endTimeInput.value = currentTime;
+
+        calculateAndUpdate();
+    }
+
+    function calculateDaysBetweenDates() {
+        const startDate = document.getElementById("start_date").value;
+        const startTime = document.getElementById("start_time").value;
+        const endDate = document.getElementById("end_date").value;
+        const endTime = document.getElementById("end_time").value;
+
+        if (startDate && endDate) {
+            const start = new Date(startDate + 'T' + (startTime || '00:00'));
+            const end = new Date(endDate + 'T' + (endTime || '00:00'));
+
+            const oneDay = 24 * 60 * 60 * 1000;
+            return Math.round(Math.abs((end - start) / oneDay)) + 1;
+        }
+        return 0;
+    }
+
+    function formatDecimal(value) {
+        return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' VND';
+    }
+
+    function calculateAndUpdate() {
+        const totalDays = calculateDaysBetweenDates();
+        document.getElementById("total_days").textContent = totalDays;
+
+        const dailyCost = parseFloat(document.getElementById("daily_cost").value) || 0;
+
+        const totalCost = dailyCost * totalDays;
+        document.getElementById("total_cost").textContent = formatDecimal(totalCost);
+    }
+
+    document.getElementById("start_date").addEventListener("change", calculateAndUpdate);
+    document.getElementById("start_time").addEventListener("change", calculateAndUpdate);
+    document.getElementById("end_date").addEventListener("change", calculateAndUpdate);
+    document.getElementById("end_time").addEventListener("change", calculateAndUpdate);
+
+    window.onload = setDefaultValues;
 
 
     /*]]>*/
