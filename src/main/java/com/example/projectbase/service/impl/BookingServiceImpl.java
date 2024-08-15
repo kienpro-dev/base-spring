@@ -8,6 +8,8 @@ import com.example.projectbase.service.BookingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class BookingServiceImpl implements BookingService {
@@ -32,6 +34,11 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public Booking saveOrUpdate(Booking booking) {
         return bookingRepository.save(booking);
+    }
+
+    @Override
+    public List<Booking> getBookingByCarId(String carId) {
+        return bookingRepository.findByCarId(carId);
     }
 
 //    @Override
