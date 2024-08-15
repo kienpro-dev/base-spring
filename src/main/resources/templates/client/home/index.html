@@ -436,10 +436,8 @@
                                     <!-- End .product-action-vertical -->
 
                                     <div class="product-action">
-                                        <a href="#quickView-modal" data-toggle="modal"
-                                           th:data-id="${item.id}"
-                                           th:onclick="quickView(this.getAttribute('data-id'))"
-                                           class="btn-product btn-cart"><span>Xem</span></a>
+                                        <a th:href="@{/car/check-out(id=${item.id})}"
+                                           class="btn-product btn-cart"><span>Rent Car</span></a>
                                     </div>
                                     <!-- End .product-action -->
                                 </figure>
@@ -573,10 +571,8 @@
                                     <!-- End .product-action-vertical -->
 
                                     <div class="product-action">
-                                        <a href="#quickView-modal" data-toggle="modal"
-                                           th:data-id="${item.id}"
-                                           th:onclick="quickView(this.getAttribute('data-id'))"
-                                           class="btn-product btn-cart"><span>Xem</span></a>
+                                        <a th:href="@{/car/check-out(id=${item.id})}"
+                                           class="btn-product btn-cart"><span>Rent Car</span></a>
                                     </div>
                                     <!-- End .product-action -->
                                 </figure>
