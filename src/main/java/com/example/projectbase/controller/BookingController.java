@@ -63,6 +63,7 @@ public class BookingController {
         booking.setCars(cars);
         if(TimeOverlapUtil.checkTimeOverlap(start, end, bookingService.getBookingByCarId(carId))) {
             model.addAttribute("isFail", true);
+            model.addAttribute("carId", carId);
         } else {
             bookingService.saveOrUpdate(booking);
             model.addAttribute("isSuccess", true);
