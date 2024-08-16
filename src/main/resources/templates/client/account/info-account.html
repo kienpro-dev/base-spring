@@ -88,9 +88,77 @@
 
                             <div class="tab-pane fade" id="tab-orders" role="tabpanel"
                                  aria-labelledby="tab-orders-link">
-                                <p>Bạn chưa có đơn đặt nào.</p>
-                                <a th:href="@{/car/client}" class="btn btn-outline-primary-2"><span>Cửa
+                                <table th:if="${currentUser.role.name == 'ROLE_CAR_OWNER'}"
+                                       class="table table-wishlist table-mobile">
+                                    <thead>
+                                    <tr>
+                                        <th>Mã đơn</th>
+                                        <th>Người đặt</th>
+                                        <th>Tổng tiền</th>
+                                        <th>Phương thức thanh toán</th>
+                                        <th>Ngày thuê</th>
+                                        <th>Ngày trả</th>
+                                        <th>Trạng thái</th>
+                                        <th></th>
+                                        <!--                    <th></th>-->
+                                    </tr>
+                                    </thead>
+
+                                    <tbody>
+                                    <tr th:each="item, i : ${list}"
+                                        style="font-size: 1, 6rem; font-weight: 400;">
+                                        <td th:text="${item.bookingNo}"></td>
+                                        <td th:text="${item.user.name}"></td>
+                                        <td
+                                                th:text="${#numbers.formatDecimal(item.getTotal(), 0, 'COMMA', 0, 'POINT')} + ' VND'"></td>
+                                        <td>
+                                            <div
+                                                    th:switch="${item.paymentMethod}">
+                                                <p th:case="'wallet'" class="text-success">Thanh toán ví điện tử</p>
+                                                <p th:case="'cash'" class="text-warning">Nhận tiền khi giao xe</p>
+                                                <p th:case="'vnpay'" class="text-primary">Chuyển khoản VNPAY</p>
+                                            </div>
+
+                                        </td>
+                                        <td th:text="${item.startDate}"></td>
+                                        <td th:text="${item.endDate}"></td>
+                                        <td>
+                                            <div
+                                                    th:switch="${item.status}">
+                                                <p th:case="'PENDING_DEPOSIT'" class="text-warning">Đang
+                                                    chờ</p>
+                                                <p th:case="'PENDING_PAY'" class="text-warning">Đang
+                                                    chờ thanh toán</p>
+                                                <p th:case="'CONFIRM'" class="text-info">Đã xác nhận</p>
+                                                <p th:case="'CANCEL'" class="text-danger">Đã hủy</p>
+                                                <p th:case="'BOOKED'" class="text-success">Đã đặt thành công</p>
+                                                <p th:case="'IN_PROGRESS'" class="text-primary">Đang thuê</p>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <a style="padding: 5px 0; width: 30%" class="btn btn-secondary active"
+                                               role="button" aria-pressed="true"
+                                               th:href="@{/car/booking/confirm(id=${item.id})}">Xác nhận</a>
+                                            <a style="padding: 5px 0; width: 30%" class="btn btn-danger active"
+                                               role="button" aria-pressed="true"
+                                               th:href="@{/car/booking/cancel(id=${item.id})}">Hủy</a>
+
+                                        </td>
+                                        <!--                    <td class="remove-col"><a class="btn-remove"-->
+                                        <!--                                              href="#orderView-modal" data-toggle="modal"-->
+                                        <!--                                              th:data-id="${item.id}"-->
+                                        <!--                                              th:onclick="orderView(this.getAttribute('data-id'))"> <i-->
+                                        <!--                            class="icon-eye"></i>-->
+                                        <!--                    </a></td>-->
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <div th:if="${currentUser.role.name == 'ROLE_USER'}">
+                                    <p>Bạn chưa có đơn đặt nào.</p>
+                                    <a th:href="@{/car/client}" class="btn btn-outline-primary-2"><span>Cửa
 											hàng</span><i class="icon-long-arrow-right"></i></a>
+                                </div>
+
                             </div>
                             <!-- .End .tab-pane -->
 

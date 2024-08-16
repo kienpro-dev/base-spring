@@ -51,6 +51,11 @@ public class BookingServiceImpl implements BookingService {
         return bookingRepository.findById(id).orElse(null);
     }
 
+    @Override
+    public List<Booking> getBookingByCarOwnerId(String id) {
+        return bookingRepository.getBookingByCarOwnerId(id);
+    }
+
 //    @Override
 //    public void saveDetail(String bookingId, String carId) {
 //        bookingRepository.saveDetail(bookingId, carId);

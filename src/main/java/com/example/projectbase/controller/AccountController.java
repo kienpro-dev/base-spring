@@ -1,13 +1,16 @@
 package com.example.projectbase.controller;
 
 import com.example.projectbase.base.CarMvc;
+import com.example.projectbase.constant.RoleConstant;
 import com.example.projectbase.constant.UrlConstant;
 import com.example.projectbase.domain.dto.response.OrderAddressDto;
 import com.example.projectbase.domain.dto.response.UserDto;
+import com.example.projectbase.domain.entity.Booking;
 import com.example.projectbase.domain.entity.User;
 import com.example.projectbase.security.CurrentUser;
 import com.example.projectbase.security.UserPrincipal;
 import com.example.projectbase.service.AuthService;
+import com.example.projectbase.service.BookingService;
 import com.example.projectbase.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.ui.Model;
@@ -17,7 +20,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @CarMvc
 @RequiredArgsConstructor
@@ -25,6 +30,8 @@ public class AccountController {
     private final UserService userService;
 
     private final AuthService authService;
+
+	private final BookingService bookingService;
 
     @GetMapping("/account/info-account")
     public String infoAccount(Model model, @CurrentUser UserPrincipal userPrincipal) {
@@ -49,6 +56,13 @@ public class AccountController {
 			userDto.setBalance(user.getBalance());
 			userDto.setActive(user.getIsActive());
 			model.addAttribute("userDto", userDto);
+			if(user.getRole().getName().equals(RoleConstant.CAR_OWNER)) {
+				List<Booking> bookings = bookingService.getBookingByCarOwnerId(userPrincipal.getId());
+				model.addAttribute("list", bookings);
+			} else {
+				model.addAttribute("list", new ArrayList<>());
+			}
+
         }
         return "client/account/info-account";
     }
