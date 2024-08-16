@@ -38,6 +38,11 @@ public interface BookingRepository extends JpaRepository<Booking, String> {
     @Query(value = "SELECT * FROM bookings b WHERE b.user_id = :userId", nativeQuery = true)
     List<Booking> findByUserId(@Param("userId")String userId);
 
+    @Query(value = "SELECT * FROM bookings b JOIN booking_car bc " +
+            "ON b.id = bc.booking_id JOIN cars c ON bc.car_id = c.id " +
+            "JOIN users u ON c.user_id = u.id WHERE u.id = :id", nativeQuery = true)
+    List<Booking> getBookingByCarOwnerId(@Param("id")String id);
+
 
 //    @Transactional
 //    @Modifying

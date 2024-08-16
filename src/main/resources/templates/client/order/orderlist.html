@@ -1,116 +1,125 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{client/layout.html}">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{client/layout.html}">
 
 <head>
-<title>Danh sách đặt hàng</title>
+    <title>Danh sách đặt hàng</title>
 </head>
 
 <body>
-	<div layout:fragment="content">
-		<div class="page-header text-center"
-			style="background-image: url('../client/assets/images/page-header-bg.jpg')">
-			<div class="container">
-				<h1 class="page-title">
-					Đặt hàng<span>Cửa hàng</span>
-				</h1>
-			</div>
-			<!-- End .container -->
-		</div>
-		<!-- End .page-header -->
-		<nav aria-label="breadcrumb" class="breadcrumb-nav">
-			<div class="container">
-				<ol class="breadcrumb">
-					<li class="breadcrumb-item"><a th:href="@{/car/home}">Trang
-							chủ</a></li>
-					<li class="breadcrumb-item"><a th:href="@{/car/client}">Cửa
-							hàng</a></li>
-					<li class="breadcrumb-item active" aria-current="page">Danh
-						sách đặt xe</li>
-				</ol>
-			</div>
-			<!-- End .container -->
-		</nav>
-		<!-- End .breadcrumb-nav -->
+<div layout:fragment="content">
+    <div class="page-header text-center"
+         style="background-image: url('../client/assets/images/page-header-bg.jpg')">
+        <div class="container">
+            <h1 class="page-title">
+                Đặt hàng<span>Cửa hàng</span>
+            </h1>
+        </div>
+        <!-- End .container -->
+    </div>
+    <!-- End .page-header -->
+    <nav aria-label="breadcrumb" class="breadcrumb-nav">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a th:href="@{/car/home}">Trang
+                    chủ</a></li>
+                <li class="breadcrumb-item"><a th:href="@{/car/client}">Cửa
+                    hàng</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Danh
+                    sách đặt xe
+                </li>
+            </ol>
+        </div>
+        <!-- End .container -->
+    </nav>
+    <!-- End .breadcrumb-nav -->
 
-		<div class="page-content">
-			<div class="container">
-				<table class="table table-wishlist table-mobile">
-					<thead>
-						<tr>
-							<th>Mã đơn</th>
-							<th>Ngày đặt</th>
-							<th>Tổng tiền</th>
-							<th>Phương thức thanh toán</th>
-							<th>Ngày thuê</th>
-							<th>Ngày trả</th>
-							<th>Trạng thái</th>
-							<th></th>
-						</tr>
-					</thead>
+    <div class="page-content">
+        <div class="container">
+            <table class="table table-wishlist table-mobile">
+                <thead>
+                <tr>
+                    <th>Mã đơn</th>
+                    <th>Ngày đặt</th>
+                    <th>Tổng tiền</th>
+                    <th>Phương thức thanh toán</th>
+                    <th>Ngày thuê</th>
+                    <th>Ngày trả</th>
+                    <th>Trạng thái</th>
+                    <th></th>
+<!--                    <th></th>-->
+                </tr>
+                </thead>
 
-					<tbody>
-						<tr th:each="item, i : ${list}"
-							style="font-size: 1, 6rem; font-weight: 400;">
-							<td th:text="${item.bookingNo}"></td>
-							<td th:text="${item.createdDate}"></td>
-							<td
-								th:text="${#numbers.formatDecimal(item.getTotal(), 0, 'COMMA', 0, 'POINT')} + ' VND'"></td>
-							<td>
-								<div
-									th:switch="${item.paymentMethod}">
-									<p th:case="'wallet'" class="text-success">Thanh toán ví điện tử</p>
-									<p th:case="'cash'" class="text-warning">Nhận tiền khi giao xe</p>
-									<p th:case="'vnpay'" class="text-primary">Chuyển khoản VNPAY</p>
-								</div>
+                <tbody>
+                <tr th:each="item, i : ${list}"
+                    style="font-size: 1, 6rem; font-weight: 400;">
+                    <td th:text="${item.bookingNo}"></td>
+                    <td th:text="${item.createdDate}"></td>
+                    <td
+                            th:text="${#numbers.formatDecimal(item.getTotal(), 0, 'COMMA', 0, 'POINT')} + ' VND'"></td>
+                    <td>
+                        <div
+                                th:switch="${item.paymentMethod}">
+                            <p th:case="'wallet'" class="text-success">Thanh toán ví điện tử</p>
+                            <p th:case="'cash'" class="text-warning">Nhận tiền khi giao xe</p>
+                            <p th:case="'vnpay'" class="text-primary">Chuyển khoản VNPAY</p>
+                        </div>
 
-							</td>
-							<td th:text="${item.startDate}"></td>
-							<td th:text="${item.endDate}"></td>
-							<td>
-								<div
-									th:switch="${item.status}">
-									<p th:case="'PENDING_DEPOSIT'" class="text-warning">Đang
-										chờ đặt cọc</p>
-									<p th:case="'PENDING_PAY'" class="text-warning">Đang
-										chờ thanh toán</p>
-									<p th:case="'CONFIRM'" class="text-info">Đã xác nhận</p>
-									<p th:case="'CANCEL'" class="text-danger">Đã hủy</p>
-									<p th:case="'BOOKED'" class="text-success">Đã đặt thành công</p>
-									<p th:case="'IN_PROGRESS'" class="text-primary">Đang xử lý</p>
-								</div>
-							</td>
-							<td class="remove-col"><a class="btn-remove"
-								href="#orderView-modal" data-toggle="modal"
-								th:data-id="${item.id}"
-								th:onclick="orderView(this.getAttribute('data-id'))"> <i
-									class="icon-eye"></i>
-							</a></td>
-						</tr>
-					</tbody>
-				</table>
-				<!-- End .table table-wishlist -->
-				<div class="wishlist-share">
-					<div class="social-icons social-icons-sm mb-2">
-						<label class="social-label">Chia sẻ:</label> <a href="#"
-							class="social-icon" title="Facebook" target="_blank"><i
-							class="icon-facebook-f"></i></a> <a href="#" class="social-icon"
-							title="Twitter" target="_blank"><i class="icon-twitter"></i></a>
-						<a href="#" class="social-icon" title="Instagram" target="_blank"><i
-							class="icon-instagram"></i></a> <a href="#" class="social-icon"
-							title="Youtube" target="_blank"><i class="icon-youtube"></i></a>
-						<a href="#" class="social-icon" title="Pinterest" target="_blank"><i
-							class="icon-pinterest"></i></a>
-					</div>
-					<!-- End .soial-icons -->
-				</div>
-				<!-- End .wishlist-share -->
-			</div>
-			<!-- End .container -->
-		</div>
-		<!-- End .page-content -->
-	</div>
+                    </td>
+                    <td th:text="${item.startDate}"></td>
+                    <td th:text="${item.endDate}"></td>
+                    <td>
+                        <div
+                                th:switch="${item.status}">
+                            <p th:case="'PENDING_DEPOSIT'" class="text-warning">Đang
+                                chờ</p>
+                            <p th:case="'PENDING_PAY'" class="text-warning">Đang
+                                chờ thanh toán</p>
+                            <p th:case="'CONFIRM'" class="text-info">Đã xác nhận</p>
+                            <p th:case="'CANCEL'" class="text-danger">Đã hủy</p>
+                            <p th:case="'BOOKED'" class="text-success">Đã đặt thành công</p>
+                            <p th:case="'IN_PROGRESS'" class="text-primary">Đang thuê</p>
+                        </div>
+                    </td>
+                    <td>
+                        <a style="padding: 5px 0; width: 30%" class="btn btn-secondary active" role="button" aria-pressed="true" th:href="@{/car/booking/confirm-pick-up(id=${item.id})}">Đã nhận xe</a>
+                        <a style="padding: 5px 0; width: 30%" class="btn btn-danger active" role="button" aria-pressed="true" th:href="@{/car/booking/cancel(id=${item.id})}">Hủy đặt</a>
+
+                    </td>
+<!--                    <td class="remove-col"><a class="btn-remove"-->
+<!--                                              href="#orderView-modal" data-toggle="modal"-->
+<!--                                              th:data-id="${item.id}"-->
+<!--                                              th:onclick="orderView(this.getAttribute('data-id'))"> <i-->
+<!--                            class="icon-eye"></i>-->
+<!--                    </a></td>-->
+                </tr>
+                </tbody>
+            </table>
+            <!-- End .table table-wishlist -->
+            <div class="wishlist-share">
+                <div class="social-icons social-icons-sm mb-2">
+                    <label class="social-label">Chia sẻ:</label> <a href="#"
+                                                                    class="social-icon" title="Facebook"
+                                                                    target="_blank"><i
+                        class="icon-facebook-f"></i></a> <a href="#" class="social-icon"
+                                                            title="Twitter" target="_blank"><i class="icon-twitter"></i></a>
+                    <a href="#" class="social-icon" title="Instagram" target="_blank"><i
+                            class="icon-instagram"></i></a> <a href="#" class="social-icon"
+                                                               title="Youtube" target="_blank"><i
+                        class="icon-youtube"></i></a>
+                    <a href="#" class="social-icon" title="Pinterest" target="_blank"><i
+                            class="icon-pinterest"></i></a>
+                </div>
+                <!-- End .soial-icons -->
+            </div>
+            <!-- End .wishlist-share -->
+        </div>
+        <!-- End .container -->
+    </div>
+    <!-- End .page-content -->
+</div>
 </body>
 
 </html>

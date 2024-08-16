@@ -98,6 +98,42 @@ public class BookingController {
         return "client/order/orderlist";
     }
 
+    @GetMapping("/booking/confirm-pick-up")
+    public String confirmPickUp(Model model, @CurrentUser UserPrincipal userPrincipal, @RequestParam String id) {
+        if (authService.isAuthenticated()) {
+            User currentUser = this.userService.findById(userPrincipal.getId());
+            model.addAttribute("currentUser", currentUser);
+        }
+        Booking booking = bookingService.getBookingById(id);
+        booking.setStatus(BookingConstant.IN_PROGRESS);
+        bookingService.saveOrUpdate(booking);
+        return "redirect:/car/booking-list";
+    }
+
+    @GetMapping("/booking/cancel")
+    public String cancel(Model model, @CurrentUser UserPrincipal userPrincipal, @RequestParam String id) {
+        if (authService.isAuthenticated()) {
+            User currentUser = this.userService.findById(userPrincipal.getId());
+            model.addAttribute("currentUser", currentUser);
+        }
+        Booking booking = bookingService.getBookingById(id);
+        booking.setStatus(BookingConstant.CANCEL);
+        bookingService.saveOrUpdate(booking);
+        return "redirect:/car/booking-list";
+    }
+
+    @GetMapping("/booking/confirm")
+    public String confirm(Model model, @CurrentUser UserPrincipal userPrincipal, @RequestParam String id) {
+        if (authService.isAuthenticated()) {
+            User currentUser = this.userService.findById(userPrincipal.getId());
+            model.addAttribute("currentUser", currentUser);
+        }
+        Booking booking = bookingService.getBookingById(id);
+        booking.setStatus(BookingConstant.CONFIRM);
+        bookingService.saveOrUpdate(booking);
+        return "redirect:/car/account/info-account";
+    }
+
     @GetMapping(value = "/view/{id}")
 	public ResponseEntity<Booking> viewByOrderId(@PathVariable(name = "id") String id) {
 		Booking booking = bookingService.getBookingById(id);
