@@ -49,12 +49,10 @@ function registerSubmit() {
 				title: 'Thông báo đã đăng ký',
 				text: response.data.message,
 				icon: 'success',
-				confirmButtonColor: '#3085d6',
-				confirmButtonText: 'Xác nhận'
-			}).then((result) => {
-				if (result.isConfirmed) {
-					location.reload(true);
-				}
+				showConfirmButton: false,
+				timer: 700
+			}).then(() => {
+				location.reload(true);
 			})
 		})
 		.catch(function(error) {
@@ -89,12 +87,10 @@ function loginSubmit() {
 				title: 'Thông báo đã đăng nhập',
 				text: response.data.message,
 				icon: 'success',
-				confirmButtonColor: '#3085d6',
-				confirmButtonText: 'Xác nhận'
-			}).then((result) => {
-				if (result.isConfirmed) {
-					location.reload(true);
-				}
+				showConfirmButton: false,
+				timer: 700
+			}).then(() => {
+				location.reload(true);
 			})
 		})
 		.catch(function(error) {
@@ -128,12 +124,10 @@ function logout() {
 						title: 'Thông báo',
 						text: 'Đã đăng xuất thành công',
 						icon: 'success',
-						confirmButtonColor: '#3085d6',
-						confirmButtonText: 'Xác nhận'
-					}).then((result) => {
-						if (result.isConfirmed) {
+						showConfirmButton: false,
+						timer: 700
+					}).then(() => {
 							window.location.href = baseUrl + '/car/home';
-						}
 					})
 				})
 		}
