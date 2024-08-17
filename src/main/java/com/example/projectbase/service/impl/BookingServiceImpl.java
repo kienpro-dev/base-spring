@@ -1,6 +1,7 @@
 package com.example.projectbase.service.impl;
 
 
+import com.example.projectbase.domain.dto.response.BookingDetailDto;
 import com.example.projectbase.domain.entity.Booking;
 
 import com.example.projectbase.repository.BookingRepository;
@@ -9,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -54,6 +56,14 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public List<Booking> getBookingByCarOwnerId(String id) {
         return bookingRepository.getBookingByCarOwnerId(id);
+    }
+
+    @Override
+    public BookingDetailDto getBookingDetail(String id) {
+        BookingDetailDto bookingDetail=bookingRepository.getBookingDetail(id);
+        Optional<Booking> booking=bookingRepository.findById(bookingDetail.getBookingId());
+        bookingDetail.setTotal(booking.get().getTotal());
+        return bookingDetail;
     }
 
 //    @Override

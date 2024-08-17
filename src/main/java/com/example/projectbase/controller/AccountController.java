@@ -60,7 +60,8 @@ public class AccountController {
 				List<Booking> bookings = bookingService.getBookingByCarOwnerId(userPrincipal.getId());
 				model.addAttribute("list", bookings);
 			} else {
-				model.addAttribute("list", new ArrayList<>());
+				List<Booking> bookings=bookingService.getBookingByUserId(userPrincipal.getId());
+				model.addAttribute("list", bookings);
 			}
 
         }

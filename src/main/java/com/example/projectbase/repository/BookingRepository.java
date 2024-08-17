@@ -1,5 +1,6 @@
 package com.example.projectbase.repository;
 
+import com.example.projectbase.domain.dto.response.BookingDetailDto;
 import com.example.projectbase.domain.entity.Booking;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -42,6 +43,11 @@ public interface BookingRepository extends JpaRepository<Booking, String> {
             "ON b.id = bc.booking_id JOIN cars c ON bc.car_id = c.id " +
             "JOIN users u ON c.user_id = u.id WHERE u.id = :id", nativeQuery = true)
     List<Booking> getBookingByCarOwnerId(@Param("id")String id);
+
+    @Query(value = "SELECT new com.example.projectbase.domain.dto.response.BookingDetailDto(b.id,b.createdDate,b.paymentMethod,b.startDate,b.endDate,b.status,c.name,c.brand,c.userOwn.name,u.address,u.email,u.name,u.phoneNumber) FROM Booking b INNER JOIN b.user u INNER JOIN b.cars c WHERE b.id=?1")
+    BookingDetailDto getBookingDetail(String bookingId);
+
+
 
 
 //    @Transactional
