@@ -435,7 +435,12 @@
                                     </div>
                                     <!-- End .product-action-vertical -->
 
-                                    <div class="product-action">
+
+                                    <div class="product-action"  sec:authorize="!isAuthenticated()">
+                                        <a href="#signin-modal" data-toggle="modal"
+                                           class="btn-product btn-cart"><span>Rent Car</span></a>
+                                    </div>
+                                    <div class="product-action" sec:authorize="isAuthenticated()">
                                         <a th:href="@{/car/check-out(id=${item.id})}"
                                            class="btn-product btn-cart"><span>Rent Car</span></a>
                                     </div>
@@ -570,7 +575,11 @@
                                     </div>
                                     <!-- End .product-action-vertical -->
 
-                                    <div class="product-action">
+                                    <div class="product-action"  sec:authorize="!isAuthenticated()">
+                                        <a href="#signin-modal" data-toggle="modal"
+                                           class="btn-product btn-cart"><span>Rent Car</span></a>
+                                    </div>
+                                    <div class="product-action" sec:authorize="isAuthenticated()">
                                         <a th:href="@{/car/check-out(id=${item.id})}"
                                            class="btn-product btn-cart"><span>Rent Car</span></a>
                                     </div>
