@@ -30,10 +30,10 @@ public interface CarRepository extends JpaRepository<Car, String> {
             "    JOIN bookings b ON bc.booking_id = b.id " +
             "    GROUP BY bc.car_id " +
             ") latest_booking ON c.id = latest_booking.car_id " +
-            "WHERE c.address LIKE %:address% " +
-            "AND (latest_booking.latest_end_date IS NULL OR " +
-            "     (latest_booking.latest_end_date <= :startDateTime OR b.start_date >= :endDateTime)) " +
-            "AND c.name LIKE %:keyword% ",
+            "WHERE (:address IS NULL OR c.address LIKE %:address%) " +
+            "AND (:startDateTime IS NULL OR latest_booking.latest_end_date IS NULL OR " +
+            "     latest_booking.latest_end_date <= :startDateTime OR b.start_date >= :endDateTime) " +
+            "AND (:keyword IS NULL OR c.name LIKE %:keyword%)",
             countQuery = "SELECT COUNT(DISTINCT c.id) " +
                     "FROM cars c " +
                     "LEFT JOIN booking_car bc ON c.id = bc.car_id " +
@@ -44,16 +44,17 @@ public interface CarRepository extends JpaRepository<Car, String> {
                     "    JOIN bookings b ON bc.booking_id = b.id " +
                     "    GROUP BY bc.car_id " +
                     ") latest_booking ON c.id = latest_booking.car_id " +
-                    "WHERE c.address LIKE %:address% " +
-                    "AND (latest_booking.latest_end_date IS NULL OR " +
-                    "     (latest_booking.latest_end_date <= :startDateTime OR b.start_date >= :endDateTime)) " +
-                    "AND c.name LIKE %:keyword%",
+                    "WHERE (:address IS NULL OR c.address LIKE %:address%) " +
+                    "AND (:startDateTime IS NULL OR latest_booking.latest_end_date IS NULL OR " +
+                    "     latest_booking.latest_end_date <= :startDateTime OR b.start_date >= :endDateTime) " +
+                    "AND (:keyword IS NULL OR c.name LIKE %:keyword%)",
             nativeQuery = true)
     Page<Car> findAvailableCars(@Param("startDateTime") LocalDateTime startDateTime,
                                 @Param("endDateTime") LocalDateTime endDateTime,
                                 @Param("address") String address,
                                 @Param("keyword") String keyword,
                                 Pageable pageable);
+
 
 
     @Query(value = "SELECT DISTINCT c.* " +

@@ -38,11 +38,11 @@ public class ClientController {
 	public String getPage(Model model, @RequestParam(name = "field") Optional<String> field,
 						  @RequestParam(name = "page") Optional<Integer> page, @RequestParam(name = "size") Optional<Integer> size,
 						  @RequestParam(name = "keywords", defaultValue = "") Optional<String> keywords,
-						  @RequestParam(name = "startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
-						  @RequestParam(name = "startTime") @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime startTime,
-						  @RequestParam(name = "endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
-						  @RequestParam(name = "endTime") @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime endTime,
-						  @RequestParam(name = "location") String location,
+						  @RequestParam(name = "startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Optional<LocalDate> startDate,
+						  @RequestParam(name = "startTime") @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) Optional<LocalTime> startTime,
+						  @RequestParam(name = "endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Optional<LocalDate> endDate,
+						  @RequestParam(name = "endTime") @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) Optional<LocalTime> endTime,
+						  @RequestParam(name = "location",defaultValue = "") Optional<String> location,
 						  @CurrentUser UserPrincipal userPrincipal) {
 		User currentUser = this.userService.findById(userPrincipal.getId());
 		model.addAttribute("currentUser", currentUser);
@@ -50,10 +50,31 @@ public class ClientController {
 		sessionService.set("keywords", keyword);
 		Sort sort = Sort.by(Sort.Direction.ASC, field.orElse("name"));
 		Pageable pageable = PageRequest.of(page.orElse(1) - 1, size.orElse(12), sort);
-		LocalDateTime startDateTime = LocalDateTime.of(startDate, startTime);
-		LocalDateTime endDateTime = LocalDateTime.of(endDate, endTime);
 
-		Page<Car> resultPage = this.carService.findAvailableCar(location, startDateTime, endDateTime, keyword, pageable);
+		LocalDate startDates=startDate.orElse(sessionService.get("startDate"));
+		model.addAttribute("startDate", startDates);
+		LocalTime startTimes=startTime.orElse(sessionService.get("startTime"));
+		model.addAttribute("startTime",startTimes);
+
+		LocalDate endDates=endDate.orElse(sessionService.get("endDate"));
+		model.addAttribute("endDate", endDates);
+		LocalTime endTimes=endTime.orElse(sessionService.get("endTime"));
+		model.addAttribute("endTime",endTimes);
+
+		String locations = location.orElse(sessionService.get("location"));
+		sessionService.set("location", locations);
+
+		LocalDateTime startDateTime = null;
+		if (startDates != null && startTimes != null) {
+			startDateTime = LocalDateTime.of(startDates, startTimes);
+		}
+
+		LocalDateTime endDateTime = null;
+		if (endDates != null && endTimes != null) {
+			endDateTime = LocalDateTime.of(endDates, endTimes);
+		}
+
+		Page<Car> resultPage = this.carService.findAvailableCar(locations, startDateTime, endDateTime, keyword, pageable);
 
 		int totalPages = resultPage.getTotalPages();
 		int startPage = Math.max(1, page.orElse(1) - 2);
@@ -68,14 +89,14 @@ public class ClientController {
 
 		model.addAttribute("pageNumbers", pageNumbers);
 		model.addAttribute("field", field.orElse("id"));
-		model.addAttribute("size", size.orElse(10));
+		model.addAttribute("size", size.orElse(12));
 		model.addAttribute("keywords", keyword);
 		model.addAttribute("resultPage", resultPage);
-		model.addAttribute("location", location);
-		model.addAttribute("startDate", startDate);
-		model.addAttribute("startTime", startTime);
-		model.addAttribute("endDate", endDate);
-		model.addAttribute("endTime", endTime);
+		model.addAttribute("location", locations);
+		model.addAttribute("startDate", startDates);
+		model.addAttribute("startTime", startTimes);
+		model.addAttribute("endDate", endDates);
+		model.addAttribute("endTime", endTimes);
 		return "client/client/client";
 	}
 }
