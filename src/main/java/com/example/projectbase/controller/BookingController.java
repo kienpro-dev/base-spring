@@ -68,6 +68,7 @@ public class BookingController {
         }
         Car item = carService.findById(carId).get();
         User userRent = userService.findById(user.getId());
+        User owner = item.getUserOwn();
         Booking booking = new Booking();
         booking.setBookingNo(new Random().nextInt(100000 - 1000 + 1));
         LocalDateTime start = LocalDate.parse(bookingDto.getStartDate()).atTime(LocalTime.parse(bookingDto.getStartTime()));
@@ -89,7 +90,9 @@ public class BookingController {
                 model.addAttribute("failBalance", true);
             } else {
                 userRent.setBalance(userRent.getBalance() - item.getDeposit());
+                owner.setBalance(owner.getBalance() + item.getDeposit());
                 userService.saveOrUpdate(userRent);
+                userService.saveOrUpdate(owner);
                 bookingService.saveOrUpdate(booking);
                 model.addAttribute("isSuccess", true);
             }
@@ -148,12 +151,27 @@ public class BookingController {
 
     @GetMapping("/booking/return-car")
     public String returnCar(Model model, @CurrentUser UserPrincipal userPrincipal, @RequestParam String id) {
+        User currentUser = this.userService.findById(userPrincipal.getId());
         if (authService.isAuthenticated()) {
-            User currentUser = this.userService.findById(userPrincipal.getId());
             model.addAttribute("currentUser", currentUser);
         }
         Booking booking = bookingService.getBookingById(id);
-        booking.setStatus(BookingConstant.COMPLETED);
+        List<Car> carBooked = booking.getCars();
+        for (Car car : carBooked) {
+            User owner = car.getUserOwn();
+            if (booking.getTotal() <= car.getDeposit()) {
+                currentUser.setBalance(currentUser.getBalance() + (car.getDeposit() - booking.getTotal()));
+                owner.setBalance(owner.getBalance() - (car.getDeposit() - booking.getTotal()));
+                booking.setStatus(BookingConstant.COMPLETED);
+            } else {
+                currentUser.setBalance(currentUser.getBalance() - (booking.getTotal() - car.getDeposit()));
+                owner.setBalance(owner.getBalance() + (booking.getTotal() - car.getDeposit()));
+                booking.setStatus(BookingConstant.PENDING_PAY);
+            }
+            userService.saveOrUpdate(owner);
+            userService.saveOrUpdate(currentUser);
+        }
+
         bookingService.saveOrUpdate(booking);
         return "redirect:/car/booking-list";
     }
@@ -165,7 +183,12 @@ public class BookingController {
             model.addAttribute("currentUser", currentUser);
         }
         Booking booking = bookingService.getBookingById(id);
-        booking.setStatus(BookingConstant.CONFIRM);
+        if (booking.getStatus().equals(BookingConstant.PENDING_DEPOSIT)) {
+            booking.setStatus(BookingConstant.CONFIRM);
+
+        } else if (booking.getStatus().equals(BookingConstant.PENDING_PAY)) {
+            booking.setStatus(BookingConstant.COMPLETED);
+        }
         bookingService.saveOrUpdate(booking);
         return "redirect:/car/account/info-account";
     }
