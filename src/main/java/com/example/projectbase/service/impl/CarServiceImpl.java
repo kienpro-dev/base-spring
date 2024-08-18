@@ -164,6 +164,7 @@ public class CarServiceImpl implements CarService {
             currentCar.setDocument(carDto.getDocument());
             currentCar.setImages(imageList);
             currentCar.setUserOwn(carDto.getUserOwn());
+            currentCar.setStatusCar(carDto.getStatusCar());
             this.carRepository.save(currentCar);
             if(imageList != null){
                 this.imageRepository.saveAll(imageList);

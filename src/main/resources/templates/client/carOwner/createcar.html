@@ -93,10 +93,13 @@
                 </div>
                 <div class="form-group">
                     <label for="fuel">Fuel:</label>
-                    <input type="text" class="form-control" id="fuel" name="fuel"
-                           th:field="*{fuelType}">
+                    <select class="form-control" id="fuel" name="fuel" th:field="*{fuelType}">
+                        <option value="" disabled selected>Select Fuel Type</option>
+                        <option th:each="fuel : ${fuelTypes}" th:value="${fuel}" th:text="${fuel}"></option>
+                    </select>
                     <div class="text-danger" th:if="${#fields.hasErrors('fuelType')}" th:errors="*{fuelType}"></div>
                 </div>
+
             </div>
         </div>
         <div class="form-group">

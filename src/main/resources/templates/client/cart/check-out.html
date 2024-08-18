@@ -45,15 +45,15 @@
                             <div class="row">
                                 <div class="col-sm-6">
                                     <label>Từ ngày*</label> <input type="date"
-                                                                   class="form-control" required id="start_date" name="startDate">
+                                                                   class="form-control" required id="start_date" name="startDate" th:value="${startDate}">
                                     <label>Từ thời gian*</label> <input type="time"
-                                                                         class="form-control" required id="start_time" name="startTime">
+                                                                         class="form-control" required id="start_time" name="startTime" th:value="${startTime}">
                                 </div>
                                 <div class="col-sm-6">
                                     <label>Đến ngày*</label> <input type="date"
-                                                                    class="form-control" required id="end_date" name="endDate">
+                                                                    class="form-control" required id="end_date" name="endDate" th:value="${endDate}">
                                     <label>Đến thời gian*</label> <input type="time"
-                                                                         class="form-control" required id="end_time" name="endTime">
+                                                                         class="form-control" required id="end_time" name="endTime" th:value="${endTime}">
                                 </div>
 
                             </div>
