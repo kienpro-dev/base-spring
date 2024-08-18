@@ -48,7 +48,7 @@
                     <th>Ngày trả</th>
                     <th>Trạng thái</th>
                     <th></th>
-<!--                    <th></th>-->
+                    <!--                    <th></th>-->
                 </tr>
                 </thead>
 
@@ -56,7 +56,7 @@
                 <tr th:each="item, i : ${list}"
                     style="font-size: 1, 6rem; font-weight: 400;">
                     <td th:text="${item.bookingNo}"></td>
-                    <td th:text="${item.createdDate}"></td>
+                    <td th:text="${#temporals.format(item.createdDate, 'yyyy-MM-dd HH:mm')}"></td>
                     <td
                             th:text="${#numbers.formatDecimal(item.getTotal(), 0, 'COMMA', 0, 'POINT')} + ' VND'"></td>
                     <td>
@@ -68,32 +68,87 @@
                         </div>
 
                     </td>
-                    <td th:text="${item.startDate}"></td>
-                    <td th:text="${item.endDate}"></td>
+                    <td th:text="${#temporals.format(item.startDate, 'yyyy-MM-dd HH:mm')}"></td>
+                    <td th:text="${#temporals.format(item.endDate, 'yyyy-MM-dd HH:mm')}"></td>
                     <td>
                         <div
                                 th:switch="${item.status}">
                             <p th:case="'PENDING_DEPOSIT'" class="text-warning">Đang
-                                chờ</p>
+                                chờ xác nhận</p>
                             <p th:case="'PENDING_PAY'" class="text-warning">Đang
                                 chờ thanh toán</p>
                             <p th:case="'CONFIRM'" class="text-info">Đã xác nhận</p>
                             <p th:case="'CANCEL'" class="text-danger">Đã hủy</p>
-                            <p th:case="'BOOKED'" class="text-success">Đã đặt thành công</p>
+                            <p th:case="'COMPLETED'" class="text-success">Đã hoàn thành</p>
                             <p th:case="'IN_PROGRESS'" class="text-primary">Đang thuê</p>
                         </div>
                     </td>
-                    <td>
-                        <a style="padding: 5px 0; width: 30%" class="btn btn-secondary active" role="button" aria-pressed="true" th:href="@{/car/booking/confirm-pick-up(id=${item.id})}">Đã nhận xe</a>
-                        <a style="padding: 5px 0; width: 30%" class="btn btn-danger active" role="button" aria-pressed="true" th:href="@{/car/booking/cancel(id=${item.id})}">Hủy đặt</a>
-
+                    <td th:switch="${item.status}" class="col-2 ">
+                        <div th:case="'CONFIRM'" class="d-flex">
+                            <a class="btn btn-info"
+                               style="padding: 5px 0; width: 20%"
+                               role="button"
+                               href="#orderView-modal" data-toggle="modal"
+                               th:data-id="${item.id}"
+                               th:onclick="orderView(this.getAttribute('data-id'))"> Chi tiết</a>
+                            <a style="padding: 5px 0; width: 20%"
+                               class="btn btn-secondary active"
+                               role="button" aria-pressed="true"
+                               th:href="@{/car/booking/confirm-pick-up(id=${item.id})}">Đã nhận
+                                xe</a>
+                            <a style="padding: 5px 0; width: 30%" class="btn btn-danger active"
+                               role="button"
+                               th:data-id="${item.id}"
+                               th:onclick="cancelSubmit(this.getAttribute('data-id'))">Hủy đặt</a>
+                        </div>
+                        <div th:case="'PENDING_DEPOSIT'" class="d-flex">
+                            <a class="btn btn-info"
+                               style="padding: 5px 0; width: 30%"
+                               role="button"
+                               href="#orderView-modal" data-toggle="modal"
+                               th:data-id="${item.id}"
+                               th:onclick="orderView(this.getAttribute('data-id'))"> Chi tiết</a>
+                            <a style="padding: 5px 0; width: 30%" class="btn btn-danger active"
+                               role="button"
+                               th:data-id="${item.id}"
+                               th:onclick="cancelSubmit(this.getAttribute('data-id'))">Hủy đặt</a>
+                        </div>
+                        <div th:case="'IN_PROGRESS'" class="d-flex">
+                            <a class="btn btn-info"
+                               style="padding: 5px 0; width: 30%"
+                               role="button"
+                               href="#orderView-modal" data-toggle="modal"
+                               th:data-id="${item.id}"
+                               th:onclick="orderView(this.getAttribute('data-id'))"> Chi tiết</a>
+                            <a style="padding: 5px 0; width: 30%" class="btn btn-danger active"
+                               role="button" aria-pressed="true"
+                               th:href="@{/car/booking/return-car(id=${item.id})}">Trả xe</a>
+                        </div>
+                        <div th:case="'PENDING_PAY'" class="d-flex">
+                            <a class="btn btn-info"
+                               style="padding: 5px 0; width: 30%"
+                               role="button"
+                               href="#orderView-modal" data-toggle="modal"
+                               th:data-id="${item.id}"
+                               th:onclick="orderView(this.getAttribute('data-id'))"> Chi tiết</a>
+                        </div>
+                        <div th:case="'CANCEL'" class="d-flex">
+                            <a class="btn btn-info"
+                               style="padding: 5px 0; width: 30%"
+                               role="button"
+                               href="#orderView-modal" data-toggle="modal"
+                               th:data-id="${item.id}"
+                               th:onclick="orderView(this.getAttribute('data-id'))"> Chi tiết</a>
+                        </div>
+                        <div th:case="'COMPLETED'" class="d-flex">
+                            <a class="btn btn-info"
+                               style="padding: 5px 0; width: 30%"
+                               role="button"
+                               href="#orderView-modal" data-toggle="modal"
+                               th:data-id="${item.id}"
+                               th:onclick="orderView(this.getAttribute('data-id'))"> Chi tiết</a>
+                        </div>
                     </td>
-<!--                    <td class="remove-col"><a class="btn-remove"-->
-<!--                                              href="#orderView-modal" data-toggle="modal"-->
-<!--                                              th:data-id="${item.id}"-->
-<!--                                              th:onclick="orderView(this.getAttribute('data-id'))"> <i-->
-<!--                            class="icon-eye"></i>-->
-<!--                    </a></td>-->
                 </tr>
                 </tbody>
             </table>

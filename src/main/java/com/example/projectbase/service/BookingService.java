@@ -1,6 +1,7 @@
 package com.example.projectbase.service;
 
 
+import com.example.projectbase.domain.dto.response.BookingDetailDto;
 import com.example.projectbase.domain.entity.Booking;
 
 import java.util.List;
@@ -21,6 +22,9 @@ public interface BookingService {
     Booking getBookingById(String id);
 
     List<Booking> getBookingByCarOwnerId(String id);
+
+    BookingDetailDto getBookingDetail(String id);
+
 //    void saveDetail(String bookingId, String carId);
 
 }

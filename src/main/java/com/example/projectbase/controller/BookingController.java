@@ -2,6 +2,7 @@ package com.example.projectbase.controller;
 
 import com.example.projectbase.base.CarMvc;
 import com.example.projectbase.constant.BookingConstant;
+import com.example.projectbase.domain.dto.response.BookingDetailDto;
 import com.example.projectbase.domain.dto.response.BookingDto;
 import com.example.projectbase.domain.dto.response.CarDto;
 import com.example.projectbase.domain.dto.response.UserDto;
@@ -38,7 +39,7 @@ public class BookingController {
 
     @GetMapping("/check-out")
     public String checkOut(Model model, @RequestParam String id, @CurrentUser UserPrincipal userPrincipal) {
-        if(authService.isAuthenticated()) {
+        if (authService.isAuthenticated()) {
             User currentUser = this.userService.findById(userPrincipal.getId());
             model.addAttribute("currentUser", currentUser);
         }
@@ -52,7 +53,7 @@ public class BookingController {
     @PostMapping("/check-out/submit")
     public String submitCheckOut(Model model, @ModelAttribute BookingDto bookingDto, @RequestParam(value = "id") String carId,
                                  @CurrentUser UserPrincipal user) {
-        if(authService.isAuthenticated()) {
+        if (authService.isAuthenticated()) {
             User currentUser = this.userService.findById(user.getId());
             model.addAttribute("currentUser", currentUser);
         }
@@ -71,7 +72,7 @@ public class BookingController {
         List<Car> cars = new ArrayList<>();
         cars.add(item);
         booking.setCars(cars);
-        if(TimeOverlapUtil.checkTimeOverlap(start, end, bookingService.getBookingByCarId(carId))) {
+        if (TimeOverlapUtil.checkTimeOverlap(start, end, bookingService.getBookingByCarId(carId))) {
             model.addAttribute("isFail", true);
             model.addAttribute("carId", carId);
         } else {
@@ -87,14 +88,14 @@ public class BookingController {
 
     @GetMapping("/booking-list")
     public String bookingList(Model model, @CurrentUser UserPrincipal userPrincipal) {
-        if(authService.isAuthenticated()) {
+        if (authService.isAuthenticated()) {
             User currentUser = this.userService.findById(userPrincipal.getId());
             model.addAttribute("currentUser", currentUser);
             List<Booking> bookings = bookingService.getBookingByUserId(userPrincipal.getId());
             model.addAttribute("list", bookings);
         } else {
-			model.addAttribute("error", "Bạn chưa có đơn hàng nào.");
-		}
+            model.addAttribute("error", "Bạn chưa có đơn hàng nào.");
+        }
         return "client/order/orderlist";
     }
 
@@ -110,14 +111,26 @@ public class BookingController {
         return "redirect:/car/booking-list";
     }
 
-    @GetMapping("/booking/cancel")
-    public String cancel(Model model, @CurrentUser UserPrincipal userPrincipal, @RequestParam String id) {
+    @GetMapping("/booking/cancel/{id}")
+    public ResponseEntity<?> cancel(Model model, @CurrentUser UserPrincipal userPrincipal, @PathVariable(name = "id") String id) {
         if (authService.isAuthenticated()) {
             User currentUser = this.userService.findById(userPrincipal.getId());
             model.addAttribute("currentUser", currentUser);
         }
         Booking booking = bookingService.getBookingById(id);
         booking.setStatus(BookingConstant.CANCEL);
+        bookingService.saveOrUpdate(booking);
+        return new ResponseEntity<Void>(HttpStatus.OK);
+    }
+
+    @GetMapping("/booking/return-car")
+    public String returnCar(Model model, @CurrentUser UserPrincipal userPrincipal, @RequestParam String id) {
+        if (authService.isAuthenticated()) {
+            User currentUser = this.userService.findById(userPrincipal.getId());
+            model.addAttribute("currentUser", currentUser);
+        }
+        Booking booking = bookingService.getBookingById(id);
+        booking.setStatus(BookingConstant.COMPLETED);
         bookingService.saveOrUpdate(booking);
         return "redirect:/car/booking-list";
     }
@@ -135,14 +148,14 @@ public class BookingController {
     }
 
     @GetMapping(value = "/view/{id}")
-	public ResponseEntity<Booking> viewByOrderId(@PathVariable(name = "id") String id) {
-		Booking booking = bookingService.getBookingById(id);
-		return new ResponseEntity<Booking>(booking, HttpStatus.OK);
-	}
+    public ResponseEntity<BookingDetailDto> viewByOrderId(@PathVariable(name = "id") String id) {
+        BookingDetailDto bookingDetailDto = bookingService.getBookingDetail(id);
+        return new ResponseEntity<BookingDetailDto>(bookingDetailDto, HttpStatus.OK);
+    }
 
-	@GetMapping(value = "/view-order-detail/{id}")
-	public ResponseEntity<List<Car>> viewOrderDetailByOrderId(@PathVariable(name = "id") String id) {
-		List<Car> list = carService.findCarByBookingId(id);
-		return new ResponseEntity<List<Car>>(list, HttpStatus.OK);
-	}
+    @GetMapping(value = "/view-order-detail/{id}")
+    public ResponseEntity<List<Car>> viewOrderDetailByOrderId(@PathVariable(name = "id") String id) {
+        List<Car> list = carService.findCarByBookingId(id);
+        return new ResponseEntity<List<Car>>(list, HttpStatus.OK);
+    }
 }
