@@ -47,6 +47,8 @@ public class CarController {
             User currentUser = this.userService.findById(userPrincipal.getId());
             model.addAttribute("currentUser", currentUser);
         }
+        List<String> fuelTypes = CommonConstant.fuelType;
+        model.addAttribute("fuelTypes", fuelTypes);
         return "client/carOwner/createcar";
     }
 

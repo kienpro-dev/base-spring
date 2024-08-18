@@ -178,37 +178,37 @@
         }
     }
 
-    function getCurrentDate() {
-        const today = new Date();
-        return today.toISOString().split('T')[0];
-    }
-
-    function getCurrentTime() {
-        const now = new Date();
-        return now.toTimeString().split(' ')[0].slice(0, 5);
-    }
-
-    function setDefaultValues() {
-        const startDateInput = document.getElementById("start_date");
-        const startTimeInput = document.getElementById("start_time");
-        const endDateInput = document.getElementById("end_date");
-        const endTimeInput = document.getElementById("end_time");
-
-        const currentDate = getCurrentDate();
-        const currentTime = getCurrentTime();
-
-        startDateInput.value = currentDate;
-        startTimeInput.value = currentTime;
-
-        const tomorrow = new Date();
-        tomorrow.setDate(tomorrow.getDate() + 1);
-        const tomorrowDate = tomorrow.toISOString().split('T')[0];
-
-        endDateInput.value = tomorrowDate;
-        endTimeInput.value = currentTime;
-
-        calculateAndUpdate();
-    }
+    // function getCurrentDate() {
+    //     const today = new Date();
+    //     return today.toISOString().split('T')[0];
+    // }
+    //
+    // function getCurrentTime() {
+    //     const now = new Date();
+    //     return now.toTimeString().split(' ')[0].slice(0, 5);
+    // }
+    //
+    // function setDefaultValues() {
+    //     const startDateInput = document.getElementById("start_date");
+    //     const startTimeInput = document.getElementById("start_time");
+    //     const endDateInput = document.getElementById("end_date");
+    //     const endTimeInput = document.getElementById("end_time");
+    //
+    //     const currentDate = getCurrentDate();
+    //     const currentTime = getCurrentTime();
+    //
+    //     startDateInput.value = currentDate;
+    //     startTimeInput.value = currentTime;
+    //
+    //     const tomorrow = new Date();
+    //     tomorrow.setDate(tomorrow.getDate() + 1);
+    //     const tomorrowDate = tomorrow.toISOString().split('T')[0];
+    //
+    //     endDateInput.value = tomorrowDate;
+    //     endTimeInput.value = currentTime;
+    //
+    //     calculateAndUpdate();
+    // }
 
     function calculateDaysBetweenDates() {
         const startDate = document.getElementById("start_date").value;
@@ -245,7 +245,8 @@
     document.getElementById("end_date").addEventListener("change", calculateAndUpdate);
     document.getElementById("end_time").addEventListener("change", calculateAndUpdate);
 
-    window.onload = setDefaultValues;
+    window.onload = calculateAndUpdate;
+    // window.onload = setDefaultValues;
 
 
     /*]]>*/

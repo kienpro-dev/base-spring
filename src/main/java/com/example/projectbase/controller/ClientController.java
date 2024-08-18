@@ -44,8 +44,12 @@ public class ClientController {
 						  @RequestParam(name = "endTime") @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) Optional<LocalTime> endTime,
 						  @RequestParam(name = "location",defaultValue = "") Optional<String> location,
 						  @CurrentUser UserPrincipal userPrincipal) {
-		User currentUser = this.userService.findById(userPrincipal.getId());
-		model.addAttribute("currentUser", currentUser);
+		if(userPrincipal != null){
+			User currentUser = this.userService.findById(userPrincipal.getId());
+			model.addAttribute("currentUser", currentUser);
+		}
+//		User currentUser = this.userService.findById(userPrincipal.getId());
+//		model.addAttribute("currentUser", currentUser);
 		String keyword = keywords.orElse(sessionService.get("keywords"));
 		sessionService.set("keywords", keyword);
 		Sort sort = Sort.by(Sort.Direction.ASC, field.orElse("name"));
@@ -53,13 +57,19 @@ public class ClientController {
 
 		LocalDate startDates=startDate.orElse(sessionService.get("startDate"));
 		model.addAttribute("startDate", startDates);
+		sessionService.set("startDate", startDates);
+
 		LocalTime startTimes=startTime.orElse(sessionService.get("startTime"));
 		model.addAttribute("startTime",startTimes);
+		sessionService.set("startTime", startTimes);
 
 		LocalDate endDates=endDate.orElse(sessionService.get("endDate"));
 		model.addAttribute("endDate", endDates);
+		sessionService.set("endDate", endDates);
+
 		LocalTime endTimes=endTime.orElse(sessionService.get("endTime"));
 		model.addAttribute("endTime",endTimes);
+		sessionService.set("endTime", endTimes);
 
 		String locations = location.orElse(sessionService.get("location"));
 		sessionService.set("location", locations);

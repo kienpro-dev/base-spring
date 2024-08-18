@@ -48,6 +48,14 @@ public class BookingController {
         model.addAttribute("user", user);
         CarDto item = carService.getCarById(id);
         model.addAttribute("item", item);
+        model.addAttribute("startDate", sessionService.get("startDate"));
+        model.addAttribute("startTime", sessionService.get("startTime"));
+        model.addAttribute("endDate", sessionService.get("endDate"));
+        model.addAttribute("endTime", sessionService.get("endTime"));
+        sessionService.remove("startDate");
+        sessionService.remove("startTime");
+        sessionService.remove("endDate");
+        sessionService.remove("endTime");
         return "client/cart/check-out";
     }
 

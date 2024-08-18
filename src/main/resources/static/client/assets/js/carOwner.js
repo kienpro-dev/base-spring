@@ -57,16 +57,23 @@ function submitForm() {
         });
 }
 
+function updateStep4() {
+    let carName = document.getElementById('nameOfCar').value;
+    document.getElementById('carName').innerText = carName;
+    let carPrice = document.getElementById('basePrice').value;
+    document.getElementById('price').innerText = carPrice;
+    let address = document.getElementById('address').value;
+    document.getElementById('location').innerText = address;
+    document.getElementById('status').innerText = 'Available';
+    let deposit = document.getElementById('deposit').value;
+    document.getElementById('depositAmount').innerText = deposit;
+}
+
 showStep(currentStep);
 
 
 
-function updateStep4() {
-    document.getElementById('carName').value = document.querySelector('input[name="name"]').value;
-    document.getElementById('price').value = document.querySelector('input[name="basePrice"]').value;
-    document.getElementById('location').value = document.querySelector('input[name="address"]').value;
-    document.getElementById('status').value = 'Available'; // Placeholder status
-}
+
 
 
 
