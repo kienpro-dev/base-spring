@@ -67,6 +67,7 @@ public class CarCreateDTO {
     @NotNull(message = "Deposit is required")
     private String description;
 
+    
     private String additionalFunctions;
 
     @NotNull(message = "Term of use is required")

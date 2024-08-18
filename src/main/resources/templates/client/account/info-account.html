@@ -148,7 +148,8 @@
                                             <div th:case="'PENDING_PAY'">
                                                 <a style="padding: 5px 0; width: 30%" class="btn btn-danger active"
                                                    role="button"
-                                                   th:href="@{/car/booking/confirm(id=${item.id})}">Xác nhận thanh toán</a>
+                                                   th:href="@{/car/booking/confirm(id=${item.id})}">Xác nhận thanh
+                                                    toán</a>
                                                 <a style="padding: 5px 0; width: 30%" class="btn btn-danger active"
                                                    role="button"
                                                    th:href="@{/car/booking/cancel(id=${item.id})}">Hủy đơn</a>
@@ -209,14 +210,21 @@
                                                 <h3 class="card-title">Số dư ví tài khoản</h3>
                                                 <!-- End .card-title -->
                                                 <p th:text="${#numbers.formatDecimal(userDto.balance, 0, 'COMMA', 0, 'POINT')} + ' VND'"></p>
-                                                <form
-                                                        th:action="@{'/car/account/info-account/' + ${userDto.id} + '/balance'}"
-                                                        method="POST">
-
+                                                <form id="balanceForm"
+                                                      th:action="@{/car/account/info-account/{id}/balance(id=${userDto.id})}"
+                                                      method="POST">
                                                     <label>Nhập số tiền nạp *</label>
                                                     <input type="text" class="form-control" name="balance" required>
-                                                    <button type="submit" class="btn btn-primary btn-round">
-                                                        <span>Nạp tiền</span> <i class="icon-long-arrow-right"></i>
+
+                                                    <input type="hidden" id="type" name="type" value="">
+
+                                                    <button type="submit" class="btn btn-primary btn-round"
+                                                            onclick="setType('add')">
+                                                        <span>Nạp tiền</span>
+                                                    </button>
+                                                    <button type="submit" class="btn btn-info btn-round"
+                                                            onclick="setType('minus')">
+                                                        <span>Rút tiền</span>
                                                     </button>
                                                 </form>
                                             </div>
@@ -323,6 +331,8 @@
     </div>
     <!-- End .page-content -->
 </div>
+
+
 </body>
 
 </html>
