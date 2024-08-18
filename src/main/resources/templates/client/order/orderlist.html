@@ -47,7 +47,8 @@
                     <th>Ngày thuê</th>
                     <th>Ngày trả</th>
                     <th>Trạng thái</th>
-                    <th></th>
+                    <th>Thực hiện</th>
+                    <th>Chi tiết</th>
                     <!--                    <th></th>-->
                 </tr>
                 </thead>
@@ -74,23 +75,17 @@
                         <div
                                 th:switch="${item.status}">
                             <p th:case="'PENDING_DEPOSIT'" class="text-warning">Đang
-                                chờ xác nhận</p>
+                                chờ xác nhận cọc</p>
                             <p th:case="'PENDING_PAY'" class="text-warning">Đang
-                                chờ thanh toán</p>
+                                chờ xác nhận thanh toán</p>
                             <p th:case="'CONFIRM'" class="text-info">Đã xác nhận</p>
                             <p th:case="'CANCEL'" class="text-danger">Đã hủy</p>
                             <p th:case="'COMPLETED'" class="text-success">Đã hoàn thành</p>
                             <p th:case="'IN_PROGRESS'" class="text-primary">Đang thuê</p>
                         </div>
                     </td>
-                    <td th:switch="${item.status}" class="col-2 ">
-                        <div th:case="'CONFIRM'" class="d-flex">
-                            <a class="btn btn-info"
-                               style="padding: 5px 0; width: 20%"
-                               role="button"
-                               href="#orderView-modal" data-toggle="modal"
-                               th:data-id="${item.id}"
-                               th:onclick="orderView(this.getAttribute('data-id'))"> Chi tiết</a>
+                    <td th:switch="${item.status}" class="col-1">
+                        <div th:case="'CONFIRM'">
                             <a style="padding: 5px 0; width: 20%"
                                class="btn btn-secondary active"
                                role="button" aria-pressed="true"
@@ -101,54 +96,31 @@
                                th:data-id="${item.id}"
                                th:onclick="cancelSubmit(this.getAttribute('data-id'))">Hủy đặt</a>
                         </div>
-                        <div th:case="'PENDING_DEPOSIT'" class="d-flex">
-                            <a class="btn btn-info"
-                               style="padding: 5px 0; width: 30%"
-                               role="button"
-                               href="#orderView-modal" data-toggle="modal"
-                               th:data-id="${item.id}"
-                               th:onclick="orderView(this.getAttribute('data-id'))"> Chi tiết</a>
+                        <div th:case="'PENDING_DEPOSIT'">
                             <a style="padding: 5px 0; width: 30%" class="btn btn-danger active"
                                role="button"
                                th:data-id="${item.id}"
                                th:onclick="cancelSubmit(this.getAttribute('data-id'))">Hủy đặt</a>
                         </div>
-                        <div th:case="'IN_PROGRESS'" class="d-flex">
-                            <a class="btn btn-info"
-                               style="padding: 5px 0; width: 30%"
-                               role="button"
-                               href="#orderView-modal" data-toggle="modal"
-                               th:data-id="${item.id}"
-                               th:onclick="orderView(this.getAttribute('data-id'))"> Chi tiết</a>
+                        <div th:case="'IN_PROGRESS'">
                             <a style="padding: 5px 0; width: 30%" class="btn btn-danger active"
                                role="button" aria-pressed="true"
                                th:href="@{/car/booking/return-car(id=${item.id})}">Trả xe</a>
                         </div>
-                        <div th:case="'PENDING_PAY'" class="d-flex">
-                            <a class="btn btn-info"
-                               style="padding: 5px 0; width: 30%"
-                               role="button"
-                               href="#orderView-modal" data-toggle="modal"
-                               th:data-id="${item.id}"
-                               th:onclick="orderView(this.getAttribute('data-id'))"> Chi tiết</a>
+                        <div th:case="'PENDING_PAY'">
+
                         </div>
-                        <div th:case="'CANCEL'" class="d-flex">
-                            <a class="btn btn-info"
-                               style="padding: 5px 0; width: 30%"
-                               role="button"
-                               href="#orderView-modal" data-toggle="modal"
-                               th:data-id="${item.id}"
-                               th:onclick="orderView(this.getAttribute('data-id'))"> Chi tiết</a>
+                        <div th:case="'CANCEL'">
                         </div>
-                        <div th:case="'COMPLETED'" class="d-flex">
-                            <a class="btn btn-info"
-                               style="padding: 5px 0; width: 30%"
-                               role="button"
-                               href="#orderView-modal" data-toggle="modal"
-                               th:data-id="${item.id}"
-                               th:onclick="orderView(this.getAttribute('data-id'))"> Chi tiết</a>
+                        <div th:case="'COMPLETED'">
                         </div>
                     </td>
+                    <td class="remove-col"><a class="btn-remove"
+                                              href="#orderView-modal" data-toggle="modal"
+                                              th:data-id="${item.id}"
+                                              th:onclick="orderView(this.getAttribute('data-id'))"> <i
+                            class="icon-eye"></i>
+                    </a></td>
                 </tr>
                 </tbody>
             </table>

@@ -136,12 +136,27 @@
     var isAuth = [[${isAuth}]];
     var isFail = [[${isAuth}]];
     var carId = [[${carId}]];
+    var failBalance = [[${failBalance}]]
+
     if (isFail) {
         if (isAuth) {
             Swal.fire({
                 icon: 'error',
                 title: 'Thuê xe thất bại',
                 text: 'Xe đã được đặt ở thời điểm này',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = new URL(window.location.href).origin + "/car/check-out?id=" + carId;
+                }
+            })
+        }
+    }
+    if (failBalance) {
+        if (isAuth) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Thuê xe thất bại',
+                text: 'Số dư tài khoản không đủ',
             }).then((result) => {
                 if (result.isConfirmed) {
                     window.location.href = new URL(window.location.href).origin + "/car/check-out?id=" + carId;

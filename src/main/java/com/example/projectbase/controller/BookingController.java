@@ -2,6 +2,7 @@ package com.example.projectbase.controller;
 
 import com.example.projectbase.base.CarMvc;
 import com.example.projectbase.constant.BookingConstant;
+import com.example.projectbase.constant.RoleConstant;
 import com.example.projectbase.domain.dto.response.BookingDetailDto;
 import com.example.projectbase.domain.dto.response.BookingDto;
 import com.example.projectbase.domain.dto.response.CarDto;
@@ -76,8 +77,14 @@ public class BookingController {
             model.addAttribute("isFail", true);
             model.addAttribute("carId", carId);
         } else {
-            bookingService.saveOrUpdate(booking);
-            model.addAttribute("isSuccess", true);
+            if (userRent.getBalance() < booking.getTotal()) {
+                model.addAttribute("failBalance", true);
+            } else {
+                userRent.setBalance(userRent.getBalance() - item.getDeposit());
+                userService.saveOrUpdate(userRent);
+                bookingService.saveOrUpdate(booking);
+                model.addAttribute("isSuccess", true);
+            }
         }
 
         model.addAttribute("isAuth", authService.isAuthenticated());
@@ -113,12 +120,20 @@ public class BookingController {
 
     @GetMapping("/booking/cancel/{id}")
     public ResponseEntity<?> cancel(Model model, @CurrentUser UserPrincipal userPrincipal, @PathVariable(name = "id") String id) {
+        User currentUser = this.userService.findById(userPrincipal.getId());
         if (authService.isAuthenticated()) {
-            User currentUser = this.userService.findById(userPrincipal.getId());
             model.addAttribute("currentUser", currentUser);
         }
         Booking booking = bookingService.getBookingById(id);
         booking.setStatus(BookingConstant.CANCEL);
+        if (currentUser.getRole().getName().equals(RoleConstant.CAR_OWNER)) {
+            User customer = booking.getUser();
+            List<Car> carBooked = booking.getCars();
+            for (Car car : carBooked) {
+                customer.setBalance(customer.getBalance() + car.getDeposit());
+            }
+            userService.saveOrUpdate(customer);
+        }
         bookingService.saveOrUpdate(booking);
         return new ResponseEntity<Void>(HttpStatus.OK);
     }

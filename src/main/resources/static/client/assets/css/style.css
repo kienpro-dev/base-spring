@@ -16085,8 +16085,8 @@ button:focus {
 .table .remove-col {
     padding-right: 0;
     padding-left: 0;
-    width: 38px;
-    text-align: right
+    width: 70px;
+    text-align: center
 }
 
 .table .remove-col .btn-remove {

@@ -45,7 +45,7 @@ function orderView(id) {
 
 
 			if (response.data.status === 'PENDING_DEPOSIT' || response.data.status === null) {
-				viewStatus.innerText = 'Đang chờ xác nhận';
+				viewStatus.innerText = 'Đang chờ xác nhận cọc';
 				viewStatus.className = 'text-danger';
 			} else if (response.data.status === 'CONFIRM') {
 				viewStatus.innerText = 'Đã xác nhận';
@@ -61,7 +61,7 @@ function orderView(id) {
 				viewStatus.innerText = 'Đang thuê';
 				viewStatus.className = 'text-success';
 			}else {
-				viewStatus.innerText = 'Đang chờ thanh toán';
+				viewStatus.innerText = 'Đang chờ xác nhận thanh toán';
 				viewStatus.className = 'text-text-warning';
 			}
 			viewCar.innerText=response.data.carName;
