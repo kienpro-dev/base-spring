@@ -24,7 +24,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -58,6 +61,20 @@ public class HomeController {
 
         List<Car> listCarElectric = carService.findAvailableCarByfuelType("Electric", dateNow);
         model.addAttribute("listElectric", listCarElectric);
+
+        LocalDate startDate = LocalDate.now();
+        LocalTime startTime = LocalTime.now();
+        LocalDate endDate = startDate.plusDays(1);
+        LocalTime endTime = LocalTime.now();
+
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+
+        model.addAttribute("startDate", startDate);
+        model.addAttribute("startTime", startTime.format(timeFormatter));
+        model.addAttribute("endDate", endDate);
+        model.addAttribute("endTime", endTime.format(timeFormatter));
+        model.addAttribute("location", "");
+
 
         return "client/home/index";
     }

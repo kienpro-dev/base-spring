@@ -42,7 +42,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="licensePlate">Name:</label>
-                    <input type="text" class="form-control" th:id="nameOfCar"
+                    <input type="text" class="form-control" id="nameOfCar"
                            th:field="*{name}">
                     <div class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
                 </div>
@@ -93,10 +93,13 @@
                 </div>
                 <div class="form-group">
                     <label for="fuel">Fuel:</label>
-                    <input type="text" class="form-control" id="fuel" name="fuel"
-                           th:field="*{fuelType}">
+                    <select class="form-control" id="fuel" name="fuel" th:field="*{fuelType}">
+                        <option value="" disabled selected>Select Fuel Type</option>
+                        <option th:each="fuel : ${fuelTypes}" th:value="${fuel}" th:text="${fuel}"></option>
+                    </select>
                     <div class="text-danger" th:if="${#fields.hasErrors('fuelType')}" th:errors="*{fuelType}"></div>
                 </div>
+
             </div>
         </div>
         <div class="form-group">
@@ -234,6 +237,11 @@
                 <label for="price">Price:</label>
                 <span id="price" name="price" ></span>
             </div>
+            <div class="form-group">
+                <label for="depositAmount">Required Deposit:</label>
+                <span id="depositAmount" name="depositAmount" ></span>
+            </div>
+
             <div class="form-group">
                 <label for="location">Location:</label>
                 <span  id="location" name="location" ></span>

@@ -1,11 +1,13 @@
 $(document).ready(function() {
-    const addtionalFuctions = $('#additionalF').text().split(',');
-    console.log(addtionalFuctions);
-    $('.form-check-input').each(function () {
-        if (addtionalFuctions.includes($(this).val())) {
-            $(this).prop('checked', true);
-        }
-    });
+    if( $('#additionalF').text() !== ''){
+        const addtionalFuctions = $('#additionalF').text().split(',');
+        $('.form-check-input').each(function () {
+            if (addtionalFuctions.includes($(this).val())) {
+                $(this).prop('checked', true);
+            }
+        });
+    }
+
 
     const terms = $('#terms').text().split(',');
     $('.form-check-input').each(function () {

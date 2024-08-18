@@ -6,10 +6,7 @@ import com.example.projectbase.domain.entity.Booking;
 import com.example.projectbase.domain.entity.User;
 import com.example.projectbase.security.CurrentUser;
 import com.example.projectbase.security.UserPrincipal;
-import com.example.projectbase.service.AuthService;
-import com.example.projectbase.service.CarService;
-import com.example.projectbase.service.ImageService;
-import com.example.projectbase.service.UserService;
+import com.example.projectbase.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,6 +26,8 @@ public class CarDetailController {
 
     private final ImageService imageService;
 
+    private final SessionService sessionService;
+
     @GetMapping("/product-detail")
     public String viewDetails(Model model, @RequestParam(name = "id") String id, @CurrentUser UserPrincipal userPrincipal) {
         if(authService.isAuthenticated()) {
@@ -44,6 +43,10 @@ public class CarDetailController {
         model.addAttribute("lastBooking", lastBooking);
         model.addAttribute("carDto", carDto);
         model.addAttribute("id", id);
+        model.addAttribute("startDate", sessionService.get("startDate"));
+        model.addAttribute("startTime", sessionService.get("startTime"));
+        model.addAttribute("endDate", sessionService.get("endDate"));
+        model.addAttribute("endTime", sessionService.get("endTime"));
         return "client/productDetail/details";
     }
 }
