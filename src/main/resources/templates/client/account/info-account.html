@@ -48,7 +48,8 @@
                                 chính</a></li>
                             <li class="nav-item"><a class="nav-link"
                                                     id="tab-orders-link" data-toggle="tab" href="#tab-orders"
-                                                    role="tab" aria-controls="tab-orders" aria-selected="false">Đơn đặt</a></li>
+                                                    role="tab" aria-controls="tab-orders" aria-selected="false">Đơn
+                                đặt</a></li>
                             <li class="nav-item" sec:authorize="isAuthenticated()"><a
                                     class="nav-link" id="tab-address-link" data-toggle="tab"
                                     href="#tab-address" role="tab" aria-controls="tab-address"
@@ -98,7 +99,8 @@
                                         <th>Ngày thuê</th>
                                         <th>Ngày trả</th>
                                         <th>Trạng thái</th>
-                                        <th></th>
+                                        <th>Thực hiện</th>
+                                        <th>Chi tiết</th>
                                         <!--                    <th></th>-->
                                     </tr>
                                     </thead>
@@ -134,21 +136,31 @@
                                                 <p th:case="'IN_PROGRESS'" class="text-primary">Đang thuê</p>
                                             </div>
                                         </td>
-                                        <td>
-                                            <a style="padding: 5px 0; width: 30%" class="btn btn-secondary active"
-                                               role="button" aria-pressed="true"
-                                               th:href="@{/car/booking/confirm(id=${item.id})}">Xác nhận</a>
-                                            <a style="padding: 5px 0; width: 30%" class="btn btn-danger active"
-                                               role="button" aria-pressed="true"
-                                               th:href="@{/car/booking/cancel(id=${item.id})}">Hủy</a>
-
+                                        <td th:switch="${item.status}" class="col-1">
+                                            <div th:case="'PENDING_DEPOSIT'">
+                                                <a style="padding: 5px 0; width: 30%" class="btn btn-danger active"
+                                                   role="button"
+                                                   th:href="@{/car/booking/confirm(id=${item.id})}">Xác nhận cọc</a>
+                                                <a style="padding: 5px 0; width: 30%" class="btn btn-danger active"
+                                                   role="button"
+                                                   th:href="@{/car/booking/cancel(id=${item.id})}">Hủy đơn</a>
+                                            </div>
+                                            <div th:case="'PENDING_PAY'">
+                                                <a style="padding: 5px 0; width: 30%" class="btn btn-danger active"
+                                                   role="button"
+                                                   th:href="@{/car/booking/confirm(id=${item.id})}">Xác nhận thanh toán</a>
+                                                <a style="padding: 5px 0; width: 30%" class="btn btn-danger active"
+                                                   role="button"
+                                                   th:href="@{/car/booking/cancel(id=${item.id})}">Hủy đơn</a>
+                                            </div>
                                         </td>
-                                        <!--                    <td class="remove-col"><a class="btn-remove"-->
-                                        <!--                                              href="#orderView-modal" data-toggle="modal"-->
-                                        <!--                                              th:data-id="${item.id}"-->
-                                        <!--                                              th:onclick="orderView(this.getAttribute('data-id'))"> <i-->
-                                        <!--                            class="icon-eye"></i>-->
-                                        <!--                    </a></td>-->
+                                        <td class="remove-col"><a class="btn-remove"
+                                                                  href="#orderView-modal" data-toggle="modal"
+                                                                  th:data-id="${item.id}"
+                                                                  th:onclick="orderView(this.getAttribute('data-id'))">
+                                            <i
+                                                    class="icon-eye"></i>
+                                        </a></td>
                                     </tr>
                                     </tbody>
                                 </table>
