@@ -93,6 +93,7 @@ public class CarServiceImpl implements CarService {
         }
 
         Car newCar = new Car();
+
         newCar.setName(carCreateDTO.getName());
         newCar.setLicensePlate(carCreateDTO.getLicensePlate());
         newCar.setBrand(carCreateDTO.getBrand());
@@ -108,11 +109,12 @@ public class CarServiceImpl implements CarService {
         newCar.setDeposit(carCreateDTO.getDeposit());
         newCar.setAddress(carCreateDTO.getAddress());
         newCar.setDescription(carCreateDTO.getDescription());
-        newCar.setAdditionalFunctions(carCreateDTO.getAdditionalFunctions());
+        newCar.setAdditionalFunctions(carCreateDTO.getAdditionalFunctions() != null? carCreateDTO.getAdditionalFunctions() : "");
         newCar.setTermOfUse(carCreateDTO.getTermOfUse());
         newCar.setDocument(document);
         newCar.setImages(imageList);
         newCar.setUserOwn(carCreateDTO.getUserOwn());
+        newCar.setStatusCar(carCreateDTO.getStatusCar());
 
 
         Car savedCar = this.carRepository.save(newCar);
@@ -142,8 +144,6 @@ public class CarServiceImpl implements CarService {
                 }
             }
 
-
-
             currentCar.setName(carDto.getName());
             currentCar.setLicensePlate(carDto.getLicensePlate());
             currentCar.setBrand(carDto.getBrand());
@@ -159,7 +159,7 @@ public class CarServiceImpl implements CarService {
             currentCar.setDeposit(carDto.getDeposit());
             currentCar.setAddress(carDto.getAddress());
             currentCar.setDescription(carDto.getDescription());
-            currentCar.setAdditionalFunctions(carDto.getAdditionalFunctions());
+            currentCar.setAdditionalFunctions(!carDto.getAdditionalFunctions().isEmpty() ? carDto.getAdditionalFunctions() : "");
             currentCar.setTermOfUse(carDto.getTermOfUse());
             currentCar.setDocument(carDto.getDocument());
             currentCar.setImages(imageList);
