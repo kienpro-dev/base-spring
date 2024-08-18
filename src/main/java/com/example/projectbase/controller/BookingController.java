@@ -10,6 +10,7 @@ import com.example.projectbase.domain.dto.response.UserDto;
 import com.example.projectbase.domain.entity.Booking;
 import com.example.projectbase.domain.entity.Car;
 import com.example.projectbase.domain.entity.User;
+import com.example.projectbase.domain.entity.Wallet;
 import com.example.projectbase.security.CurrentUser;
 import com.example.projectbase.security.UserPrincipal;
 import com.example.projectbase.service.*;
@@ -37,6 +38,8 @@ public class BookingController {
     private final CarService carService;
 
     private final BookingService bookingService;
+
+    private final WalletService walletService;
 
     @GetMapping("/check-out")
     public String checkOut(Model model, @RequestParam String id, @CurrentUser UserPrincipal userPrincipal) {
@@ -82,18 +85,36 @@ public class BookingController {
         List<Car> cars = new ArrayList<>();
         cars.add(item);
         booking.setCars(cars);
+         bookingService.saveOrUpdate(booking);
         if (TimeOverlapUtil.checkTimeOverlap(start, end, bookingService.getBookingByCarId(carId))) {
             model.addAttribute("isFail", true);
             model.addAttribute("carId", carId);
         } else {
             if (userRent.getBalance() < booking.getTotal()) {
                 model.addAttribute("failBalance", true);
+                model.addAttribute("carId", carId);
             } else {
                 userRent.setBalance(userRent.getBalance() - item.getDeposit());
+                Wallet wallet = Wallet.builder()
+                        .bookingNo(booking.getId())
+                        .carName(item.getName())
+                        .fluctuation("-"+item.getDeposit())
+                        .userOwn(userRent)
+                        .type("Đặt cọc xe")
+                        .build();
+                walletService.saveOrUpdate(wallet);
                 owner.setBalance(owner.getBalance() + item.getDeposit());
+                Wallet walletOwner = Wallet.builder()
+                        .bookingNo(booking.getId())
+                        .carName(item.getName())
+                        .fluctuation("+"+item.getDeposit())
+                        .userOwn(owner)
+                        .type("Nhận cọc xe")
+                        .build();
+                walletService.saveOrUpdate(walletOwner);
                 userService.saveOrUpdate(userRent);
                 userService.saveOrUpdate(owner);
-                bookingService.saveOrUpdate(booking);
+
                 model.addAttribute("isSuccess", true);
             }
         }
@@ -142,6 +163,22 @@ public class BookingController {
             List<Car> carBooked = booking.getCars();
             for (Car car : carBooked) {
                 customer.setBalance(customer.getBalance() + car.getDeposit());
+                Wallet wallet = Wallet.builder()
+                        .bookingNo(booking.getId())
+                        .carName(booking.getCars().get(0).getName())
+                        .fluctuation("+"+car.getDeposit())
+                        .userOwn(customer)
+                        .type("Trả cọc xe")
+                        .build();
+                walletService.saveOrUpdate(wallet);
+                 Wallet walletOwner = Wallet.builder()
+                        .bookingNo(booking.getId())
+                        .carName(booking.getCars().get(0).getName())
+                        .fluctuation("-"+car.getDeposit())
+                        .userOwn(currentUser)
+                        .type("Hoàn cọc xe")
+                        .build();
+                walletService.saveOrUpdate(walletOwner);
             }
             userService.saveOrUpdate(customer);
         }
@@ -161,11 +198,43 @@ public class BookingController {
             User owner = car.getUserOwn();
             if (booking.getTotal() <= car.getDeposit()) {
                 currentUser.setBalance(currentUser.getBalance() + (car.getDeposit() - booking.getTotal()));
+                 Wallet wallet = Wallet.builder()
+                        .bookingNo(booking.getId())
+                        .carName(car.getName())
+                        .fluctuation("+"+(car.getDeposit() - booking.getTotal()))
+                        .userOwn(currentUser)
+                        .type("Nhận tiền nhận xe")
+                        .build();
+                walletService.saveOrUpdate(wallet);
                 owner.setBalance(owner.getBalance() - (car.getDeposit() - booking.getTotal()));
+                Wallet walletOwner = Wallet.builder()
+                        .bookingNo(booking.getId())
+                        .carName(car.getName())
+                        .fluctuation("-"+(car.getDeposit() - booking.getTotal()))
+                        .userOwn(owner)
+                        .type("Trả tiền cọc cho khách")
+                        .build();
+                walletService.saveOrUpdate(walletOwner);
                 booking.setStatus(BookingConstant.COMPLETED);
             } else {
                 currentUser.setBalance(currentUser.getBalance() - (booking.getTotal() - car.getDeposit()));
+                 Wallet wallet = Wallet.builder()
+                        .bookingNo(booking.getId())
+                        .carName(car.getName())
+                        .fluctuation("-"+(booking.getTotal() - car.getDeposit()))
+                        .userOwn(currentUser)
+                        .type("Thanh toán nốt tiền xe")
+                        .build();
+                walletService.saveOrUpdate(wallet);
                 owner.setBalance(owner.getBalance() + (booking.getTotal() - car.getDeposit()));
+                Wallet walletOwner = Wallet.builder()
+                        .bookingNo(booking.getId())
+                        .carName(car.getName())
+                        .fluctuation("+"+(booking.getTotal() - car.getDeposit()))
+                        .userOwn(owner)
+                        .type("Nhận nốt tiền xe")
+                        .build();
+                walletService.saveOrUpdate(walletOwner);
                 booking.setStatus(BookingConstant.PENDING_PAY);
             }
             userService.saveOrUpdate(owner);

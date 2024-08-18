@@ -143,7 +143,8 @@
                                                    th:href="@{/car/booking/confirm(id=${item.id})}">Xác nhận cọc</a>
                                                 <a style="padding: 5px 0; width: 30%" class="btn btn-danger active"
                                                    role="button"
-                                                   th:href="@{/car/booking/cancel(id=${item.id})}">Hủy đơn</a>
+                                                   th:data-id="${item.id}"
+                                                   th:onclick="cancelSubmit(this.getAttribute('data-id'))">Hủy đặt</a>
                                             </div>
                                             <div th:case="'PENDING_PAY'">
                                                 <a style="padding: 5px 0; width: 30%" class="btn btn-danger active"
@@ -152,7 +153,8 @@
                                                     toán</a>
                                                 <a style="padding: 5px 0; width: 30%" class="btn btn-danger active"
                                                    role="button"
-                                                   th:href="@{/car/booking/cancel(id=${item.id})}">Hủy đơn</a>
+                                                   th:data-id="${item.id}"
+                                                   th:onclick="cancelSubmit(this.getAttribute('data-id'))">Hủy đặt</a>
                                             </div>
                                         </td>
                                         <td class="remove-col"><a class="btn-remove"
@@ -235,6 +237,30 @@
                                     <!-- End .col-lg-6 -->
                                 </div>
                                 <!-- End .row -->
+                                <div class="row">
+                                    <table class="table table-wishlist table-mobile">
+                                        <thead>
+                                        <tr>
+                                            <th>STT</th>
+                                            <th>Biến động</th>
+                                            <th>Hình thức</th>
+                                            <th>Ngày giao dịch</th>
+                                            <th>Mã đơn</th>
+                                            <th>Tên xe</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr th:each="item, i: ${listWallet}">
+                                            <td th:text="${i.count}"></td>
+                                            <td th:text="${item.fluctuation}"></td>
+                                            <td th:text="${item.type}"></td>
+                                            <td th:text="${item.createdDate}"></td>
+                                            <td th:text="${item.bookingNo}"></td>
+                                             <td th:text="${item.carName}"></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                             <!-- .End .tab-pane -->
 

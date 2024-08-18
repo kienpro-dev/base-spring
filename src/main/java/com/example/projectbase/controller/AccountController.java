@@ -59,6 +59,8 @@ public class AccountController {
             userDto.setBalance(user.getBalance());
             userDto.setActive(user.getIsActive());
             model.addAttribute("userDto", userDto);
+            List<Wallet> listWallet=walletService.getWalletByUserId(user.getId());
+            model.addAttribute("listWallet",listWallet);
             if (user.getRole().getName().equals(RoleConstant.CAR_OWNER)) {
                 List<Booking> bookings = bookingService.getBookingByCarOwnerId(userPrincipal.getId());
                 model.addAttribute("list", bookings);

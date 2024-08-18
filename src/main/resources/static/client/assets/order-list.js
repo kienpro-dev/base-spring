@@ -11,7 +11,7 @@ function cancelSubmit(id) {
     }).then((result) => {
         if (result.isConfirmed) {
             axios.get(baseUrl + '/car/booking/cancel/' + id)
-                .then(function(response) {
+                .then(function (response) {
                     Swal.fire({
                         title: 'Thông báo',
                         text: 'Hủy đơn thành công',
@@ -19,10 +19,10 @@ function cancelSubmit(id) {
                         showConfirmButton: false,
                         timer: 700
                     }).then(() => {
-                        window.location.href = baseUrl + '/car/booking-list';
+                        window.location.reload();
                     });
                 })
-                .catch(function(error) {
+                .catch(function (error) {
                     Swal.fire({
                         title: 'Lỗi',
                         text: 'Có lỗi xảy ra khi hủy đơn',

@@ -6,6 +6,7 @@ import com.example.projectbase.service.WalletService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -17,5 +18,10 @@ public class WalletServiceImpl implements WalletService {
     public Optional<Wallet> saveOrUpdate(Wallet wallet) {
         Wallet walletOld = walletRepository.save(wallet);
         return Optional.of(walletOld);
+    }
+
+    @Override
+    public List<Wallet> getWalletByUserId(String id) {
+        return walletRepository.getAllByUserId(id);
     }
 }
