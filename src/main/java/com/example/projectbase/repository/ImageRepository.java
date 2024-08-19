@@ -18,5 +18,4 @@ public interface ImageRepository extends JpaRepository<Image, String> {
 
     @Query("SELECT i FROM Image i WHERE i.car.id = ?1")
     List<Image> findByCarId(String carId);
-
 }

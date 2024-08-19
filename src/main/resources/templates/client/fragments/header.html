@@ -205,6 +205,10 @@
 												<a th:href="@{/car-owner/my-car}">Danh sách xe</a>
 											</li>
 
+											<li th:if="${currentUser.role.name == 'ROLE_CAR_OWNER'}">
+												<a th:href="@{/car/report}">Xem báo cáo</a>
+											</li>
+
 											<li>
 												<a style="color: #999999; cursor: pointer;" onmouseenter="this.style.color = '#fcb941'"
 													onmouseleave="this.style.color = '#999999'" th:onclick="logout()">Đăng xuất</a>
