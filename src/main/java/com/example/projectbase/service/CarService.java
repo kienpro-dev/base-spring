@@ -27,4 +27,5 @@ public interface CarService {
     List<Car> findAvailableCarByfuelType(String fuelType, LocalDateTime dateNow);
     List<Car> findCarByBookingId(String bookingId);
     List<Car> findCarByUserOwnId(String userId);
+    Page<Car> getCars(Pageable pageable,User user);
 }
