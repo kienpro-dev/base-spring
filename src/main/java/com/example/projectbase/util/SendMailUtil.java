@@ -119,7 +119,7 @@ public class SendMailUtil {
         helper.setTo(mail.getTo());
         helper.setSubject(mail.getSubject());
         try {
-            String emailContent = getEmailContent(mail.getBody());
+            String emailContent = getEmailSuccessfulContent(mail.getBody());
             helper.setText(emailContent, true);
         } catch (IOException e) {
             e.printStackTrace();
