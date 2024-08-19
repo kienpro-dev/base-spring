@@ -37,7 +37,7 @@
         <div class="checkout">
 
             <div class="container">
-                <form th:action="@{/car/check-out/submit}" method="POST" >
+                <form id="form-check-out" onsubmit="submitForm(); return false;" th:action="@{/car/check-out/submit}" method="POST" >
                     <div class="row">
                         <div class="col-lg-9">
                             <h2 class="checkout-title">Thông tin thanh toán</h2>
