@@ -1,19 +1,19 @@
 package com.example.projectbase.controller;
 
 import com.example.projectbase.base.CarMvc;
+import com.example.projectbase.base.VsResponseUtil;
 import com.example.projectbase.constant.BookingConstant;
 import com.example.projectbase.constant.RoleConstant;
+import com.example.projectbase.domain.dto.request.FeedbackRequestDto;
 import com.example.projectbase.domain.dto.response.BookingDetailDto;
 import com.example.projectbase.domain.dto.response.BookingDto;
 import com.example.projectbase.domain.dto.response.CarDto;
 import com.example.projectbase.domain.dto.response.UserDto;
-import com.example.projectbase.domain.entity.Booking;
-import com.example.projectbase.domain.entity.Car;
-import com.example.projectbase.domain.entity.User;
-import com.example.projectbase.domain.entity.Wallet;
+import com.example.projectbase.domain.entity.*;
 import com.example.projectbase.security.CurrentUser;
 import com.example.projectbase.security.UserPrincipal;
 import com.example.projectbase.service.*;
+import com.example.projectbase.service.impl.FeedbackServiceImpl;
 import com.example.projectbase.util.TimeOverlapUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -41,6 +41,8 @@ public class BookingController {
     private final BookingService bookingService;
 
     private final WalletService walletService;
+
+    private final FeedbackService feedbackService;
 
     private static  DecimalFormat formatter = new DecimalFormat("#,### VND");
 
@@ -263,6 +265,21 @@ public class BookingController {
         }
         bookingService.saveOrUpdate(booking);
         return "redirect:/car/account/info-account";
+    }
+
+    @PostMapping("/booking/feedback")
+    @ResponseBody
+    public ResponseEntity<?> loginSubmit(Model model, @RequestBody FeedbackRequestDto feedbackRequestDto) {
+
+        Booking booking = bookingService.getBookingById(feedbackRequestDto.getBookingId());
+        Feedback feedback = new Feedback();
+        feedback.setContent(feedbackRequestDto.getContent());
+        feedback.setRating(feedbackRequestDto.getRating());
+        feedback.setBooking(booking);
+        feedbackService.save(feedback);
+        booking.setFeedback(feedback);
+        bookingService.saveOrUpdate(booking);
+        return VsResponseUtil.success("Chúc mừng bạn đã đánh giá thành công.");
     }
 
     @GetMapping(value = "/view/{id}")

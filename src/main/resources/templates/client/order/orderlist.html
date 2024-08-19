@@ -5,6 +5,17 @@
 
 <head>
     <title>Danh sách đặt hàng</title>
+    <style>
+        .star-rating {
+            font-size: 2em;
+            color: #ccc;
+            cursor: pointer;
+        }
+
+        .checked {
+            color: #f5b301;
+        }
+    </style>
 </head>
 
 <body>
@@ -113,6 +124,10 @@
                         <div th:case="'CANCEL'">
                         </div>
                         <div th:case="'COMPLETED'">
+                            <input name="booking_id" id="booking_id" th:value="${item.id}" hidden>
+                            <a th:if="${item.checkFeedback() == true}" style="padding: 5px 0; width: 30%" class="btn btn-primary active"
+                               role="button" aria-pressed="true"
+                               href="#feedback-modal" data-toggle="modal">Đánh giá</a>
                         </div>
                     </td>
                     <td class="remove-col"><a class="btn-remove"
