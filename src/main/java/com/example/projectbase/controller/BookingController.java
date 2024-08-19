@@ -44,7 +44,7 @@ public class BookingController {
 
     private final FeedbackService feedbackService;
 
-    private static  DecimalFormat formatter = new DecimalFormat("#,### VND");
+    private static DecimalFormat formatter = new DecimalFormat("#,### VND");
 
     @GetMapping("/check-out")
     public String checkOut(Model model, @RequestParam String id, @CurrentUser UserPrincipal userPrincipal) {
@@ -90,7 +90,7 @@ public class BookingController {
         List<Car> cars = new ArrayList<>();
         cars.add(item);
         booking.setCars(cars);
-         bookingService.saveOrUpdate(booking);
+        bookingService.saveOrUpdate(booking);
         if (TimeOverlapUtil.checkTimeOverlap(start, end, bookingService.getBookingByCarId(carId))) {
             model.addAttribute("isFail", true);
             model.addAttribute("carId", carId);
@@ -99,28 +99,32 @@ public class BookingController {
                 model.addAttribute("failBalance", true);
                 model.addAttribute("carId", carId);
             } else {
-                userRent.setBalance(userRent.getBalance() - item.getDeposit());
-                Wallet wallet = Wallet.builder()
-                        .bookingNo(booking.getId())
-                        .carName(item.getName())
-                        .fluctuation("-"+formatter.format(item.getDeposit()))
-                        .userOwn(userRent)
-                        .type("Đặt cọc xe")
-                        .build();
-                walletService.saveOrUpdate(wallet);
-                owner.setBalance(owner.getBalance() + item.getDeposit());
-                Wallet walletOwner = Wallet.builder()
-                        .bookingNo(booking.getId())
-                        .carName(item.getName())
-                        .fluctuation("+"+formatter.format(item.getDeposit()))
-                        .userOwn(owner)
-                        .type("Nhận cọc xe")
-                        .build();
-                walletService.saveOrUpdate(walletOwner);
-                userService.saveOrUpdate(userRent);
-                userService.saveOrUpdate(owner);
+                if (!item.isAvailable()) {
+                    model.addAttribute("notAvailable", true);
+                } else {
+                    userRent.setBalance(userRent.getBalance() - item.getDeposit());
+                    Wallet wallet = Wallet.builder()
+                            .bookingNo(booking.getId())
+                            .carName(item.getName())
+                            .fluctuation("-" + formatter.format(item.getDeposit()))
+                            .userOwn(userRent)
+                            .type("Đặt cọc xe")
+                            .build();
+                    walletService.saveOrUpdate(wallet);
+                    owner.setBalance(owner.getBalance() + item.getDeposit());
+                    Wallet walletOwner = Wallet.builder()
+                            .bookingNo(booking.getId())
+                            .carName(item.getName())
+                            .fluctuation("+" + formatter.format(item.getDeposit()))
+                            .userOwn(owner)
+                            .type("Nhận cọc xe")
+                            .build();
+                    walletService.saveOrUpdate(walletOwner);
+                    userService.saveOrUpdate(userRent);
+                    userService.saveOrUpdate(owner);
 
-                model.addAttribute("isSuccess", true);
+                    model.addAttribute("isSuccess", true);
+                }
             }
         }
 
@@ -171,15 +175,15 @@ public class BookingController {
                 Wallet wallet = Wallet.builder()
                         .bookingNo(booking.getId())
                         .carName(booking.getCars().get(0).getName())
-                        .fluctuation("+"+formatter.format(car.getDeposit()))
+                        .fluctuation("+" + formatter.format(car.getDeposit()))
                         .userOwn(customer)
                         .type("Trả cọc xe")
                         .build();
                 walletService.saveOrUpdate(wallet);
-                 Wallet walletOwner = Wallet.builder()
+                Wallet walletOwner = Wallet.builder()
                         .bookingNo(booking.getId())
                         .carName(booking.getCars().get(0).getName())
-                        .fluctuation("-"+formatter.format(car.getDeposit()))
+                        .fluctuation("-" + formatter.format(car.getDeposit()))
                         .userOwn(currentUser)
                         .type("Hoàn cọc xe")
                         .build();
@@ -203,10 +207,10 @@ public class BookingController {
             User owner = car.getUserOwn();
             if (booking.getTotal() <= car.getDeposit()) {
                 currentUser.setBalance(currentUser.getBalance() + (car.getDeposit() - booking.getTotal()));
-                 Wallet wallet = Wallet.builder()
+                Wallet wallet = Wallet.builder()
                         .bookingNo(booking.getId())
                         .carName(car.getName())
-                        .fluctuation("+"+formatter.format(car.getDeposit() - booking.getTotal()))
+                        .fluctuation("+" + formatter.format(car.getDeposit() - booking.getTotal()))
                         .userOwn(currentUser)
                         .type("Nhận tiền nhận xe")
                         .build();
@@ -215,7 +219,7 @@ public class BookingController {
                 Wallet walletOwner = Wallet.builder()
                         .bookingNo(booking.getId())
                         .carName(car.getName())
-                        .fluctuation("-"+formatter.format(car.getDeposit() - booking.getTotal()))
+                        .fluctuation("-" + formatter.format(car.getDeposit() - booking.getTotal()))
                         .userOwn(owner)
                         .type("Trả tiền cọc cho khách")
                         .build();
@@ -223,10 +227,10 @@ public class BookingController {
                 booking.setStatus(BookingConstant.COMPLETED);
             } else {
                 currentUser.setBalance(currentUser.getBalance() - (booking.getTotal() - car.getDeposit()));
-                 Wallet wallet = Wallet.builder()
+                Wallet wallet = Wallet.builder()
                         .bookingNo(booking.getId())
                         .carName(car.getName())
-                        .fluctuation("-"+formatter.format((booking.getTotal() - car.getDeposit())))
+                        .fluctuation("-" + formatter.format((booking.getTotal() - car.getDeposit())))
                         .userOwn(currentUser)
                         .type("Thanh toán nốt tiền xe")
                         .build();
@@ -235,7 +239,7 @@ public class BookingController {
                 Wallet walletOwner = Wallet.builder()
                         .bookingNo(booking.getId())
                         .carName(car.getName())
-                        .fluctuation("+"+formatter.format((booking.getTotal() - car.getDeposit())))
+                        .fluctuation("+" + formatter.format((booking.getTotal() - car.getDeposit())))
                         .userOwn(owner)
                         .type("Nhận nốt tiền xe")
                         .build();
