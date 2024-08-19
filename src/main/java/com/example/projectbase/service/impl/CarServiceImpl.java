@@ -205,4 +205,9 @@ public class CarServiceImpl implements CarService {
         return carRepository.findCarByBookingId(bookingId);
     }
 
+    @Override
+    public List<Car> findCarByUserOwnId(String userId) {
+        return this.carRepository.findByUserOwnId(userId);
+    }
+
 }

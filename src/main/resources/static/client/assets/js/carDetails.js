@@ -8,7 +8,6 @@ $(document).ready(function() {
         });
     }
 
-
     const terms = $('#terms').text().split(',');
     $('.form-check-input').each(function () {
         if (terms.includes($(this).val())) {
