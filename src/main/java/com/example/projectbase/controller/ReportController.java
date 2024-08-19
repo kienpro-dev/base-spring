@@ -74,11 +74,11 @@ public class ReportController {
             model.addAttribute("resultPage", feedbackPage);
             model.addAttribute("feedbackList", feedbackList);
             model.addAttribute("countAllFeedback", feedbackList.size());
-            model.addAttribute("countFeedbackByRating1", this.feedbackService.countFeedbackByRating(1));
-            model.addAttribute("countFeedbackByRating2", this.feedbackService.countFeedbackByRating(2));
-            model.addAttribute("countFeedbackByRating3", this.feedbackService.countFeedbackByRating(3));
-            model.addAttribute("countFeedbackByRating4", this.feedbackService.countFeedbackByRating(4));
-            model.addAttribute("countFeedbackByRating5", this.feedbackService.countFeedbackByRating(5));
+            model.addAttribute("countFeedbackByRating1", this.feedbackService.countFeedbackByRating(1, currentUser.getId()));
+            model.addAttribute("countFeedbackByRating2", this.feedbackService.countFeedbackByRating(2, currentUser.getId()));
+            model.addAttribute("countFeedbackByRating3", this.feedbackService.countFeedbackByRating(3, currentUser.getId()));
+            model.addAttribute("countFeedbackByRating4", this.feedbackService.countFeedbackByRating(4, currentUser.getId()));
+            model.addAttribute("countFeedbackByRating5", this.feedbackService.countFeedbackByRating(5, currentUser.getId()));
             model.addAttribute("avgRate", avgRate);
         }
         return "/client/carOwner/viewReport";

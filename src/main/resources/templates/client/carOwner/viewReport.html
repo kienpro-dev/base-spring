@@ -7,6 +7,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Car details</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .checked {
+            color: #f5b301;
+        }
+    </style>
 </head>
 <body>
 <div layout:fragment="content" class="container mt-4">
@@ -54,31 +59,31 @@
         <div class="card-body">
 
             <div th:each="feedback : ${feedbackList}">
-                <div class="d-flex align-items-center mb-3">
+                <div class="d-flex justify-content-between align-items-center mb-3">
                     <strong th:text="${feedback.getBooking().getUser().getName()}"></strong>
-                    <div th:each="i : ${#numbers.sequence(1, 5)}">
-                        <span th:if="${i <= feedback.rating}">
-                            <i class="icon-star star-primary"></i>
-                        </span>
-                                            <span th:if="${i - 1 < feedback.rating} and ${i > feedback.rating}">
-                            <i class="icon-star-o star-primary"></i>
-                        </span>
-                                            <span th:if="${i > feedback.rating}">
-                            <i class="icon-star"></i>
-                        </span>
+                    <div class="d-flex flex-column">
+                        <div class="d-flex">
+                            <div th:each="i : ${#numbers.sequence(1, 5)}">
+                            <span th:if="${i <= feedback.rating}">
+                                <i class="icon-star checked star-primary"></i>
+                            </span>
+                            </div>
+                        </div>
+                        <p th:text="${#temporals.format(feedback.createdDate, 'yyyy-MM-dd HH:mm')}"></p>
                     </div>
                 </div>
                 <p th:text="${feedback.getContent()}"></p>
-                <div class="row">
+                <div class="row mb-4">
                     <div class="col-md-4" th:each="car : ${feedback.getBooking().getCars()}">
                         <img th:src="@{${car.getBanner()}}" class="img-fluid" alt="Car Image">
                     </div>
                     <div class="col-md-8" th:each="car : ${feedback.getBooking().getCars()}">
                         <h5 th:text="${car.getName()}"></h5>
-                        <p>From: <span th:text="${feedback.getBooking().getStartDate()}"></span></p>
-                        <p>To: <span th:text="${feedback.getBooking().getEndDate()}"></span></p>
+                        <p>From: <span th:text="${#temporals.format(feedback.getBooking().getStartDate(), 'yyyy-MM-dd HH:mm')}"></span></p>
+                        <p>To: <span th:text="${#temporals.format(feedback.getBooking().getEndDate(), 'yyyy-MM-dd HH:mm')}"></span></p>
                     </div>
                 </div>
+                <hr>
             </div>
 
         </div>
