@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{client/layout.html}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car details</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div layout:fragment="content" class="container mt-4">
+    <!-- My Reports Section -->
+    <h2>Feedback Report</h2>
+
+    <!-- Average Ratings -->
+    <div class="text-center mb-4">
+        <h4>Average Ratings</h4>
+        <h2 th:text="${avgRate}"></h2>
+        <div class="star-rating">
+            <span class="fa fa-star checked"></span>
+            <span class="fa fa-star checked"></span>
+            <span class="fa fa-star checked"></span>
+            <span class="fa fa-star checked"></span>
+            <span class="fa fa-star-half-o"></span>
+        </div>
+    </div>
+
+    <!-- Rating Details -->
+    <div class="d-flex justify-content-center mb-4">
+        <div class="btn-group" role="group" aria-label="Ratings Details">
+            <button type="button" class="btn btn-outline-primary">All (<span th:text="${countAllFeedback}"></span>)
+            </button>
+            <button type="button" class="btn btn-outline-primary">5 Stars (<span
+                    th:text="${countFeedbackByRating5}"></span>)
+            </button>
+            <button type="button" class="btn btn-outline-primary">4 Stars (<span
+                    th:text="${countFeedbackByRating4}"></span>)
+            </button>
+            <button type="button" class="btn btn-outline-primary">3 Stars (<span
+                    th:text="${countFeedbackByRating3}"></span>)
+            </button>
+            <button type="button" class="btn btn-outline-primary">2 Stars (<span
+                    th:text="${countFeedbackByRating2}"></span>)
+            </button>
+            <button type="button" class="btn btn-outline-primary">1 Star (<span
+                    th:text="${countFeedbackByRating1}"></span>)
+            </button>
+        </div>
+    </div>
+
+    <!-- Comments Section -->
+    <div class="card mb-4">
+        <div class="card-body">
+
+            <div th:each="feedback : ${feedbackList}">
+                <div class="d-flex align-items-center mb-3">
+                    <strong th:text="${feedback.getBooking().getUser().getName()}"></strong>
+                    <div th:each="i : ${#numbers.sequence(1, 5)}">
+                        <span th:if="${i <= feedback.rating}">
+                            <i class="icon-star star-primary"></i>
+                        </span>
+                                            <span th:if="${i - 1 < feedback.rating} and ${i > feedback.rating}">
+                            <i class="icon-star-o star-primary"></i>
+                        </span>
+                                            <span th:if="${i > feedback.rating}">
+                            <i class="icon-star"></i>
+                        </span>
+                    </div>
+                </div>
+                <p th:text="${feedback.getContent()}"></p>
+                <div class="row">
+                    <div class="col-md-4" th:each="car : ${feedback.getBooking().getCars()}">
+                        <img th:src="@{${car.getBanner()}}" class="img-fluid" alt="Car Image">
+                    </div>
+                    <div class="col-md-8" th:each="car : ${feedback.getBooking().getCars()}">
+                        <h5 th:text="${car.getName()}"></h5>
+                        <p>From: <span th:text="${feedback.getBooking().getStartDate()}"></span></p>
+                        <p>To: <span th:text="${feedback.getBooking().getEndDate()}"></span></p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Pagination -->
+    <nav aria-label="Page navigation" th:if="${resultPage.totalPages > 0}">
+        <ul class="pagination justify-content-center">
+            <li th:class="${resultPage.number == 0} ? 'page-item disabled' : 'page-item'">
+                <a class="page-link" th:href="@{/car/report(page=${resultPage.number - 1}, size=${resultPage.size})}"
+                   aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <li th:each="pageNumber : ${pageNumbers}"
+                th:class="${pageNumber == resultPage.number + 1} ? 'page-item active' : 'page-item'">
+                <a class="page-link" th:href="@{/car/report(page=${pageNumber - 1}, size=${resultPage.size})}"
+                   th:text="${pageNumber}">1</a>
+            </li>
+            <li th:class="${resultPage.number + 1 == resultPage.totalPages} ? 'page-item disabled' : 'page-item'">
+                <a class="page-link" th:href="@{/car/report(page=${resultPage.number + 1}, size=${resultPage.size})}"
+                   aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
+
+</body>
+</html>
