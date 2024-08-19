@@ -11,6 +11,7 @@
         .car-card {
             margin-bottom: 20px;
         }
+
         .car-card img {
             width: 100%;
             height: auto;
@@ -33,18 +34,22 @@
                     <div class="col-md-6">
                         <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                             <ol class="carousel-indicators">
-                                <li th:each="image, iterStat : ${car.images}" th:data-slide-to="${iterStat.index}" th:classappend="${iterStat.index == 0} ? 'active'"></li>
+                                <li th:each="image, iterStat : ${car.images}" th:data-slide-to="${iterStat.index}"
+                                    th:classappend="${iterStat.index == 0} ? 'active'"></li>
                             </ol>
                             <div class="carousel-inner">
-                                <div th:each="image, iterStat : ${car.images}" th:classappend="${iterStat.index == 0} ? 'active'" class="carousel-item">
+                                <div th:each="image, iterStat : ${car.images}"
+                                     th:classappend="${iterStat.index == 0} ? 'active'" class="carousel-item">
                                     <img th:src="@{${image.url}}" class="d-block w-100" alt="Car Image">
                                 </div>
                             </div>
-                            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button"
+                               data-slide="prev">
                                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                 <span class="sr-only">Previous</span>
                             </a>
-                            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button"
+                               data-slide="next">
                                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                 <span class="sr-only">Next</span>
                             </a>
@@ -59,32 +64,42 @@
                             <p class="card-text">Status: <span th:text="${car.statusCar}">Status: </span></p>
                         </div>
                         <div class="card-footer">
-                            <a th:href="@{/car-owner/my-car/{id}(id=${car.id})}" class="btn btn-primary">View details</a>
+                            <a th:href="@{/car-owner/my-car/{id}(id=${car.id})}" class="btn btn-primary">View
+                                details</a>
                             <a href="" class="btn btn-success">Confirm deposit</a>
                         </div>
                     </div>
                 </div>
             </div>
-            </div>
         </div>
+    </div>
 
-    <nav aria-label="Page navigation">
+    <nav aria-label="Page navigation example"
+         th:if="${resultPage.totalPages > 0}">
         <ul class="pagination justify-content-center">
-            <li class="page-item" th:classappend="${currentPage == 1} ? 'disabled'">
-                <a class="page-link" th:href="@{/car-owner/my-car(page=${currentPage - 1}, size=${size})}" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                </a>
+            <li
+                    th:class="${resultPage.number + 1 == 1} ? 'page-item active' : 'page-item'">
+                <a class="page-link"
+                   th:href="@{/car-owner/my-car(field=${field}, page=${1}, size=${resultPage.size})}"
+                   tabindex="-1" aria-disabled="true">Previous</a>
             </li>
-            <li class="page-item" th:each="i : ${#numbers.sequence(1, totalPages)}" th:classappend="${i == currentPage} ? 'active'">
-                <a class="page-link" th:href="@{/car-owner/my-car(page=${i}, size=${size})}" th:text="${i}">1</a>
+
+            <li th:each=" pageNumber : ${pageNumbers}"
+                th:if="${resultPage.totalPages > 1}"
+                th:class="${pageNumber == resultPage.number + 1} ? 'page-item active' : 'page-item'">
+                <a class="page-link"
+                   th:href="@{/car-owner/my-car(field=${field}, page=${pageNumber}, size=${resultPage.size})}"
+                   th:text="${pageNumber}">1</a>
             </li>
-            <li class="page-item" th:classappend="${currentPage == totalPages} ? 'disabled'">
-                <a class="page-link" th:href="@{/car-owner/my-car(page=${currentPage + 1}, size=${size})}" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                </a>
+
+            <li
+                    th:class="${resultPage.number + 1 == resultPage.totalPages} ? 'page-item active' : 'page-item'">
+                <a class="page-link"
+                   th:href="@{/car-owner/my-car(field=${field}, page=${resultPage.totalPages}, size=${resultPage.size})}">Next</a>
             </li>
         </ul>
     </nav>
+    -
 </div>
 </body>
 

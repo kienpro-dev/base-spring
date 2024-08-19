@@ -103,7 +103,7 @@
                                 <td th:text="${item.nationalId}==null? 'Chưa cập nhật..' : ${item.nationalId}"></td>
                                 <td th:text="${item.drivingLicense}==null? 'Chưa cập nhật..' : ${item.drivingLicense}"></td>
                                 <td th:text="${item.address}==null? 'Chưa cập nhật..' : ${item.address}"></td>
-                                <td><span
+                                <td>
                                     <span th:if="${item.role.name} == 'ROLE_ADMIN'"
                                           class="badge bg-success">Admin</span>
                                     <span th:if="${item.role.name} == 'ROLE_USER'"
@@ -141,7 +141,7 @@
                                 <li
                                         th:class="${resultPage.number + 1 == 1} ? 'page-item active' : 'page-item'">
                                     <a class="page-link"
-                                       th:href="@{/admin-page/users(field=${field}, page=${1}, size=${resultPage.size}, keywords=${keywords})}"
+                                       th:href="@{/admin/users(field=${field}, page=${1}, size=${resultPage.size}, keywords=${keywords})}"
                                        tabindex="-1" aria-disabled="true">Previous</a>
                                 </li>
 
@@ -149,14 +149,14 @@
                                     th:if="${resultPage.totalPages > 1}"
                                     th:class="${pageNumber == resultPage.number + 1} ? 'page-item active' : 'page-item'">
                                     <a class="page-link"
-                                       th:href="@{/admin-page/users(field=${field}, page=${pageNumber}, size=${resultPage.size}, keywords=${keywords})}"
+                                       th:href="@{/admin/users(field=${field}, page=${pageNumber}, size=${resultPage.size}, keywords=${keywords})}"
                                        th:text="${pageNumber}">1</a>
                                 </li>
 
                                 <li
                                         th:class="${resultPage.number + 1 == resultPage.totalPages} ? 'page-item active' : 'page-item'">
                                     <a class="page-link"
-                                       th:href="@{/admin-page/users(field=${field}, page=${resultPage.totalPages}, size=${resultPage.size}, keywords=${keywords})}">Next</a>
+                                       th:href="@{/admin/users(field=${field}, page=${resultPage.totalPages}, size=${resultPage.size}, keywords=${keywords})}">Next</a>
                                 </li>
                             </ul>
                         </nav>

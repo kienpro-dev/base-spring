@@ -43,13 +43,18 @@ public class CarServiceImpl implements CarService {
         return carMapper.toCarDto(car);
     }
 
+
     @Override
     public PaginationResponseDto<CarDto> getCars(PaginationFullRequestDto request, User userOwn) {
         Pageable pageable = PaginationUtil.buildPageable(request, SortByDataConstant.CAR);
         Page<Car> carPage = this.carRepository.findByUserOwn(pageable, userOwn);
         List<CarDto> carDtos = carMapper.toCarDtos(carPage.getContent());
         PagingMeta pagingMeta = new PagingMeta(carPage.getTotalElements(), carPage.getSize(), carPage.getNumber(), carPage.getTotalPages(), request.getSortBy(), request.getIsAscending().toString());
-        return new PaginationResponseDto<>(pagingMeta,carDtos);
+
+        PaginationResponseDto<CarDto> responseDto=new PaginationResponseDto<>();
+        responseDto.setItems(carDtos);
+        responseDto.setMeta(pagingMeta);
+        return responseDto;
     }
 
     @Override
@@ -208,6 +213,11 @@ public class CarServiceImpl implements CarService {
     @Override
     public List<Car> findCarByUserOwnId(String userId) {
         return this.carRepository.findByUserOwnId(userId);
+    }
+
+    @Override
+    public Page<Car> getCars(Pageable pageable, User user) {
+        return carRepository.findByUserOwn(pageable,user);
     }
 
 }

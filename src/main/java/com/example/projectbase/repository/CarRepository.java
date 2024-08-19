@@ -14,10 +14,11 @@ import java.util.List;
 
 @Repository
 public interface CarRepository extends JpaRepository<Car, String> {
-    Page<Car> findByUserOwn(Pageable pageable, User userOwn);
+
 
     @Query(value = "SELECT * FROM cars WHERE name LIKE %?1%", nativeQuery = true)
     Page<Car> findAllByNameLike(String keyword, Pageable pageable);
+
     List<Car> findByFuelType(String fuelType);
 
     @Query(value = "SELECT DISTINCT c.* " +
@@ -76,7 +77,10 @@ public interface CarRepository extends JpaRepository<Car, String> {
                                           @Param("dateNow") LocalDateTime dateNow);
 
     @Query(value = "SELECT * FROM cars c INNER JOIN booking_cars ON c.id = bc.car_id WHERE bc.booking_id = :id", nativeQuery = true)
-    List<Car> findCarByBookingId(@Param("id")String bookingId);
+    List<Car> findCarByBookingId(@Param("id") String bookingId);
+
+
+    Page<Car> findByUserOwn(Pageable pageable, User user);
 
     List<Car> findByUserOwnId(String userId);
 }
