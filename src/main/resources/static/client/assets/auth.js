@@ -16,9 +16,66 @@ var changePassword = document.getElementById('change_password');
 var changeRetypePassword = document.getElementById('change_retype_password');
 var changeRetypePassword2 = document.getElementById('change_retype_password2');
 var changeForm = document.getElementById('change');
-
 var forgotEmail = document.getElementById('forgot_email');
 var forgotForm = document.getElementById('forgot');
+
+var feedbackContent = document.getElementById("feedback_content");
+var selectedRating = 0;
+var bookingid = document.getElementById("booking_id")
+
+var formFeedback = document.getElementById("feedback")
+$(document).ready(function () {
+
+    // Khi người dùng chọn số sao
+    $('.star-rating .icon-star').click(function () {
+        selectedRating = $(this).data('value');
+        $('.star-rating .icon-star').removeClass('checked');
+        for (var i = 1; i <= selectedRating; i++) {
+            $('.star-rating .icon-star[data-value="' + i + '"]').addClass('checked');
+        }
+    });
+});
+
+function feedbackSubmit() {
+    console.log(feedbackContent.value);
+    console.log(selectedRating);
+    if (!feedbackContent.value || selectedRating === 0) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Thông báo lỗi',
+            text: "Vui lòng nhập đầy đủ thông tin",
+        })
+        return;
+    }
+    axios.post(baseUrl + '/car/booking/feedback', {
+        rating: selectedRating,
+        content: feedbackContent.value,
+        bookingId: bookingid.value
+    })
+        .then(function (response) {
+            Swal.fire({
+                title: 'Thông báo đã đánh giá',
+                text: response.data.message,
+                icon: 'success',
+                showConfirmButton: false,
+                timer: 700
+            }).then(() => {
+                location.reload(true);
+            })
+        })
+        .catch(function (error) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Thông báo lỗi',
+                text: error.response.data.message,
+            })
+        });
+}
+
+formFeedback.addEventListener('submit', (e) => {
+    e.preventDefault();
+    feedbackSubmit();
+});
 
 function registerSubmit() {
     if (!registerName.value || !registerEmail.value || !registerPassword.value || !registerPhone.value || !registerRetypePassword.value) {

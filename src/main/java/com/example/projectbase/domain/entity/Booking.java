@@ -71,4 +71,8 @@ public class Booking extends DateAuditing {
     public Long countDay() {
         return ChronoUnit.DAYS.between(startDate, endDate) + 1;
     }
+
+    public boolean checkFeedback() {
+        return this.feedback == null;
+    }
 }
