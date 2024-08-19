@@ -21,6 +21,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.*;
@@ -35,6 +36,8 @@ public class AccountController {
     private final BookingService bookingService;
 
     private final WalletService walletService;
+
+     private static DecimalFormat formatter = new DecimalFormat("#,### VND");
 
     @GetMapping("/account/info-account")
     public String infoAccount(Model model, @CurrentUser UserPrincipal userPrincipal) {
@@ -110,7 +113,7 @@ public class AccountController {
             Wallet wallet= Wallet.builder()
                     .bookingNo("N/A")
                     .carName("N/A")
-                    .fluctuation("+"+balance.toString())
+                    .fluctuation("+"+formatter.format(balance))
                     .userOwn(user)
                     .type("Nạp tiền")
                     .build();
@@ -127,7 +130,7 @@ public class AccountController {
                   Wallet wallet= Wallet.builder()
                     .bookingNo("N/A")
                     .carName("N/A")
-                    .fluctuation("-"+balance.toString())
+                    .fluctuation("-"+formatter.format(balance))
                     .userOwn(user)
                     .type("Rút tiền")
                     .build();

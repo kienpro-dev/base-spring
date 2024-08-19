@@ -21,6 +21,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -40,6 +41,8 @@ public class BookingController {
     private final BookingService bookingService;
 
     private final WalletService walletService;
+
+    private static  DecimalFormat formatter = new DecimalFormat("#,### VND");
 
     @GetMapping("/check-out")
     public String checkOut(Model model, @RequestParam String id, @CurrentUser UserPrincipal userPrincipal) {
@@ -98,7 +101,7 @@ public class BookingController {
                 Wallet wallet = Wallet.builder()
                         .bookingNo(booking.getId())
                         .carName(item.getName())
-                        .fluctuation("-"+item.getDeposit())
+                        .fluctuation("-"+formatter.format(item.getDeposit()))
                         .userOwn(userRent)
                         .type("Đặt cọc xe")
                         .build();
@@ -107,7 +110,7 @@ public class BookingController {
                 Wallet walletOwner = Wallet.builder()
                         .bookingNo(booking.getId())
                         .carName(item.getName())
-                        .fluctuation("+"+item.getDeposit())
+                        .fluctuation("+"+formatter.format(item.getDeposit()))
                         .userOwn(owner)
                         .type("Nhận cọc xe")
                         .build();
@@ -166,7 +169,7 @@ public class BookingController {
                 Wallet wallet = Wallet.builder()
                         .bookingNo(booking.getId())
                         .carName(booking.getCars().get(0).getName())
-                        .fluctuation("+"+car.getDeposit())
+                        .fluctuation("+"+formatter.format(car.getDeposit()))
                         .userOwn(customer)
                         .type("Trả cọc xe")
                         .build();
@@ -174,7 +177,7 @@ public class BookingController {
                  Wallet walletOwner = Wallet.builder()
                         .bookingNo(booking.getId())
                         .carName(booking.getCars().get(0).getName())
-                        .fluctuation("-"+car.getDeposit())
+                        .fluctuation("-"+formatter.format(car.getDeposit()))
                         .userOwn(currentUser)
                         .type("Hoàn cọc xe")
                         .build();
@@ -201,7 +204,7 @@ public class BookingController {
                  Wallet wallet = Wallet.builder()
                         .bookingNo(booking.getId())
                         .carName(car.getName())
-                        .fluctuation("+"+(car.getDeposit() - booking.getTotal()))
+                        .fluctuation("+"+formatter.format(car.getDeposit() - booking.getTotal()))
                         .userOwn(currentUser)
                         .type("Nhận tiền nhận xe")
                         .build();
@@ -210,7 +213,7 @@ public class BookingController {
                 Wallet walletOwner = Wallet.builder()
                         .bookingNo(booking.getId())
                         .carName(car.getName())
-                        .fluctuation("-"+(car.getDeposit() - booking.getTotal()))
+                        .fluctuation("-"+formatter.format(car.getDeposit() - booking.getTotal()))
                         .userOwn(owner)
                         .type("Trả tiền cọc cho khách")
                         .build();
@@ -221,7 +224,7 @@ public class BookingController {
                  Wallet wallet = Wallet.builder()
                         .bookingNo(booking.getId())
                         .carName(car.getName())
-                        .fluctuation("-"+(booking.getTotal() - car.getDeposit()))
+                        .fluctuation("-"+formatter.format((booking.getTotal() - car.getDeposit())))
                         .userOwn(currentUser)
                         .type("Thanh toán nốt tiền xe")
                         .build();
@@ -230,7 +233,7 @@ public class BookingController {
                 Wallet walletOwner = Wallet.builder()
                         .bookingNo(booking.getId())
                         .carName(car.getName())
-                        .fluctuation("+"+(booking.getTotal() - car.getDeposit()))
+                        .fluctuation("+"+formatter.format((booking.getTotal() - car.getDeposit())))
                         .userOwn(owner)
                         .type("Nhận nốt tiền xe")
                         .build();

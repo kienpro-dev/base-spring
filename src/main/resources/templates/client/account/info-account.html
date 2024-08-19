@@ -121,8 +121,9 @@
                                             </div>
 
                                         </td>
-                                        <td th:text="${item.startDate}"></td>
-                                        <td th:text="${item.endDate}"></td>
+                                        <td th:text="${#temporals.format(item.startDate, 'yyyy-MM-dd HH:mm')}"></td>
+                                        <td th:text="${#temporals.format(item.endDate, 'yyyy-MM-dd HH:mm')}"></td>
+
                                         <td>
                                             <div
                                                     th:switch="${item.status}">
@@ -238,6 +239,7 @@
                                 </div>
                                 <!-- End .row -->
                                 <div class="row">
+                                    <h4 class="text-primary">LỊCH SỬ GIAO DỊCH</h4>
                                     <table class="table table-wishlist table-mobile">
                                         <thead>
                                         <tr>
@@ -252,11 +254,14 @@
                                         <tbody>
                                         <tr th:each="item, i: ${listWallet}">
                                             <td th:text="${i.count}"></td>
-                                            <td th:text="${item.fluctuation}"></td>
-                                            <td th:text="${item.type}"></td>
-                                            <td th:text="${item.createdDate}"></td>
+                                            <td th:style="'color: ' + (${item.fluctuation.startsWith('-')} ? 'red' : 'green')"
+                                                th:text="${item.fluctuation}">
+                                            </td>
+
+                                            <td th:text="${item.type}" class="text-primary"></td>
+                                            <td th:text="${#temporals.format(item.createdDate, 'yyyy-MM-dd HH:mm')}"></td>
                                             <td th:text="${item.bookingNo}"></td>
-                                             <td th:text="${item.carName}"></td>
+                                            <td th:text="${item.carName}"></td>
                                         </tr>
                                         </tbody>
                                     </table>

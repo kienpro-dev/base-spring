@@ -36,12 +36,12 @@ public interface BookingRepository extends JpaRepository<Booking, String> {
     @Query(value = "SELECT * FROM bookings b INNER JOIN booking_car bc ON b.id = bc.booking_id WHERE car_id = :carId AND b.status = 'CONFIRM'", nativeQuery = true)
     List<Booking> findByCarId(@Param("carId")String carId);
 
-    @Query(value = "SELECT * FROM bookings b WHERE b.user_id = :userId", nativeQuery = true)
+    @Query(value = "SELECT * FROM bookings b WHERE b.user_id = :userId ORDER BY b.created_date DESC" , nativeQuery = true)
     List<Booking> findByUserId(@Param("userId")String userId);
 
     @Query(value = "SELECT * FROM bookings b JOIN booking_car bc " +
             "ON b.id = bc.booking_id JOIN cars c ON bc.car_id = c.id " +
-            "JOIN users u ON c.user_id = u.id WHERE u.id = :id", nativeQuery = true)
+            "JOIN users u ON c.user_id = u.id WHERE u.id = :id ORDER BY b.created_date DESC", nativeQuery = true)
     List<Booking> getBookingByCarOwnerId(@Param("id")String id);
 
     @Query(value = "SELECT new com.example.projectbase.domain.dto.response.BookingDetailDto(b.id,b.createdDate,b.paymentMethod,b.startDate,b.endDate,b.status,c.name,c.brand,c.userOwn.name,u.address,u.email,u.name,u.phoneNumber) FROM Booking b INNER JOIN b.user u INNER JOIN b.cars c WHERE b.id=?1")

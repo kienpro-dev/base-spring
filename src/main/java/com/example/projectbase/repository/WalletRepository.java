@@ -10,6 +10,6 @@ import java.util.List;
 @Repository
 public interface WalletRepository extends JpaRepository<Wallet,String> {
 
-    @Query(value = "SELECT w FROM Wallet w WHERE w.userOwn.id=?1")
+    @Query(value = "SELECT w FROM Wallet w WHERE w.userOwn.id=?1 order by w.createdDate DESC ")
     List<Wallet> getAllByUserId(String id);
 }
