@@ -289,8 +289,10 @@
                               <div class="v-line-height v-font-size"
                                 style="line-height: 160%; text-align: justify; word-wrap: break-word;">
                                 <p style="font-size: 14px; line-height: 160%;"><strong>Xin chào ${username},</strong></p>
-                                <p style="font-size: 14px; line-height: 160%;"> </p>
-                                <p style="font-size: 14px; line-height: 160%;">Bạn đã thay đổi mật khẩu thành công, cảm ơn bạn đã sử dụng một trong những dịch vụ tốt của trang web chúng tôi.</p>
+                                <p style="font-size: 14px; line-height: 160%;">Hệ thống Rental Car</p>
+                                <p style="font-size: 14px; line-height: 160%;">Có 1 thông báo được gửi tới bạn</p>
+                                <p style="font-size: 14px; line-height: 160%;"><strong>Xin chào ${content},</strong></p>
+                                <p style="font-size: 14px; line-height: 160%;">Vui lòng đăng nhập để xem chi tiết</p>
                               </div>
 
                             </td>

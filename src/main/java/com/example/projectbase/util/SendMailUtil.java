@@ -109,13 +109,70 @@ public class SendMailUtil {
         // Gửi message đến SMTP server
         mailSender.send(message);
     }
+
+    public void sendSuccessfullyInfo(DataMailDto mail) throws MessagingException {
+        // Tạo message
+        MimeMessage message = mailSender.createMimeMessage();
+        // Sử dụng Helper để thiết lập các thông tin cần thiết cho message
+        MimeMessageHelper helper = new MimeMessageHelper(message, true, "utf-8");
+        helper.setFrom(mail.getFrom());
+        helper.setTo(mail.getTo());
+        helper.setSubject(mail.getSubject());
+        try {
+            String emailContent = getEmailContent(mail.getBody());
+            helper.setText(emailContent, true);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (TemplateException e) {
+            e.printStackTrace();
+        }
+        helper.setReplyTo(mail.getFrom());
+        String[] cc = mail.getCc();
+        if (cc != null && cc.length > 0) {
+            helper.setCc(cc);
+        }
+        String[] bcc = mail.getBcc();
+        if (bcc != null && bcc.length > 0) {
+            helper.setBcc(bcc);
+        }
+        String[] attachments = mail.getAttachments();
+        if (attachments != null && attachments.length > 0) {
+            for (String path : attachments) {
+                File file = new File(path);
+                helper.addAttachment(file.getName(), file);
+            }
+        }
+        helper.addInline("image-1", new ClassPathResource("static/mail/image-1.png"));
+        helper.addInline("image-2", new ClassPathResource("static/mail/image-2.png"));
+        helper.addInline("image-3", new ClassPathResource("static/mail/image-3.png"));
+        helper.addInline("image-4", new ClassPathResource("static/mail/image-4.png"));
+        helper.addInline("service", new ClassPathResource("static/mail/service.png"));
+        helper.addInline("rate", new ClassPathResource("static/mail/rate.png"));
+        // Gửi message đến SMTP server
+        mailSender.send(message);
+    }
+
     private final Configuration configuration;
+
     private String getEmailContent(List<Object[]> body) throws IOException, TemplateException {
         StringWriter stringWriter = new StringWriter();
         Map<String, Object> model = new HashMap<>();
         String template = "forgot-password.ftlh";
         for (Object[] objects : body) {
             model.put("body", objects[0].toString());
+        }
+        configuration.getTemplate(template).process(model, stringWriter);
+        return stringWriter.getBuffer().toString();
+    }
+
+    private String getEmailSuccessfulContent(List<Object[]> body) throws IOException, TemplateException {
+        StringWriter stringWriter = new StringWriter();
+        Map<String, Object> model = new HashMap<>();
+        String template = "success-service.ftlh";
+        for (Object[] objects : body) {
+            model.put("urlLogin", objects[0].toString());
+            model.put("username", objects[1].toString());
+            model.put("content", objects[2].toString());
         }
         configuration.getTemplate(template).process(model, stringWriter);
         return stringWriter.getBuffer().toString();
