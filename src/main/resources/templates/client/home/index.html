@@ -618,6 +618,282 @@
                     <!-- End .col-xl-9 -->
                 </div>
                 <!-- End .row cat-banner-row -->
+                <div class="mb-3"></div>
+                <div class="row cat-banner-row electronics">
+                    <div class="col-xl-3 col-xxl-4">
+                        <div class="cat-banner row no-gutters">
+                            <div class="cat-banner-list col-sm-6 d-xl-none d-xxl-flex"
+                                 style="background-image: url(assets/images/demos/demo-14/banners/banner-bg-1.jpg);">
+                                <div class="banner-list-content">
+                                    <h2>
+                                        <a th:href="@{/car/client?category_id=12}">Hybrid</a>
+                                    </h2>
+                                </div>
+                                <!-- End .banner-list-content -->
+                            </div>
+                            <!-- End .col-sm-6 -->
+
+                            <div class="col-sm-6 col-xl-12 col-xxl-6">
+                                <div class="banner banner-overlay">
+                                    <a th:href="@{/car/client?category_id=12}"> <img
+                                            th:src="@{/client/assets/images/demos/demo-14/banners/banner-5.jpg}"
+                                            alt="Banner img desc">
+                                    </a>
+
+                                    <div class="banner-content">
+                                        <h4 class="banner-subtitle text-white">
+                                            <a href="#">Siêu giảm giá</a>
+                                        </h4>
+                                        <!-- End .banner-subtitle -->
+                                        <!-- End .banner-title -->
+                                        <a th:href="@{/car/client}" class="banner-link">Cửa hàng
+                                            <i class="icon-long-arrow-right"></i>
+                                        </a>
+                                    </div>
+                                    <!-- End .banner-content -->
+                                </div>
+                                <!-- End .banner -->
+                            </div>
+                            <!-- End .col-sm-6 -->
+                        </div>
+                        <!-- End .cat-banner -->
+                    </div>
+                    <!-- End .col-xl-3 -->
+
+                    <div class="col-xl-9 col-xxl-8">
+                        <div
+                                class="owl-carousel owl-full carousel-equal-height carousel-with-shadow"
+                                data-toggle="owl"
+                                data-owl-options='{
+                                        "nav": true,
+                                        "dots": false,
+                                        "margin": 20,
+                                        "loop": false,
+                                        "responsive": {
+                                            "0": {
+                                                "items":2
+                                            },
+                                            "480": {
+                                                "items":2
+                                            },
+                                            "768": {
+                                                "items":3
+                                            },
+                                            "992": {
+                                                "items":4
+                                            },
+                                            "1200": {
+                                                "items":3
+                                            },
+                                            "1600": {
+                                                "items":4
+                                            }
+                                        }
+                                    }'>
+                            <div class="product text-center"
+                                 th:each="item, i : ${listHybrid}">
+                                <figure class="product-media">
+										<span>
+											<span class="product-label label-sale">Đặt cọc 20%</span>
+                                            <span
+												class="product-label"
+												th:text="${item.isAvailable() ? 'Available' : 'Stopped'}"
+                                                th:style="${item.isAvailable()} ? 'background-color: #00FF00;' : 'background-color: red;'"></span>
+										</span>
+                                    <a th:href="@{/car/product-detail(id=${item.id})}"> <img
+                                            th:src="${item.getBanner()} == null ? '/client/assets/images/no-image.jpg' : ${item.getBanner()}"
+                                            alt="Product image" class="product-image">
+                                    </a>
+
+                                    <div class="product-action-vertical">
+                                        <a th:data-id="${item.id}"
+                                           th:onclick="addLikeShop(this.getAttribute('data-id'))"
+                                           class="btn-product-icon btn-wishlist btn-expandable"><span>Yêu
+													thích</span></a> <a href="#quickView-modal" data-toggle="modal"
+                                                                        th:data-id="${item.id}"
+                                                                        th:onclick="quickView(this.getAttribute('data-id'))"
+                                                                        class="btn-product-icon btn-quickview"><span>Xem</span></a>
+                                    </div>
+                                    <!-- End .product-action-vertical -->
+
+
+                                    <div class="product-action"  sec:authorize="!isAuthenticated()">
+                                        <a href="#signin-modal" data-toggle="modal"
+                                           class="btn-product btn-cart"><span>Rent Car</span></a>
+                                    </div>
+                                    <div class="product-action" sec:authorize="isAuthenticated()">
+                                        <a th:href="@{/car/check-out(id=${item.id})}"
+                                           class="btn-product btn-cart"><span>Rent Car</span></a>
+                                    </div>
+                                    <!-- End .product-action -->
+                                </figure>
+                                <!-- End .product-media -->
+
+                                <div class="product-body">
+                                    <div class="product-cat">
+                                        <a href="#" th:text="${item.brand}"></a>
+                                    </div>
+                                    <!-- End .product-cat -->
+                                    <h3 class="product-title">
+                                        <a th:href="@{/car/product-detail(id=${item.id})}"
+                                           th:text="${item.name}">Tên xe</a>
+                                    </h3>
+                                    <!-- End .product-title -->
+
+                                    <div class="product-price">
+                                        <span>
+												<span class="new-price"
+                                                      th:text="${#numbers.formatDecimal(item.deposit, 0, 'COMMA', 0, 'POINT')} + ' VND'"></span> <span class="old-price"> <del
+                                            th:text="${#numbers.formatDecimal(item.basePrice, 0, 'COMMA', 0, 'POINT')} + ' VND'">
+														</del></span>
+
+											</span>
+                                    </div>
+                                    <!-- End .product-price -->
+                                </div>
+                                <!-- End .product-body -->
+                            </div>
+                            <!-- End .product -->
+                        </div>
+                        <!-- End .owl-carousel -->
+                    </div>
+                    <!-- End .col-xl-9 -->
+                </div>
+                <div class="mb-3"></div>
+                <div class="row cat-banner-row furniture">
+                    <div class="col-xl-3 col-xxl-4">
+                        <div class="cat-banner row no-gutters">
+                            <div class="cat-banner-list col-sm-6 d-xl-none d-xxl-flex"
+                                 style="background-image: url(assets/images/demos/demo-14/banners/banner-bg-2.jpg);">
+                                <div class="banner-list-content">
+                                    <h2>
+                                        <a th:href="@{/car/client?category_id=8}">Diesel </a>
+                                    </h2>
+                                </div>
+                                <!-- End .banner-list-content -->
+                            </div>
+                            <!-- End .col-sm-6 -->
+
+                            <div class="col-sm-6 col-xl-12 col-xxl-6">
+                                <div class="banner banner-overlay">
+                                    <a th:href="@{/car/client?category_id=8}"> <img
+                                            th:src="@{/client/assets/images/demos/demo-14/banners/banner-6.jpg}"
+                                            alt="Banner img desc">
+                                    </a>
+
+                                    <div class="banner-content">
+                                        <!-- End .banner-title -->
+                                        <a th:href="@{/car/client}" class="banner-link">Cửa hàng
+                                            <i class="icon-long-arrow-right"></i>
+                                        </a>
+                                    </div>
+                                    <!-- End .banner-content -->
+                                </div>
+                                <!-- End .banner -->
+                            </div>
+                            <!-- End .col-sm-6 -->
+                        </div>
+                        <!-- End .cat-banner -->
+                    </div>
+                    <!-- End .col-xl-3 -->
+
+                    <div class="col-xl-9 col-xxl-8">
+                        <div
+                                class="owl-carousel owl-full carousel-equal-height carousel-with-shadow"
+                                data-toggle="owl"
+                                data-owl-options='{
+                                        "nav": true,
+                                        "dots": false,
+                                        "margin": 20,
+                                        "loop": false,
+                                        "responsive": {
+                                            "0": {
+                                                "items":2
+                                            },
+                                            "480": {
+                                                "items":2
+                                            },
+                                            "768": {
+                                                "items":3
+                                            },
+                                            "992": {
+                                                "items":4
+                                            },
+                                            "1200": {
+                                                "items":3
+                                            },
+                                            "1600": {
+                                                "items":4
+                                            }
+                                        }
+                                    }'>
+                            <div class="product text-center" th:each="item, i : ${listDiesel}">
+                                <figure class="product-media">
+										<span>
+											<span class="product-label label-sale">Đặt cọc 20%</span>
+                                            <span
+												class="product-label"
+												th:text="${item.isAvailable() ? 'Available' : 'Stopped'}"
+                                                th:style="${item.isAvailable()} ? 'background-color: #00FF00;' : 'background-color: red;'"></span>
+										</span>
+                                    <a th:href="@{/car/product-detail(id=${item.id})}"> <img
+                                            th:src="${item.getBanner()} == null ? '/client/assets/images/no-image.jpg' : ${item.getBanner()}"
+                                            alt="Product image" class="product-image">
+                                    </a>
+
+                                    <div class="product-action-vertical">
+                                        <a th:data-id="${item.id}"
+                                           th:onclick="addLikeShop(this.getAttribute('data-id'))"
+                                           class="btn-product-icon btn-wishlist btn-expandable"><span>Yêu
+													thích</span></a> <a href="#quickView-modal" data-toggle="modal"
+                                                                        th:data-id="${item.id}"
+                                                                        th:onclick="quickView(this.getAttribute('data-id'))"
+                                                                        class="btn-product-icon btn-quickview"><span>Xem</span></a>
+                                    </div>
+                                    <!-- End .product-action-vertical -->
+
+                                    <div class="product-action"  sec:authorize="!isAuthenticated()">
+                                        <a href="#signin-modal" data-toggle="modal"
+                                           class="btn-product btn-cart"><span>Rent Car</span></a>
+                                    </div>
+                                    <div class="product-action" sec:authorize="isAuthenticated()">
+                                        <a th:href="@{/car/check-out(id=${item.id})}"
+                                           class="btn-product btn-cart"><span>Rent Car</span></a>
+                                    </div>
+                                    <!-- End .product-action -->
+                                </figure>
+                                <!-- End .product-media -->
+
+                                <div class="product-body">
+                                    <div class="product-cat">
+                                        <a href="#" th:text="${item.brand}"></a>
+                                    </div>
+                                    <!-- End .product-cat -->
+                                    <h3 class="product-title">
+                                        <a th:href="@{/car/product-detail(id=${item.id})}"
+                                           th:text="${item.name}">Tên xe</a>
+                                    </h3>
+                                    <!-- End .product-title -->
+
+                                    <div class="product-price">
+                                        <span>
+												<span class="new-price"
+                                                      th:text="${#numbers.formatDecimal(item.deposit, 0, 'COMMA', 0, 'POINT')} + ' VND'"></span> <span class="old-price"> <del
+                                            th:text="${#numbers.formatDecimal(item.basePrice, 0, 'COMMA', 0, 'POINT')} + ' VND'">
+														</del></span>
+
+											</span>
+                                    </div>
+                                    <!-- End .product-price -->
+                                </div>
+                                <!-- End .product-body -->
+                            </div>
+                            <!-- End .product -->
+                        </div>
+                        <!-- End .owl-carousel -->
+                    </div>
+                    <!-- End .col-xl-9 -->
+                </div>
 
                 <div class="mb-3"></div>
                 <!-- End .mb-3 -->

@@ -62,6 +62,12 @@ public class HomeController {
         List<Car> listCarElectric = carService.findAvailableCarByfuelType("Electric", dateNow);
         model.addAttribute("listElectric", listCarElectric);
 
+        List<Car> listCarHybrid = carService.findAvailableCarByfuelType("Hybrid", dateNow);
+        model.addAttribute("listHybrid", listCarHybrid);
+
+        List<Car> listCarDiesel = carService.findAvailableCarByfuelType("Diesel", dateNow);
+        model.addAttribute("listDiesel", listCarDiesel);
+
         LocalDate startDate = LocalDate.now();
         LocalTime startTime = LocalTime.now();
         LocalDate endDate = startDate.plusDays(1);
