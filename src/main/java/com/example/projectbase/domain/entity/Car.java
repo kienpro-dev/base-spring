@@ -106,6 +106,6 @@ public class Car extends UserDateAuditing {
     }
 
     public boolean isAvailable() {
-        return true;
+        return statusCar.toString().equals("available");
     }
 }
