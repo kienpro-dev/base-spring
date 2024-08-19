@@ -139,6 +139,21 @@
     var isFail = [[${isAuth}]];
     var carId = [[${carId}]];
     var failBalance = [[${failBalance}]]
+    var notAvailable = [[${notAvailable}]]
+
+    if (notAvailable) {
+        if (isAuth) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Thuê xe thất bại',
+                text: 'Chủ xe đã dừng cho thuê xe này',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = new URL(window.location.href).origin + "/car/check-out?id=" + carId;
+                }
+            })
+        }
+    }
 
     if (isFail) {
         if (isAuth) {

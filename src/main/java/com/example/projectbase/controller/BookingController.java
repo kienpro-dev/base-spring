@@ -44,7 +44,7 @@ public class BookingController {
 
     private final FeedbackService feedbackService;
 
-    private static  DecimalFormat formatter = new DecimalFormat("#,### VND");
+    private static DecimalFormat formatter = new DecimalFormat("#,### VND");
 
     @GetMapping("/check-out")
     public String checkOut(Model model, @RequestParam String id, @CurrentUser UserPrincipal userPrincipal) {
@@ -69,7 +69,7 @@ public class BookingController {
 
     @PostMapping("/check-out/submit")
     public String submitCheckOut(Model model, @ModelAttribute BookingDto bookingDto, @RequestParam(value = "id") String carId,
-                                 @CurrentUser UserPrincipal user) {
+                                 @CurrentUser UserPrincipal user) throws Exception {
         if (authService.isAuthenticated()) {
             User currentUser = this.userService.findById(user.getId());
             model.addAttribute("currentUser", currentUser);
@@ -90,7 +90,7 @@ public class BookingController {
         List<Car> cars = new ArrayList<>();
         cars.add(item);
         booking.setCars(cars);
-         bookingService.saveOrUpdate(booking);
+        bookingService.saveOrUpdate(booking);
         if (TimeOverlapUtil.checkTimeOverlap(start, end, bookingService.getBookingByCarId(carId))) {
             model.addAttribute("isFail", true);
             model.addAttribute("carId", carId);
@@ -99,28 +99,33 @@ public class BookingController {
                 model.addAttribute("failBalance", true);
                 model.addAttribute("carId", carId);
             } else {
-                userRent.setBalance(userRent.getBalance() - item.getDeposit());
-                Wallet wallet = Wallet.builder()
-                        .bookingNo(booking.getId())
-                        .carName(item.getName())
-                        .fluctuation("-"+formatter.format(item.getDeposit()))
-                        .userOwn(userRent)
-                        .type("Đặt cọc xe")
-                        .build();
-                walletService.saveOrUpdate(wallet);
-                owner.setBalance(owner.getBalance() + item.getDeposit());
-                Wallet walletOwner = Wallet.builder()
-                        .bookingNo(booking.getId())
-                        .carName(item.getName())
-                        .fluctuation("+"+formatter.format(item.getDeposit()))
-                        .userOwn(owner)
-                        .type("Nhận cọc xe")
-                        .build();
-                walletService.saveOrUpdate(walletOwner);
-                userService.saveOrUpdate(userRent);
-                userService.saveOrUpdate(owner);
-
-                model.addAttribute("isSuccess", true);
+                if (!item.isAvailable()) {
+                    model.addAttribute("notAvailable", true);
+                } else {
+                    userRent.setBalance(userRent.getBalance() - item.getDeposit());
+                    Wallet wallet = Wallet.builder()
+                            .bookingNo(booking.getId())
+                            .carName(item.getName())
+                            .fluctuation("-" + formatter.format(item.getDeposit()))
+                            .userOwn(userRent)
+                            .type("Đặt cọc xe")
+                            .build();
+                    walletService.saveOrUpdate(wallet);
+                    owner.setBalance(owner.getBalance() + item.getDeposit());
+                    Wallet walletOwner = Wallet.builder()
+                            .bookingNo(booking.getId())
+                            .carName(item.getName())
+                            .fluctuation("+" + formatter.format(item.getDeposit()))
+                            .userOwn(owner)
+                            .type("Nhận cọc xe")
+                            .build();
+                    walletService.saveOrUpdate(walletOwner);
+                    userService.saveOrUpdate(userRent);
+                    userService.saveOrUpdate(owner);
+                    userService.sendSuccessMail(userRent.getEmail(), "http://localhost:8080", "Bạn đã đặt cọc xe thành công");
+                    userService.sendSuccessMail(owner.getEmail(), "http://localhost:8080", "Bạn có đơn yêu cầu thuê xe mới, kiểm tra cọc ngay!");
+                    model.addAttribute("isSuccess", true);
+                }
             }
         }
 
@@ -144,19 +149,21 @@ public class BookingController {
     }
 
     @GetMapping("/booking/confirm-pick-up")
-    public String confirmPickUp(Model model, @CurrentUser UserPrincipal userPrincipal, @RequestParam String id) {
+    public String confirmPickUp(Model model, @CurrentUser UserPrincipal userPrincipal, @RequestParam String id) throws Exception {
+        User currentUser = this.userService.findById(userPrincipal.getId());
+
         if (authService.isAuthenticated()) {
-            User currentUser = this.userService.findById(userPrincipal.getId());
             model.addAttribute("currentUser", currentUser);
         }
         Booking booking = bookingService.getBookingById(id);
         booking.setStatus(BookingConstant.IN_PROGRESS);
         bookingService.saveOrUpdate(booking);
+        userService.sendSuccessMail(currentUser.getEmail(), "http://localhost:8080", "Bạn đã xác nhận nhận được xe, thời gian thuê từ: " + booking.getStartDate().toString() + ", đến lúc: " + booking.getEndDate().toString());
         return "redirect:/car/booking-list";
     }
 
     @GetMapping("/booking/cancel/{id}")
-    public ResponseEntity<?> cancel(Model model, @CurrentUser UserPrincipal userPrincipal, @PathVariable(name = "id") String id) {
+    public ResponseEntity<?> cancel(Model model, @CurrentUser UserPrincipal userPrincipal, @PathVariable(name = "id") String id) throws Exception {
         User currentUser = this.userService.findById(userPrincipal.getId());
         if (authService.isAuthenticated()) {
             model.addAttribute("currentUser", currentUser);
@@ -171,28 +178,32 @@ public class BookingController {
                 Wallet wallet = Wallet.builder()
                         .bookingNo(booking.getId())
                         .carName(booking.getCars().get(0).getName())
-                        .fluctuation("+"+formatter.format(car.getDeposit()))
+                        .fluctuation("+" + formatter.format(car.getDeposit()))
                         .userOwn(customer)
                         .type("Trả cọc xe")
                         .build();
                 walletService.saveOrUpdate(wallet);
-                 Wallet walletOwner = Wallet.builder()
+                Wallet walletOwner = Wallet.builder()
                         .bookingNo(booking.getId())
                         .carName(booking.getCars().get(0).getName())
-                        .fluctuation("-"+formatter.format(car.getDeposit()))
+                        .fluctuation("-" + formatter.format(car.getDeposit()))
                         .userOwn(currentUser)
                         .type("Hoàn cọc xe")
                         .build();
                 walletService.saveOrUpdate(walletOwner);
             }
             userService.saveOrUpdate(customer);
+            userService.sendSuccessMail(booking.getUser().getEmail(), "http://localhost:8080", "Chủ xe từ chối cho thuê xe, tiền cọc sẽ được trả lại vào tài khoản của bạn");
+        } else {
+            userService.sendSuccessMail(booking.getCars().get(0).getUserOwn().getEmail(), "http://localhost:8080", "Khách hàng đã rút yêu cầu thuê xe của bạn");
         }
         bookingService.saveOrUpdate(booking);
+
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
     @GetMapping("/booking/return-car")
-    public String returnCar(Model model, @CurrentUser UserPrincipal userPrincipal, @RequestParam String id) {
+    public String returnCar(Model model, @CurrentUser UserPrincipal userPrincipal, @RequestParam String id) throws Exception {
         User currentUser = this.userService.findById(userPrincipal.getId());
         if (authService.isAuthenticated()) {
             model.addAttribute("currentUser", currentUser);
@@ -203,10 +214,10 @@ public class BookingController {
             User owner = car.getUserOwn();
             if (booking.getTotal() <= car.getDeposit()) {
                 currentUser.setBalance(currentUser.getBalance() + (car.getDeposit() - booking.getTotal()));
-                 Wallet wallet = Wallet.builder()
+                Wallet wallet = Wallet.builder()
                         .bookingNo(booking.getId())
                         .carName(car.getName())
-                        .fluctuation("+"+formatter.format(car.getDeposit() - booking.getTotal()))
+                        .fluctuation("+" + formatter.format(car.getDeposit() - booking.getTotal()))
                         .userOwn(currentUser)
                         .type("Nhận tiền nhận xe")
                         .build();
@@ -215,18 +226,20 @@ public class BookingController {
                 Wallet walletOwner = Wallet.builder()
                         .bookingNo(booking.getId())
                         .carName(car.getName())
-                        .fluctuation("-"+formatter.format(car.getDeposit() - booking.getTotal()))
+                        .fluctuation("-" + formatter.format(car.getDeposit() - booking.getTotal()))
                         .userOwn(owner)
                         .type("Trả tiền cọc cho khách")
                         .build();
                 walletService.saveOrUpdate(walletOwner);
                 booking.setStatus(BookingConstant.COMPLETED);
+                userService.sendSuccessMail(currentUser.getEmail(), "http://localhost:8080", "Bạn đã trả xe thành công! Số tiền thừa khi cọc sẽ được chuyển lại vào ví của bạn");
+                userService.sendSuccessMail(owner.getEmail(), "http://localhost:8080", "Khách hàng đã xác nhận trả xe!");
             } else {
                 currentUser.setBalance(currentUser.getBalance() - (booking.getTotal() - car.getDeposit()));
-                 Wallet wallet = Wallet.builder()
+                Wallet wallet = Wallet.builder()
                         .bookingNo(booking.getId())
                         .carName(car.getName())
-                        .fluctuation("-"+formatter.format((booking.getTotal() - car.getDeposit())))
+                        .fluctuation("-" + formatter.format((booking.getTotal() - car.getDeposit())))
                         .userOwn(currentUser)
                         .type("Thanh toán nốt tiền xe")
                         .build();
@@ -235,11 +248,13 @@ public class BookingController {
                 Wallet walletOwner = Wallet.builder()
                         .bookingNo(booking.getId())
                         .carName(car.getName())
-                        .fluctuation("+"+formatter.format((booking.getTotal() - car.getDeposit())))
+                        .fluctuation("+" + formatter.format((booking.getTotal() - car.getDeposit())))
                         .userOwn(owner)
                         .type("Nhận nốt tiền xe")
                         .build();
                 walletService.saveOrUpdate(walletOwner);
+                userService.sendSuccessMail(currentUser.getEmail(), "http://localhost:8080", "Bạn đã yêu cầu trả xe thành công! Số tiền thừa còn thiếu của hóa đơn sẽ được trừ theo từ ví của bạn, vui lòng đợi chủ xe xác nhận để hoàn tất thanh toán");
+                userService.sendSuccessMail(owner.getEmail(), "http://localhost:8080", "Khách hàng đã yêu cầu trả xe và yêu cầu trả thêm số tiền còn thiếu, vui lòng kiểm tra lịch sử giao dịch để hoàn tất thủ tục trả xe");
                 booking.setStatus(BookingConstant.PENDING_PAY);
             }
             userService.saveOrUpdate(owner);
@@ -251,17 +266,18 @@ public class BookingController {
     }
 
     @GetMapping("/booking/confirm")
-    public String confirm(Model model, @CurrentUser UserPrincipal userPrincipal, @RequestParam String id) {
+    public String confirm(Model model, @CurrentUser UserPrincipal userPrincipal, @RequestParam String id) throws Exception {
+        User currentUser = this.userService.findById(userPrincipal.getId());
         if (authService.isAuthenticated()) {
-            User currentUser = this.userService.findById(userPrincipal.getId());
             model.addAttribute("currentUser", currentUser);
         }
         Booking booking = bookingService.getBookingById(id);
         if (booking.getStatus().equals(BookingConstant.PENDING_DEPOSIT)) {
             booking.setStatus(BookingConstant.CONFIRM);
-
+            userService.sendSuccessMail(booking.getUser().getEmail(), "http://localhost:8080", "Chủ xe đã xác nhận đơn đặt xe của bạn");
         } else if (booking.getStatus().equals(BookingConstant.PENDING_PAY)) {
             booking.setStatus(BookingConstant.COMPLETED);
+            userService.sendSuccessMail(booking.getUser().getEmail(), "http://localhost:8080", "Chủ xe đã xác nhận số tiền còn lại của bạn");
         }
         bookingService.saveOrUpdate(booking);
         return "redirect:/car/account/info-account";
@@ -269,7 +285,7 @@ public class BookingController {
 
     @PostMapping("/booking/feedback")
     @ResponseBody
-    public ResponseEntity<?> loginSubmit(Model model, @RequestBody FeedbackRequestDto feedbackRequestDto) {
+    public ResponseEntity<?> loginSubmit(Model model, @RequestBody FeedbackRequestDto feedbackRequestDto) throws Exception {
 
         Booking booking = bookingService.getBookingById(feedbackRequestDto.getBookingId());
         Feedback feedback = new Feedback();
@@ -279,6 +295,7 @@ public class BookingController {
         feedbackService.save(feedback);
         booking.setFeedback(feedback);
         bookingService.saveOrUpdate(booking);
+        userService.sendSuccessMail(booking.getCars().get(0).getUserOwn().getEmail(), "http://localhost:8080", "Có khách hàng mới đánh giá xe của bạn");
         return VsResponseUtil.success("Chúc mừng bạn đã đánh giá thành công.");
     }
 

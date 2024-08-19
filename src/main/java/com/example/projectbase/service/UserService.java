@@ -55,5 +55,7 @@ public interface UserService {
 
     void sendMail(String email, String url) throws Exception;
 
+    void sendSuccessMail(String email, String url, String content) throws Exception;
+
     boolean createUser(RegisterRequestDto requestDto);
 }

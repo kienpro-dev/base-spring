@@ -24,6 +24,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.mail.MessagingException;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -178,6 +179,23 @@ public class UserServiceImpl implements UserService {
         mailInfo.setSubject("Quên mật khẩu");
         mailInfo.setBody(body);
         sendMailUtil.sendWithFreeTemplate(mailInfo);
+    }
+
+    @Override
+    public void sendSuccessMail(String email, String url, String content) throws MessagingException {
+        Object[] object = new Object[10];
+        object[0] = url + "/car/home";
+        User user = userRepository.findByEmail(email).get();
+        object[1] = user.getName();
+        object[2] = content;
+        List<Object[]> body = new ArrayList<>();
+        body.add(object);
+        DataMailDto mailInfo = new DataMailDto();
+        mailInfo.setFrom("Rental Car Online <RentalCar@gmail.com>");
+        mailInfo.setTo(email);
+        mailInfo.setSubject("Thông báo từ Rental Car");
+        mailInfo.setBody(body);
+        sendMailUtil.sendSuccessfullyInfo(mailInfo);
     }
 
     @Override
