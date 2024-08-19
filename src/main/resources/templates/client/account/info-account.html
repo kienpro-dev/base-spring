@@ -121,8 +121,9 @@
                                             </div>
 
                                         </td>
-                                        <td th:text="${item.startDate}"></td>
-                                        <td th:text="${item.endDate}"></td>
+                                        <td th:text="${#temporals.format(item.startDate, 'yyyy-MM-dd HH:mm')}"></td>
+                                        <td th:text="${#temporals.format(item.endDate, 'yyyy-MM-dd HH:mm')}"></td>
+
                                         <td>
                                             <div
                                                     th:switch="${item.status}">
@@ -143,15 +144,18 @@
                                                    th:href="@{/car/booking/confirm(id=${item.id})}">Xác nhận cọc</a>
                                                 <a style="padding: 5px 0; width: 30%" class="btn btn-danger active"
                                                    role="button"
-                                                   th:href="@{/car/booking/cancel(id=${item.id})}">Hủy đơn</a>
+                                                   th:data-id="${item.id}"
+                                                   th:onclick="cancelSubmit(this.getAttribute('data-id'))">Hủy đặt</a>
                                             </div>
                                             <div th:case="'PENDING_PAY'">
                                                 <a style="padding: 5px 0; width: 30%" class="btn btn-danger active"
                                                    role="button"
-                                                   th:href="@{/car/booking/confirm(id=${item.id})}">Xác nhận thanh toán</a>
+                                                   th:href="@{/car/booking/confirm(id=${item.id})}">Xác nhận thanh
+                                                    toán</a>
                                                 <a style="padding: 5px 0; width: 30%" class="btn btn-danger active"
                                                    role="button"
-                                                   th:href="@{/car/booking/cancel(id=${item.id})}">Hủy đơn</a>
+                                                   th:data-id="${item.id}"
+                                                   th:onclick="cancelSubmit(this.getAttribute('data-id'))">Hủy đặt</a>
                                             </div>
                                         </td>
                                         <td class="remove-col"><a class="btn-remove"
@@ -209,14 +213,21 @@
                                                 <h3 class="card-title">Số dư ví tài khoản</h3>
                                                 <!-- End .card-title -->
                                                 <p th:text="${#numbers.formatDecimal(userDto.balance, 0, 'COMMA', 0, 'POINT')} + ' VND'"></p>
-                                                <form
-                                                        th:action="@{'/car/account/info-account/' + ${userDto.id} + '/balance'}"
-                                                        method="POST">
-
+                                                <form id="balanceForm"
+                                                      th:action="@{/car/account/info-account/{id}/balance(id=${userDto.id})}"
+                                                      method="POST">
                                                     <label>Nhập số tiền nạp *</label>
                                                     <input type="text" class="form-control" name="balance" required>
-                                                    <button type="submit" class="btn btn-primary btn-round">
-                                                        <span>Nạp tiền</span> <i class="icon-long-arrow-right"></i>
+
+                                                    <input type="hidden" id="type" name="type" value="">
+
+                                                    <button type="submit" class="btn btn-primary btn-round"
+                                                            onclick="setType('add')">
+                                                        <span>Nạp tiền</span>
+                                                    </button>
+                                                    <button type="submit" class="btn btn-info btn-round"
+                                                            onclick="setType('minus')">
+                                                        <span>Rút tiền</span>
                                                     </button>
                                                 </form>
                                             </div>
@@ -227,6 +238,34 @@
                                     <!-- End .col-lg-6 -->
                                 </div>
                                 <!-- End .row -->
+                                <div class="row">
+                                    <h4 class="text-primary">LỊCH SỬ GIAO DỊCH</h4>
+                                    <table class="table table-wishlist table-mobile">
+                                        <thead>
+                                        <tr>
+                                            <th>STT</th>
+                                            <th>Biến động</th>
+                                            <th>Hình thức</th>
+                                            <th>Ngày giao dịch</th>
+                                            <th>Mã đơn</th>
+                                            <th>Tên xe</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr th:each="item, i: ${listWallet}">
+                                            <td th:text="${i.count}"></td>
+                                            <td th:style="'color: ' + (${item.fluctuation.startsWith('-')} ? 'red' : 'green')"
+                                                th:text="${item.fluctuation}">
+                                            </td>
+
+                                            <td th:text="${item.type}" class="text-primary"></td>
+                                            <td th:text="${#temporals.format(item.createdDate, 'yyyy-MM-dd HH:mm')}"></td>
+                                            <td th:text="${item.bookingNo}"></td>
+                                            <td th:text="${item.carName}"></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                             <!-- .End .tab-pane -->
 
@@ -323,6 +362,8 @@
     </div>
     <!-- End .page-content -->
 </div>
+
+
 </body>
 
 </html>

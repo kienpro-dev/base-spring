@@ -60,4 +60,10 @@ public class User extends DateAuditing {
   @JsonIgnore
   private List<Car> carOwn = new ArrayList<>();
 
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "userOwn")
+  @JsonIgnore
+  private List<Wallet> wallets = new ArrayList<>();
+
+
+
 }
